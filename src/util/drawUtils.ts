@@ -12,6 +12,7 @@ const drawSettings = {
 export function drawWaveForItems(
   context: CanvasRenderingContext2D,
   items: Array<IGridItem>,
+  bpm: number,
   startTime: number,
   endTime: number,
 ) {
@@ -23,13 +24,24 @@ export function drawWaveForItems(
   const duration = endTime - startTime;
   const timePerPixel = duration / context.canvas.width;
   for (let x = 0; x < context.canvas.width; x += 1) {
-    const value = getValueAtTimeForItems(startTime + timePerPixel * x, items);
+    const value = getValueAtTimeForGridItems(startTime + timePerPixel * x, items, bpm);
     context.fillRect(x, bottom - value * (bottom - top), 1, 1);
   }
 }
 
-export function getValueAtTimeForItems(time: number, items: Array<IGridItem>): number {
-  return Math.random() > 0.5 ? 1 : 0;
+export function getValueAtTimeForGridItems(
+  time: number,
+  items: Array<IGridItem>,
+  bpm: number,
+): number {
+  return getValueAtTimeForGridItem(time, { division: 2, pulseWidth: 0.25 }, bpm);
+}
+
+export function getValueAtTimeForGridItem(time: number, item: IGridItem, bpm: number): number {
+  const secondsPerBeat = 60 / bpm;
+  const repeatTimeForItem = item.division * secondsPerBeat;
+  const positionInRepeat = (time / repeatTimeForItem) % 1;
+  return positionInRepeat > item.pulseWidth ? 0 : 1;
 }
 
 export function clearContext(

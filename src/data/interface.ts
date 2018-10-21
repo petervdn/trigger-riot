@@ -9,7 +9,7 @@ export interface IPosition {
 }
 
 export interface IGridItem {
-  position: IPosition;
+  position?: IPosition;
   division: number;
   pulseWidth: number;
 }

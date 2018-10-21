@@ -3,7 +3,7 @@
 
 <template>
   <div :class="$style.wrap">
-    <h2>{{ gridItem.position.x }}, {{ gridItem.position.y }}</h2>
     <input v-model.number="gridItem.division">
+    <input v-model.number="gridItem.pulseWidth">
   </div>
 </template>

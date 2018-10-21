@@ -1,4 +1,5 @@
 import VueTypes from 'vue-types';
+import { mapState } from 'vuex';
 import { clearContext, drawWaveForItems } from '../../util/drawUtils';
 
 // @vue/component
@@ -9,9 +10,9 @@ export default {
     end: VueTypes.number.isRequired,
   },
   computed: {
-    // ...mapState({
-    //   gridItem
-    // }),
+    ...mapState({
+      bpm: state => state.app.bpm,
+    }),
   },
   mounted() {
     this.context = this.$refs.canvas.getContext('2d');
@@ -19,7 +20,7 @@ export default {
   },
   methods: {
     draw() {
-      drawWaveForItems(this.context, [], this.start, this.end);
+      drawWaveForItems(this.context, [], this.bpm, this.start, this.end);
     },
   },
 };
