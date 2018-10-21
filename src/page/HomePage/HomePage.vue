@@ -4,5 +4,10 @@
 <template>
   <div>
     <h2>HomePage</h2>
+    <WaveView
+      :start="0"
+      :end="10"
+    />
+    <Grid />
   </div>
 </template>

@@ -1,0 +1,8 @@
+/* stylelint-disable-next-line block-no-empty */
+:local {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    // grid-template-rows: 1fr;
+  }
+}
