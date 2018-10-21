@@ -5,7 +5,9 @@
 
 <template>
   <div>
-    <h2>WaveView</h2>
+    <div>
+      <button @click="draw">draw</button>
+    </div>
     <canvas
       ref="canvas"
       width="500px"

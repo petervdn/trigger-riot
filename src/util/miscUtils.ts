@@ -1,6 +1,4 @@
-import { IGridData } from '../data/interface';
-
-// export function getValueAtTime(time: number, divisions: Array<number>): number {}
+import { IGridData, IGridItem } from '../data/interface';
 
 export function createGridData(rows = 4, columns = 4, defaultPulseWidth = 0.25): IGridData {
   const grid: IGridData = {

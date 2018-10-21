@@ -2,7 +2,7 @@
 <script src="./HomePage.js"></script>
 
 <template>
-  <div>
+  <div style="padding: 20px">
     <h2>HomePage</h2>
     <WaveView
       :start="0"
