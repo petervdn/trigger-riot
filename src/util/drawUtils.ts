@@ -25,9 +25,13 @@ export function drawWaveForItems(
   const timePerPixel = duration / context.canvas.width;
 
   // loop through every pixel todo refactor to other approach
+  let previousValue = 0;
   for (let x = 0; x < context.canvas.width; x += 1) {
     const value = getValueAtTimeForGridItems(startTime + timePerPixel * x, items, bpm);
-    context.fillRect(x, bottom - value * (bottom - top), 1, 1);
+    const height = value !== previousValue ? bottom - top : 1;
+    const y = bottom - value * (bottom - top);
+    context.fillRect(x, y, 1, value === 0 && previousValue === 1 ? -height : height);
+    previousValue = value;
   }
 }
 
