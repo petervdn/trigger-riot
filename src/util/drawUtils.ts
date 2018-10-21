@@ -16,7 +16,7 @@ export function drawWaveForItems(
   startTime: number,
   endTime: number,
 ) {
-  clearContext(context);
+  clearContext(context, drawSettings.bgColor);
 
   context.fillStyle = drawSettings.drawColor;
   const top = drawSettings.margin.top;
@@ -44,10 +44,7 @@ export function getValueAtTimeForGridItem(time: number, item: IGridItem, bpm: nu
   return positionInRepeat > item.pulseWidth ? 0 : 1;
 }
 
-export function clearContext(
-  context: CanvasRenderingContext2D,
-  color = drawSettings.bgColor,
-): void {
+export function clearContext(context: CanvasRenderingContext2D, color: string): void {
   context.fillStyle = color;
   context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 }
