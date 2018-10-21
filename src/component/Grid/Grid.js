@@ -10,7 +10,6 @@ export default {
   data() {
     return {
       gridData: createGridData(),
-      bpm: 120,
     };
   },
 };

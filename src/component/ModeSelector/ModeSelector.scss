@@ -1,0 +1,20 @@
+/* stylelint-disable-next-line block-no-empty */
+:local {
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  font-size: 18px;
+  font-weight: bold;
+
+  li {
+    padding: 5px;
+    margin-right: 5px;
+    border: 1px solid black;
+  }
+  li.active {
+    background-color: dodgerblue;
+    color: white;
+  }
+}

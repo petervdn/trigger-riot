@@ -3,11 +3,12 @@
 
 <template>
   <div style="padding: 20px">
-    <h2>HomePage</h2>
     <WaveView
       :start="0"
       :end="10"
     />
+    <input v-model.number="bpm">
+    <ModeSelector />
     <Grid />
   </div>
 </template>

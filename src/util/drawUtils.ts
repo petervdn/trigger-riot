@@ -23,6 +23,8 @@ export function drawWaveForItems(
   const bottom = context.canvas.height - drawSettings.margin.bottom;
   const duration = endTime - startTime;
   const timePerPixel = duration / context.canvas.width;
+
+  // loop through every pixel todo refactor to other approach
   for (let x = 0; x < context.canvas.width; x += 1) {
     const value = getValueAtTimeForGridItems(startTime + timePerPixel * x, items, bpm);
     context.fillRect(x, bottom - value * (bottom - top), 1, 1);

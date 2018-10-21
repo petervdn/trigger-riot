@@ -5,7 +5,6 @@
 
 <template>
   <div>
-    <input v-model.number="bpm">
     <div :class="$style.grid">
       <GridItem
         v-for="item in gridData.items"
