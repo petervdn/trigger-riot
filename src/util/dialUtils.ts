@@ -1,3 +1,8 @@
+interface IPoint {
+  x: number;
+  y: number;
+}
+
 export function drawDial(
   context: CanvasRenderingContext2D,
   value: number,
@@ -16,6 +21,25 @@ export function drawDial(
   const valueRadians = startRadians + value * (endRadians - startRadians);
   drawArc(context, startRadians, valueRadians, color, center, halfSize);
   drawArc(context, valueRadians, endRadians, bgColor, center, halfSize);
+
+  drawLine(context, valueRadians, center, 1, halfSize - 4);
+}
+
+export function drawLine(
+  context: CanvasRenderingContext2D,
+  radians: number,
+  center: IPoint,
+  inner: number,
+  outer: number,
+  width: number = 2,
+): void {
+  context.strokeStyle = 'color';
+  context.lineWidth = width;
+  context.beginPath();
+  context.moveTo(center.x + Math.cos(radians) * inner, center.y + Math.sin(radians) * inner);
+  context.lineTo(center.x + Math.cos(radians) * outer, center.y + Math.sin(radians) * outer);
+  context.stroke();
+  context.closePath();
 }
 
 export function drawArc(
@@ -26,9 +50,10 @@ export function drawArc(
   center: { x: number; y: number },
   radius: number,
   lineWidth: number = 16,
+  outerMargin: number = 5,
 ) {
   context.beginPath();
-  context.arc(center.x, center.y, radius - lineWidth * 0.5, startRadians, endRadians);
+  context.arc(center.x, center.y, radius - lineWidth * 0.5 - outerMargin, startRadians, endRadians);
   context.strokeStyle = color;
   context.lineWidth = lineWidth;
   context.stroke();

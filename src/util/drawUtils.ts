@@ -3,7 +3,7 @@ import { IGridItem } from '../data/interface';
 const drawSettings = {
   margin: {
     top: 10,
-    bottom: 10,
+    bottom: 20,
   },
   drawColor: 'orange',
   bgColor: 'black',
@@ -17,6 +17,8 @@ export function drawWaveForItems(
   endTime: number,
 ) {
   clearContext(context, drawSettings.bgColor);
+
+  drawClockGrid(context, bpm, startTime, endTime);
 
   context.fillStyle = drawSettings.drawColor;
   const top = drawSettings.margin.top;
@@ -53,4 +55,13 @@ export function getValueAtTimeForGridItem(time: number, item: IGridItem, bpm: nu
 export function clearContext(context: CanvasRenderingContext2D, color: string): void {
   context.fillStyle = color;
   context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+}
+
+export function drawClockGrid(
+  context: CanvasRenderingContext2D,
+  bpm: number,
+  startTime: number,
+  endTime: number,
+) {
+  const secondsPerBeat = 60 / bpm;
 }
