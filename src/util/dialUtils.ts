@@ -25,7 +25,7 @@ export function drawArc(
   color: string,
   center: { x: number; y: number },
   radius: number,
-  lineWidth: number = 12,
+  lineWidth: number = 16,
 ) {
   context.beginPath();
   context.arc(center.x, center.y, radius - lineWidth * 0.5, startRadians, endRadians);

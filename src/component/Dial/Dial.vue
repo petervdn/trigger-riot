@@ -10,5 +10,6 @@
       ref="canvas"
       @mousedown="onCanvasMouseDown"
     />
+    <input v-model.number="dialValue">
   </div>
 </template>

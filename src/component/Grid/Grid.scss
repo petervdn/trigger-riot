@@ -1,8 +1,8 @@
 /* stylelint-disable-next-line block-no-empty */
-:local {
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 100px);
-    // grid-template-rows: 1fr;
-  }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  // grid-template-rows: 1fr;
 }
+//:local {
+//}

@@ -9,39 +9,40 @@ export default {
     max: VueTypes.number.isRequired,
     float: VueTypes.bool.def(true),
     value: VueTypes.number.isRequired,
-    arcRange: VueTypes.number.def(0.75),
-    arcWidth: VueTypes.number.def(6),
-    arcRotation: VueTypes.number.def(Math.PI / 2),
-    arcColor: VueTypes.string.def('orange'),
-    arcBgColor: VueTypes.string.def('black'),
+    // arcRange: VueTypes.number.def(0.75),
+    // arcWidth: VueTypes.number.def(6),
+    // arcRotation: VueTypes.number.def(Math.PI / 2),
+    // arcColor: VueTypes.string.def('orange'),
+    // arcBgColor: VueTypes.string.def('black'),
     pixelsForFullRange: VueTypes.number.def(200),
   },
   data() {
     return {
-      dialValue: this.value,
+      dialValue: 0,
     };
   },
   watch: {
-    value(value) {
-      if (value !== this.dialValue) {
-        this.setValue(value);
-        console.log('update');
-      }
+    // value(value) {
+    //   if (value !== this.dialValue) {
+    //     this.setValue(value);
+    //
+    //   }
+    // },
+    dialValue(value) {
+      this.dialValue = Math.min(this.max, Math.max(this.min, value));
+      this.draw();
     },
   },
   mounted() {
     this.context = this.$refs.canvas.getContext('2d');
-    this.setValue(this.value); // makes sure it is between bounds
+
     setTimeout(() => {
+      // otherwise canvas is not ready?
       this.resize();
+      this.dialValue = this.value; // triggers watcher
     }, 0);
   },
   methods: {
-    setValue(value) {
-      this.dialValue = Math.min(this.max, Math.max(this.min, value));
-      this.draw();
-      this.$emit('change', this.dialValue);
-    },
     draw() {
       drawDial(this.context, this.dialValue);
     },
@@ -68,9 +69,8 @@ export default {
       document.removeEventListener('mouseup', this.onDoucumentMouseUp);
     },
     onDocumentMouseMove(event) {
-      this.setValue(
-        this.startDragData.value + (this.startDragData.y - event.pageY) / this.pixelsForFullRange,
-      );
+      this.dialValue =
+        this.startDragData.value + (this.startDragData.y - event.pageY) / this.pixelsForFullRange;
       event.preventDefault();
     },
   },

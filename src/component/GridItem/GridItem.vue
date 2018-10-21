@@ -9,7 +9,7 @@
       :value="gridItem.pulseWidth"
       @change="onDialChange"
     />
-    <input v-model.number="gridItem.division">
-    <input v-model.number="gridItem.pulseWidth">
+    <!--<input v-model.number="gridItem.division">-->
+    <!--<input v-model.number="gridItem.pulseWidth">-->
   </div>
 </template>
