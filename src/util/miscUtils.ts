@@ -6,8 +6,8 @@ export function createGridData(rows = 4, columns = 4, defaultPulseWidth = 0.25):
     for (let x = 0; x < columns; x += 1) {
       items.push({
         position: { x, y },
-        division: 0,
-        pulseWidth: defaultPulseWidth,
+        division: 4,
+        pulseWidth: Math.random(),
       });
     }
   }

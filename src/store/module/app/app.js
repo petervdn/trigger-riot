@@ -10,7 +10,7 @@ export default {
   state: {
     deviceState: null,
     bpm: 120,
-    activeGridMode: GridMode.DIVISION,
+    activeGridMode: GridMode.PULSE_WIDTH,
   },
   getters: {},
   mutations: {

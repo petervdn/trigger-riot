@@ -22,12 +22,9 @@ export default {
     };
   },
   watch: {
-    // value(value) {
-    //   if (value !== this.dialValue) {
-    //     this.setValue(value);
-    //
-    //   }
-    // },
+    value(value) {
+      this.dialValue = value;
+    },
     dialValue(value) {
       this.dialValue = Math.min(this.max, Math.max(this.min, value));
       this.draw();
@@ -44,7 +41,8 @@ export default {
   },
   methods: {
     draw() {
-      drawDial(this.context, this.dialValue);
+      const valueFactor = (this.dialValue - this.min) / (this.max - this.min);
+      drawDial(this.context, valueFactor);
     },
     resize() {
       this.size = this.$refs.wrap.offsetWidth;

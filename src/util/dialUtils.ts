@@ -5,9 +5,9 @@ interface IPoint {
 
 export function drawDial(
   context: CanvasRenderingContext2D,
-  value: number,
+  valueFactor: number,
   rotation: number = 0.25,
-  range: number = 0.8,
+  range: number = 0.7,
   color: string = 'orange',
   bgColor: string = 'black',
 ) {
@@ -18,11 +18,11 @@ export function drawDial(
   const center = { x: halfSize, y: halfSize };
   const startRadians = rotation * pi2 + (1 - range) * 0.5 * pi2;
   const endRadians = startRadians + range * pi2;
-  const valueRadians = startRadians + value * (endRadians - startRadians);
+  const valueRadians = startRadians + valueFactor * (endRadians - startRadians);
   drawArc(context, startRadians, valueRadians, color, center, halfSize);
   drawArc(context, valueRadians, endRadians, bgColor, center, halfSize);
 
-  drawLine(context, valueRadians, center, 1, halfSize - 4);
+  drawLine(context, valueRadians, center, 1, halfSize);
 }
 
 export function drawLine(
@@ -49,8 +49,8 @@ export function drawArc(
   color: string,
   center: { x: number; y: number },
   radius: number,
-  lineWidth: number = 16,
-  outerMargin: number = 5,
+  lineWidth: number = 12, // todo clean up params, move (all?) to other draw method
+  outerMargin: number = 0,
 ) {
   context.beginPath();
   context.arc(center.x, center.y, radius - lineWidth * 0.5 - outerMargin, startRadians, endRadians);

@@ -696,6 +696,13 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.0.0-beta.35":
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.1.2.tgz#81c89935f4647706fc54541145e6b4ecfef4b8e3"
+  integrity sha512-Y3SCjmhSupzFB6wcv1KmmFucH6gDVnI30WjOcicV10ju0cZjak3Jcs67YLIXBrmZYw1xCrVeJPbycFwrqNyxpg==
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/template@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0.tgz#c2bc9870405959c89a9c814376a2ecb247838c80"
@@ -6874,6 +6881,13 @@ map-obj@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-2.0.0.tgz#a65cd29087a92598b8791257a523e021222ac1f9"
   integrity sha1-plzSkIepJZi4eRJXpSPgISIqwfk=
+
+map-slider-value@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/map-slider-value/-/map-slider-value-2.0.1.tgz#0fe1827760dbc2c0aa2ee37bcdcc7ee4930dee37"
+  integrity sha512-wjIAtBRM+FuCAOxT8bsrYIyWW+eBu8uusLHGrGLl3EFiRUC5XouHh0J3K6M6b/pLi/JfJ1Rory+Er1vBgzGddQ==
+  dependencies:
+    "@babel/runtime" "^7.0.0-beta.35"
 
 map-visit@^1.0.0:
   version "1.0.0"

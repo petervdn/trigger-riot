@@ -1,6 +1,7 @@
 import { mapState } from 'vuex';
 import VueTypes from 'vue-types';
 import Dial from '../Dial/Dial';
+import GridMode from '../../data/enum/GridMode';
 
 // @vue/component
 export default {
@@ -12,6 +13,19 @@ export default {
     gridItem: VueTypes.any,
   },
   computed: {
+    dialData() {
+      return this.activeGridMode === GridMode.DIVISION
+        ? {
+            value: this.gridItem.division,
+            min: 0,
+            max: 16,
+          }
+        : {
+            value: this.gridItem.pulseWidth,
+            min: 0,
+            max: 1,
+          };
+    },
     ...mapState({
       activeGridMode: state => state.app.activeGridMode,
     }),

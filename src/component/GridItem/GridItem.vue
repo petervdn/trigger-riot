@@ -4,9 +4,9 @@
 <template>
   <div :class="$style.wrap">
     <Dial
-      :min="0"
-      :max="1"
-      :value="gridItem.pulseWidth"
+      :min="dialData.min"
+      :max="dialData.max"
+      :value="dialData.value"
       @change="onDialChange"
     />
     <!--<input v-model.number="gridItem.division">-->
