@@ -67,8 +67,8 @@ export default {
       document.removeEventListener('mouseup', this.onDoucumentMouseUp);
     },
     onDocumentMouseMove(event) {
-      this.dialValue =
-        this.startDragData.value + (this.startDragData.y - event.pageY) / this.pixelsForFullRange;
+      const fullRangeFactor = (this.startDragData.y - event.pageY) / this.pixelsForFullRange;
+      this.dialValue = this.startDragData.value + fullRangeFactor * (this.max - this.min);
       event.preventDefault();
     },
   },

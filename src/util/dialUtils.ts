@@ -49,7 +49,7 @@ export function drawArc(
   color: string,
   center: { x: number; y: number },
   radius: number,
-  lineWidth: number = 12, // todo clean up params, move (all?) to other draw method
+  lineWidth: number = 16, // todo clean up params, move (all?) to other draw method
   outerMargin: number = 0,
 ) {
   context.beginPath();
