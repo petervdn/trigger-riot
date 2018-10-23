@@ -5,11 +5,10 @@
 
 <template>
   <div>
-    <h2>{{ activeGridMode }}</h2>
     <ul>
       <li
         v-for="mode in modes"
-        :class="'active'"
+        :class="{[$style.active]: mode === activeGridMode}"
         :key="mode"
         @click="setActiveGridMode(mode)"
       >{{ mode }}</li>
