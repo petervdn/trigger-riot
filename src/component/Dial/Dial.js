@@ -7,13 +7,8 @@ export default {
   props: {
     min: VueTypes.number.isRequired,
     max: VueTypes.number.isRequired,
-    float: VueTypes.bool.def(true),
+    integer: VueTypes.bool.def(false),
     value: VueTypes.number.isRequired,
-    // arcRange: VueTypes.number.def(0.75),
-    // arcWidth: VueTypes.number.def(6),
-    // arcRotation: VueTypes.number.def(Math.PI / 2),
-    // arcColor: VueTypes.string.def('orange'),
-    // arcBgColor: VueTypes.string.def('black'),
     pixelsForFullRange: VueTypes.number.def(200),
   },
   data() {
@@ -69,6 +64,10 @@ export default {
     onDocumentMouseMove(event) {
       const fullRangeFactor = (this.startDragData.y - event.pageY) / this.pixelsForFullRange;
       this.dialValue = this.startDragData.value + fullRangeFactor * (this.max - this.min);
+
+      if (this.integer) {
+        this.dialValue = Math.trunc(this.dialValue);
+      }
       event.preventDefault();
     },
   },

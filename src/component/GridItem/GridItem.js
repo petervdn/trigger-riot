@@ -19,6 +19,7 @@ export default {
             value: this.gridItem.division,
             min: 0,
             max: 16,
+            integer: true,
           }
         : {
             value: this.gridItem.pulseWidth,
@@ -32,8 +33,8 @@ export default {
   },
   watch: {},
   methods: {
-    onDialChange(value) {
-      this.gridItem.pulseWidth = value;
-    },
+    // onDialChange(value) {
+    //   this.gridItem.pulseWidth = value;
+    // },
   },
 };
