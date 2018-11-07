@@ -5,7 +5,7 @@ interface IPoint {
 
 export function drawDial(
   context: CanvasRenderingContext2D,
-  valueFactor: number,
+  valueFactor: number, // [0, 1]
   rotation: number = 0.25,
   range: number = 0.7,
   color: string = 'orange',

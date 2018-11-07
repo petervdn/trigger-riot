@@ -37,6 +37,14 @@ export function drawWaveForItems(
   }
 }
 
+export function setCanvasSize(canvas: HTMLCanvasElement, width: number, height: number): void {
+  const scale = window.devicePixelRatio;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+  canvas.width = width * scale;
+  canvas.height = height * scale;
+}
+
 export function getValueAtTimeForGridItems(
   time: number,
   items: Array<IGridItem>,

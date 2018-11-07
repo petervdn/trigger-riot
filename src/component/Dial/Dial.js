@@ -1,5 +1,6 @@
 import VueTypes from 'vue-types';
 import { drawDial } from '../../util/dialUtils';
+import { setCanvasSize } from '../../util/drawUtils';
 
 // @vue/component
 export default {
@@ -16,8 +17,14 @@ export default {
       dialValue: 0,
     };
   },
+  computed: {
+    dialValueFactor() {
+      return (this.dialValue - this.min) / (this.max - this.min);
+    },
+  },
   watch: {
     value(value) {
+      // set the dial to the correct value
       this.dialValue = value;
     },
     dialValue(value) {
@@ -36,18 +43,11 @@ export default {
   },
   methods: {
     draw() {
-      const valueFactor = (this.dialValue - this.min) / (this.max - this.min);
-      drawDial(this.context, valueFactor);
+      drawDial(this.context, this.dialValueFactor);
     },
     resize() {
-      this.size = this.$refs.wrap.offsetWidth;
-
-      const scale = window.devicePixelRatio;
-      this.context.canvas.style.width = `${this.size}px`;
-      this.context.canvas.style.height = `${this.size}px`;
-      this.context.canvas.width = `${this.size * scale}`;
-      this.context.canvas.height = `${this.size * scale}`;
-
+      const size = this.$refs.wrap.offsetWidth;
+      setCanvasSize(this.context.canvas, size, size);
       this.draw();
     },
     onCanvasMouseDown(event) {
@@ -68,7 +68,8 @@ export default {
       if (this.integer) {
         this.dialValue = Math.trunc(this.dialValue);
       }
-      event.preventDefault();
+
+      // event.preventDefault(); todo why was this
     },
   },
 };
