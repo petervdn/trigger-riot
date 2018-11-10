@@ -5,9 +5,6 @@
 
 <template>
   <div>
-    <div>
-      <button @click="draw">draw</button>
-    </div>
     <canvas
       ref="canvas"
       width="500px"
