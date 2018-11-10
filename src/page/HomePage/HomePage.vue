@@ -3,9 +3,11 @@
 
 <template>
   <div style="padding: 20px">
+    <h2>{{ time }}</h2>
+    <button @click="togglePlay">{{ isPlaying ? 'stop' : 'start' }}</button>
     <WaveView
-      :start="0"
-      :end="10"
+      :start-time="time"
+      :end-time="time + viewWindow"
     />
     <input v-model.number="bpm">
     <ModeSelector />

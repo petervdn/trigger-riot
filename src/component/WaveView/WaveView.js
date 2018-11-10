@@ -1,19 +1,13 @@
 import VueTypes from 'vue-types';
 import { mapState } from 'vuex';
-import { clearContext, drawWaveForItems } from '../../util/drawUtils';
+import { drawWaveForItems } from '../../util/drawUtils';
 
 // @vue/component
 export default {
   name: 'WaveView',
   props: {
-    start: VueTypes.number.isRequired,
-    end: VueTypes.number.isRequired,
-  },
-  data() {
-    return {
-      startTime: 2,
-      endTime: 11,
-    };
+    startTime: VueTypes.number.isRequired,
+    endTime: VueTypes.number.isRequired,
   },
   computed: {
     ...mapState({
@@ -30,7 +24,6 @@ export default {
   },
   mounted() {
     this.context = this.$refs.canvas.getContext('2d');
-    clearContext(this.context);
     this.draw();
   },
   methods: {
