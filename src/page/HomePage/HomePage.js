@@ -1,3 +1,4 @@
+import { mapState } from 'vuex';
 import WaveView from '../../component/WaveView/WaveView';
 import Grid from '../../component/Grid/Grid';
 import ModeSelector from '../../component/ModeSelector/ModeSelector';
@@ -18,6 +19,11 @@ export default {
       viewWindow: 10,
       isPlaying: false,
     };
+  },
+  computed: {
+    ...mapState({
+      grid: state => state.app.grid,
+    }),
   },
   mounted() {
     this.frame = new AnimationFrame(this.onFrame);

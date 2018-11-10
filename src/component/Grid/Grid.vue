@@ -7,7 +7,7 @@
   <div>
     <div :class="$style.grid">
       <GridItem
-        v-for="item in gridData.items"
+        v-for="item in grid.items"
         :key="`${item.position.x}-${item.position.y}`"
         :grid-item="item"
       />

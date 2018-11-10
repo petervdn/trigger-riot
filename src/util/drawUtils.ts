@@ -1,5 +1,6 @@
-import { IGridItem } from '../data/interface';
+import { IGridItem, IPosition, ITimeSlot } from '../data/interface';
 import { isNumeric } from './miscUtils';
+import { getSlotsInRange } from './gridUtils';
 
 const drawSettings = {
   margin: {
@@ -12,7 +13,7 @@ const drawSettings = {
 
 export function drawWaveForItems(
   context: CanvasRenderingContext2D,
-  items: Array<IGridItem>,
+  gridItem: IGridItem,
   bpm: number,
   startTime: number,
   endTime: number,
@@ -20,22 +21,49 @@ export function drawWaveForItems(
   clearContext(context, drawSettings.bgColor);
 
   drawBeats(context, startTime, endTime, bpm, 'red');
+  drawTimeSlots(context, gridItem, startTime, endTime, bpm);
+}
 
-  // context.fillStyle = drawSettings.drawColor;
-  // const top = drawSettings.margin.top;
-  // const bottom = context.canvas.height - drawSettings.margin.bottom;
-  // const duration = endTime - startTime;
-  // const timePerPixel = duration / context.canvas.width;
-  //
-  // // loop through every pixel todo refactor to other approach
-  // let previousValue = 0;
-  // for (let x = 0; x < context.canvas.width; x += 1) {
-  //   const value = getValueAtTimeForGridItems(startTime + timePerPixel * x, items, bpm);
-  //   const height = value !== previousValue ? bottom - top : 1;
-  //   const y = bottom - value * (bottom - top);
-  //   context.fillRect(x, y, 1, value === 0 && previousValue === 1 ? -height : height);
-  //   previousValue = value;
-  // }
+function drawTimeSlots(
+  context: CanvasRenderingContext2D,
+  gridItem: IGridItem,
+  startTime: number, // todo rename to time window or something
+  endTime: number,
+  bpm: number,
+  yMargin = 10,
+  lineWidth = 2,
+  color = 'deepskyblue',
+): void {
+  // todo fix broken line at beginning
+  context.lineWidth = lineWidth;
+  context.strokeStyle = color;
+
+  const yTop = yMargin;
+  const yBottom = context.canvas.height - yMargin;
+
+  const slots = getSlotsInRange(gridItem, bpm, startTime, endTime);
+  let endX: number = 0;
+
+  context.beginPath();
+  slots.forEach((slot, index) => {
+    const startX = getPositionXInCanvasForTime(context, slot.startTime, startTime, endTime);
+    endX = getPositionXInCanvasForTime(context, slot.endTime, startTime, endTime);
+    if (index === 0) {
+      context.moveTo(startX, yBottom);
+    } else {
+      context.lineTo(startX, yBottom);
+    }
+    context.lineTo(startX, yTop);
+    context.lineTo(endX, yTop);
+    context.lineTo(endX, yBottom);
+  });
+
+  // make sure line reaches the end
+  if (endX < context.canvas.width) {
+    context.lineTo(context.canvas.width, yBottom);
+  }
+
+  context.stroke();
 }
 
 export function setCanvasSize(canvas: HTMLCanvasElement, width: number, height: number): void {
@@ -100,13 +128,13 @@ export function drawBeats(
     return;
   }
 
-  const pixelsPerSecond = getPixelsPerSecond(context, startTime, endTime);
+  // const pixelsPerSecond = getPixelsPerSecond(context, startTime, endTime);
   context.strokeStyle = color;
   context.lineWidth = lineWidth;
 
   let time = firstBeatAfterStart;
   while (time < endTime) {
-    const x = pixelsPerSecond * (time - startTime);
+    const x = getPositionXInCanvasForTime(context, time, startTime, endTime);
     context.beginPath();
     context.moveTo(x, 0);
     context.lineTo(x, context.canvas.height);
@@ -114,4 +142,14 @@ export function drawBeats(
 
     time += secondsPerBeat;
   }
+}
+
+function getPositionXInCanvasForTime(
+  context: CanvasRenderingContext2D,
+  time: number,
+  startTime: number,
+  endTime: number,
+): number {
+  const pixelsPerSecond = getPixelsPerSecond(context, startTime, endTime);
+  return pixelsPerSecond * (time - startTime);
 }

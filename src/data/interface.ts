@@ -8,6 +8,11 @@ export interface IPosition {
   y: number;
 }
 
+export interface ITimeSlot {
+  startTime: number;
+  endTime: number;
+}
+
 export interface IGridItem {
   position?: IPosition;
   division: number;

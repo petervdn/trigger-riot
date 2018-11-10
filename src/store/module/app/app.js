@@ -1,4 +1,5 @@
 import GridMode from '../../../data/enum/GridMode';
+import { createGridData } from '../../../util/miscUtils';
 
 const namespace = 'app';
 
@@ -11,6 +12,7 @@ export default {
     deviceState: null,
     bpm: 120,
     activeGridMode: GridMode.PULSE_WIDTH,
+    grid: createGridData(),
   },
   getters: {},
   mutations: {

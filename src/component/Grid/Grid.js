@@ -1,4 +1,4 @@
-import { createGridData } from '../../util/miscUtils';
+import { mapState } from 'vuex';
 import GridItem from '../GridItem/GridItem';
 
 // @vue/component
@@ -7,9 +7,9 @@ export default {
   components: {
     GridItem,
   },
-  data() {
-    return {
-      gridData: createGridData(),
-    };
+  computed: {
+    ...mapState({
+      grid: state => state.app.grid,
+    }),
   },
 };
