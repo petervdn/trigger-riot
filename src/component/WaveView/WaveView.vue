@@ -13,5 +13,7 @@
       width="500px"
       height="100px"
     />
+    <input v-model="startTime">
+    <input v-model="endTime">
   </div>
 </template>

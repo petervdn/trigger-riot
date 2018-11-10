@@ -14,3 +14,7 @@ export function createGridData(rows = 4, columns = 4, defaultPulseWidth = 0.25):
 
   return { items };
 }
+
+export function isNumeric(value: any): boolean {
+  return !isNaN(parseFloat(value)) && isFinite(value);
+}
