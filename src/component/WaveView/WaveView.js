@@ -29,7 +29,10 @@ export default {
   },
   methods: {
     draw() {
-      drawWaveForItems(this.context, this.gridItem, this.bpm, this.startTime, this.endTime);
+      drawWaveForItems(this.context, this.gridItem, this.bpm, {
+        start: this.startTime,
+        end: this.endTime,
+      });
     },
   },
 };

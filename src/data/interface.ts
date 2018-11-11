@@ -4,8 +4,8 @@ export interface IPosition {
 }
 
 export interface ITimeSlot {
-  startTime: number;
-  endTime: number;
+  start: number;
+  end: number;
 }
 
 export interface IGridItem {
