@@ -30,6 +30,7 @@ export default {
     dialValue(value) {
       this.dialValue = Math.min(this.max, Math.max(this.min, value));
       this.draw();
+      this.$emit('change', this.dialValue);
     },
   },
   mounted() {

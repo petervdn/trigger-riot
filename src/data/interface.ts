@@ -1,8 +1,3 @@
-export interface IDivision {
-  division: number;
-  pulseWidth: number;
-}
-
 export interface IPosition {
   x: number;
   y: number;
