@@ -46,8 +46,5 @@ export default {
       setPulseWidth: SET_PULSE_WIDTH,
       setDivision: SET_DIVISION,
     }),
-    // onDialChange(value) {
-    //   this.gridItem.pulseWidth = value;
-    // },
   },
 };

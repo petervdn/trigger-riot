@@ -14,37 +14,24 @@ export default {
   },
   data() {
     return {
-      dialValue: 0,
+      dialValue: this.value,
     };
-  },
-  computed: {
-    dialValueFactor() {
-      return (this.dialValue - this.min) / (this.max - this.min);
-    },
   },
   watch: {
     value(value) {
-      // set the dial to the correct value
+      // set the dial to the correct value when set from outside
       this.dialValue = value;
-    },
-    dialValue(value) {
-      this.dialValue = Math.min(this.max, Math.max(this.min, value));
       this.draw();
-      this.$emit('change', this.dialValue);
     },
   },
   mounted() {
     this.context = this.$refs.canvas.getContext('2d');
-
-    setTimeout(() => {
-      // otherwise canvas is not ready?
-      this.resize();
-      this.dialValue = this.value; // triggers watcher
-    }, 0);
+    setTimeout(this.resize);
   },
   methods: {
     draw() {
-      drawDial(this.context, this.dialValueFactor);
+      // draws the value as factor (0 to 1)
+      drawDial(this.context, (this.dialValue - this.min) / (this.max - this.min));
     },
     resize() {
       const size = this.$refs.wrap.offsetWidth;
@@ -64,13 +51,15 @@ export default {
     },
     onDocumentMouseMove(event) {
       const fullRangeFactor = (this.startDragData.y - event.pageY) / this.pixelsForFullRange;
-      this.dialValue = this.startDragData.value + fullRangeFactor * (this.max - this.min);
+      const dragValue = this.startDragData.value + fullRangeFactor * (this.max - this.min);
+      this.dialValue = Math.min(this.max, Math.max(this.min, dragValue));
 
       if (this.integer) {
         this.dialValue = Math.trunc(this.dialValue);
       }
 
-      // event.preventDefault(); todo why was this
+      this.draw();
+      this.$emit('change', this.dialValue);
     },
   },
 };
