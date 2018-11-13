@@ -3,7 +3,7 @@ import { getSlotsInRange } from './gridUtils';
 
 export function drawWaveForItems(
   context: CanvasRenderingContext2D,
-  gridItem: IGridItem,
+  gridItem: IGridItem | null,
   bpm: number,
   timeWindow: ITimeSlot,
 ) {
@@ -11,6 +11,9 @@ export function drawWaveForItems(
   context.fillStyle = 'black'; // todo move color somewhere (all default draw options actually)
   context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
+  if (!gridItem) {
+    return;
+  }
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
   drawBeats(context, timeWindow, bpm, pixelsPerSecond);
   drawTimeSlots(context, gridItem, timeWindow, bpm, pixelsPerSecond);

@@ -4,7 +4,7 @@
 </script>
 
 <template>
-  <div :class="[$style.wrap, isActive ? $style.active : null]">
+  <div :class="$style.wrap">
     <Dial
       :min="dialData.min"
       :max="dialData.max"

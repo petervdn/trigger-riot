@@ -23,6 +23,7 @@ export default {
   computed: {
     ...mapState({
       grid: state => state.grid.grid,
+      activeGridItems: state => state.grid.activeItems,
     }),
   },
   mounted() {

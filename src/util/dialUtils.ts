@@ -8,7 +8,7 @@ export function drawDial(
   valueFactor: number, // [0, 1]
   rotation: number = 0.25,
   range: number = 0.7,
-  color: string = 'orange',
+  color: string = 'deepskyblue',
   bgColor: string = 'black',
 ) {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -22,7 +22,7 @@ export function drawDial(
   drawArc(context, startRadians, valueRadians, color, center, halfSize);
   drawArc(context, valueRadians, endRadians, bgColor, center, halfSize);
 
-  drawLine(context, valueRadians, center, 1, halfSize);
+  drawLine(context, valueRadians, center, 20, halfSize, color);
 }
 
 export function drawLine(
@@ -31,9 +31,10 @@ export function drawLine(
   center: IPoint,
   inner: number,
   outer: number,
-  width: number = 2,
+  color: string,
+  width: number = 4,
 ): void {
-  context.strokeStyle = 'color';
+  context.strokeStyle = color;
   context.lineWidth = width;
   context.beginPath();
   context.moveTo(center.x + Math.cos(radians) * inner, center.y + Math.sin(radians) * inner);

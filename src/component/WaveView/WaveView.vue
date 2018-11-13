@@ -8,7 +8,7 @@
     <canvas
       ref="canvas"
       width="700px"
-      height="150px"
+      height="100px"
     />
   </div>
 </template>

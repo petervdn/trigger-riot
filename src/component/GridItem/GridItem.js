@@ -14,9 +14,6 @@ export default {
     gridItem: VueTypes.any, // todo define better
   },
   computed: {
-    isActive() {
-      return this.activeGridItems.includes(this.gridItem);
-    },
     dialData() {
       return this.activeGridMode === GridMode.DIVISION
         ? {

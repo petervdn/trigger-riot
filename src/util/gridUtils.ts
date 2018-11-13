@@ -30,20 +30,35 @@ export function getSlotsInRange(
   return results;
 }
 
-export function createGridData(rows = 4, columns = 4, defaultPulseWidth = 0.25): IGridData {
+export function createGridData(
+  numberOfRows = 4,
+  numberOfColumns = 4,
+  defaultPulseWidth = 0.25,
+): IGridData {
   const items: Array<IGridItem> = [];
+
   let index = 0;
-  for (let y = 0; y < rows; y += 1) {
-    for (let x = 0; x < columns; x += 1) {
-      items.push({
+  for (let y = 0; y < numberOfRows; y += 1) {
+    for (let x = 0; x < numberOfColumns; x += 1) {
+      const item: IGridItem = {
         index,
         position: { x, y },
-        division: 4,
+        division: Math.round(Math.random() * 15),
         pulseWidth: Math.random(),
-      });
-
+      };
+      items.push(item);
       index += 1;
     }
+  }
+
+  const columns: Array<Array<IGridItem>> = [];
+  for (let x = 0; x < numberOfColumns; x += 1) {
+    columns.push(items.filter(item => item.position.x === x));
+  }
+
+  const rows: Array<Array<IGridItem>> = [];
+  for (let y = 0; y < numberOfRows; y += 1) {
+    rows.push(items.filter(item => item.position.y === y));
   }
 
   return { rows, columns, items };

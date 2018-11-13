@@ -5,12 +5,30 @@
 
 <template>
   <div>
-    <div :class="$style.grid">
-      <GridItem
-        v-for="item in grid.items"
+    <div
+      v-for="(row, index) in grid.rows"
+      :key="index"
+      :class="$style.gridRow"
+    >
+      <div
+        v-for="item in row"
         :key="`${item.position.x}-${item.position.y}`"
-        :grid-item="item"
-      />
+        :class="$style.gridItem"
+      >
+        <GridItem :grid-item="item" />
+      </div>
+      <div :class="[$style.gridItem, $style.rowGroupItem]">
+        row
+      </div>
+    </div>
+    <div :class="$style.gridRow">
+      <div
+        v-for="(column, index) in grid.columns"
+        :key="index"
+        :class="[$style.gridItem, $style.columnGroupItem]"
+      >
+        column
+      </div>
     </div>
   </div>
 </template>

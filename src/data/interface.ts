@@ -16,7 +16,7 @@ export interface IGridItem {
 }
 
 export interface IGridData {
-  rows: number;
-  columns: number;
+  rows: Array<Array<IGridItem>>;
+  columns: Array<Array<IGridItem>>;
   items: Array<IGridItem>;
 }
