@@ -1,10 +1,9 @@
 /* stylelint-disable-next-line block-no-empty */
 .wrap {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
   margin: 2px;
 }
-//:local {
-//  //input {
-//  //  width: 50px;
-//  //}
-//}
+
+.active {
+  background-color: rgba(255, 255, 255, 0.5);
+}

@@ -1,8 +1,10 @@
-<style src="./GridItem.scss" module lang="scss"></style>
-<script src="./GridItem.js"></script>
+<style src="./GridItem.scss" module lang="scss">
+</style>
+<script src="./GridItem.js">
+</script>
 
 <template>
-  <div :class="$style.wrap">
+  <div :class="[$style.wrap, isActive ? $style.active : null]">
     <Dial
       :min="dialData.min"
       :max="dialData.max"
@@ -10,6 +12,7 @@
       :value="dialData.value"
       @change="onValueChange"
     />
+    <button @click="onActivateClick">activate</button>
     <!--<input v-model.number="gridItem.division">-->
     <!--<input v-model.number="gridItem.pulseWidth">-->
   </div>

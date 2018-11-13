@@ -2,7 +2,7 @@ import { mapState, mapMutations } from 'vuex';
 import VueTypes from 'vue-types';
 import Dial from '../Dial/Dial';
 import GridMode from '../../data/enum/GridMode';
-import { SET_PULSE_WIDTH, SET_DIVISION } from '../../store/module/grid/grid';
+import { SET_PULSE_WIDTH, SET_DIVISION, SET_ACTIVE_ITEMS } from '../../store/module/grid/grid';
 
 // @vue/component
 export default {
@@ -14,6 +14,9 @@ export default {
     gridItem: VueTypes.any, // todo define better
   },
   computed: {
+    isActive() {
+      return this.activeGridItems.includes(this.gridItem);
+    },
     dialData() {
       return this.activeGridMode === GridMode.DIVISION
         ? {
@@ -30,6 +33,7 @@ export default {
     },
     ...mapState({
       activeGridMode: state => state.grid.activeGridMode,
+      activeGridItems: state => state.grid.activeItems,
     }),
   },
   watch: {},
@@ -44,6 +48,10 @@ export default {
     ...mapMutations({
       setPulseWidth: SET_PULSE_WIDTH,
       setDivision: SET_DIVISION,
+      setActiveItems: SET_ACTIVE_ITEMS,
     }),
+    onActivateClick() {
+      this.setActiveItems([this.gridItem]);
+    },
   },
 };

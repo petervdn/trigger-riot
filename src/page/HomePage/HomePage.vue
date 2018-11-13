@@ -3,7 +3,7 @@
 
 <template>
   <div style="padding: 20px">
-    <h2>{{ time }}</h2>
+    <h1>{{ time.toFixed(2) }}</h1>
     <button @click="togglePlay">{{ isPlaying ? 'stop' : 'start' }}</button>
     <WaveView
       :start-time="time"
