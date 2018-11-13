@@ -11,7 +11,7 @@ export default {
     Dial,
   },
   props: {
-    matrixItem: VueTypes.any, // todo define better
+    matrixItem: VueTypes.any.isRequired, // todo define better
   },
   computed: {
     dialData() {

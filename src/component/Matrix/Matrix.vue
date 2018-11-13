@@ -13,12 +13,12 @@
       <div
         v-for="item in row"
         :key="`${item.position.x}-${item.position.y}`"
-        :class="$style.rowItem"
+        :class="[$style.rowItem, itemIsActive(item) ? $style.active : null]"
       >
         <MatrixItem :matrix-item="item" />
       </div>
       <div :class="[$style.rowItem, $style.rowGroupItem]">
-        row
+        <MatrixGroupItem :matrix-items="row"/>
       </div>
     </div>
     <div :class="$style.row">
@@ -27,7 +27,7 @@
         :key="index"
         :class="[$style.rowItem, $style.columnGroupItem]"
       >
-        column
+        <MatrixGroupItem :matrix-items="column"/>
       </div>
     </div>
   </div>
