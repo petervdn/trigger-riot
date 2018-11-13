@@ -2,7 +2,7 @@ import { mapState, mapMutations } from 'vuex';
 import VueTypes from 'vue-types';
 import Dial from '../Dial/Dial';
 import GridMode from '../../data/enum/GridMode';
-import { SET_PULSE_WIDTH, SET_DIVISION } from '../../store/module/app/app';
+import { SET_PULSE_WIDTH, SET_DIVISION } from '../../store/module/grid/grid';
 
 // @vue/component
 export default {
@@ -29,7 +29,7 @@ export default {
           };
     },
     ...mapState({
-      activeGridMode: state => state.app.activeGridMode,
+      activeGridMode: state => state.grid.activeGridMode,
     }),
   },
   watch: {},

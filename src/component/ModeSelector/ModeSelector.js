@@ -1,7 +1,7 @@
 // @vue/component
 import { mapState, mapMutations } from 'vuex';
 import GridMode from '../../data/enum/GridMode';
-import { SET_ACTIVE_GRID_MODE } from '../../store/module/app/app';
+import { SET_ACTIVE_GRID_MODE } from '../../store/module/grid/grid';
 
 export default {
   name: 'ModeSelector',
@@ -12,7 +12,7 @@ export default {
   },
   computed: {
     ...mapState({
-      activeGridMode: state => state.app.activeGridMode,
+      activeGridMode: state => state.grid.activeGridMode,
     }),
   },
   methods: {

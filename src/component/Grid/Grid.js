@@ -9,7 +9,7 @@ export default {
   },
   computed: {
     ...mapState({
-      grid: state => state.app.grid,
+      grid: state => state.grid.grid,
     }),
   },
 };

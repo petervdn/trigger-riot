@@ -16,13 +16,13 @@ export default {
     return {
       bpm: 120,
       time: 0,
-      viewWindow: 10,
+      viewWindow: 20,
       isPlaying: false,
     };
   },
   computed: {
     ...mapState({
-      grid: state => state.app.grid,
+      grid: state => state.grid.grid,
     }),
   },
   mounted() {

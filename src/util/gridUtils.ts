@@ -1,4 +1,4 @@
-import { IGridItem, ITimeSlot } from '../data/interface';
+import { IGridData, IGridItem, ITimeSlot } from '../data/interface';
 
 export function getSlotsInRange(
   gridItem: IGridItem,
@@ -28,4 +28,23 @@ export function getSlotsInRange(
     entryStart += itemRepeatTime;
   }
   return results;
+}
+
+export function createGridData(rows = 4, columns = 4, defaultPulseWidth = 0.25): IGridData {
+  const items: Array<IGridItem> = [];
+  let index = 0;
+  for (let y = 0; y < rows; y += 1) {
+    for (let x = 0; x < columns; x += 1) {
+      items.push({
+        index,
+        position: { x, y },
+        division: 4,
+        pulseWidth: Math.random(),
+      });
+
+      index += 1;
+    }
+  }
+
+  return { rows, columns, items };
 }

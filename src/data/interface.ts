@@ -9,11 +9,14 @@ export interface ITimeSlot {
 }
 
 export interface IGridItem {
-  position?: IPosition;
+  index: number;
+  position: IPosition;
   division: number;
   pulseWidth: number;
 }
 
 export interface IGridData {
+  rows: number;
+  columns: number;
   items: Array<IGridItem>;
 }
