@@ -14,8 +14,8 @@ export function drawWaveForItems(
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
   drawBeats(context, timeWindow, bpm, pixelsPerSecond);
 
-  for (let i = 0; i < matrixItems.length; i += 1) {
-    drawTimeSlots(context, matrixItems[i], timeWindow, bpm, pixelsPerSecond, 0.2);
+  if (matrixItems[0] !== undefined) {
+    drawTimeSlots(context, matrixItems[0], timeWindow, bpm, pixelsPerSecond);
   }
 }
 
@@ -25,7 +25,6 @@ function drawTimeSlots(
   timeWindow: ITimeSlot,
   bpm: number,
   pixelsPerSecond: number,
-  alpha: number,
   yMargin = 10,
   lineWidth = 2,
   color = 'deepskyblue',
@@ -36,7 +35,6 @@ function drawTimeSlots(
   const slots = getSlotsInRange(matrixItem, bpm, timeWindow);
   const points = getLinePointsForTimeSlots(context, timeWindow, slots, pixelsPerSecond);
 
-  context.globalAlpha = alpha;
   context.beginPath();
   points.forEach((point, index) => {
     if (index === 0) {

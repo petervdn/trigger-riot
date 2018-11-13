@@ -1,7 +1,8 @@
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import WaveView from '../../component/WaveView/WaveView';
 import Matrix from '../../component/Matrix/Matrix';
 import ModeSelector from '../../component/ModeSelector/ModeSelector';
+import { START_PLAY, STOP_PLAY } from '../../store/module/app/app';
 import AnimationFrame from '../../util/AnimationFrame';
 
 // @vue/component
@@ -14,42 +15,37 @@ export default {
   },
   data() {
     return {
-      bpm: 120,
       time: 0,
-      viewWindow: 20,
       isPlaying: false,
     };
   },
   computed: {
     ...mapState({
+      playStartTime: state => state.app.playStartTime,
       matrix: state => state.matrix.matrix,
       activeMatrixItems: state => state.matrix.activeItems,
     }),
   },
-  mounted() {
-    this.frame = new AnimationFrame(this.onFrame);
-    this.context = new AudioContext();
-  },
-  methods: {
-    togglePlay() {
-      if (this.isPlaying) {
-        this.stop();
+  watch: {
+    playStartTime(time) {
+      if (time === -1) {
+        this.frame.stop();
+        this.time = 0;
       } else {
-        this.start();
+        this.frame.start();
       }
     },
+  },
+  mounted() {
+    this.frame = new AnimationFrame(this.onFrame);
+  },
+  methods: {
+    ...mapActions({
+      start: START_PLAY,
+      stop: STOP_PLAY,
+    }),
     onFrame() {
-      this.time = this.context.currentTime - this.startTime;
-    },
-    start() {
-      this.startTime = this.context.currentTime;
-      this.frame.start();
-      this.isPlaying = true;
-    },
-    stop() {
-      this.frame.stop();
-      this.isPlaying = false;
-      this.time = 0;
+      this.time = this.$soundManager.context.currentTime - this.playStartTime;
     },
   },
 };

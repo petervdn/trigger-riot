@@ -7,7 +7,7 @@ import { RouteNames } from '../router/routes';
 import { createPath } from '../util/routeUtils';
 import Params from '../data/enum/Params';
 import { getValue } from '../util/injector';
-import { CONFIG_MANAGER, GATEWAY } from '../data/Injectables';
+import { CONFIG_MANAGER, GATEWAY, SOUND_MANAGER } from '../data/Injectables';
 import localeLoader from '../util/localeLoader';
 import { mediaQueries, deviceState } from '../data/mediaQueries.json';
 
@@ -21,6 +21,7 @@ const initPlugins = () => {
     $http: axios,
     $versionRoot: configManager.getVariable(VariableNames.VERSIONED_STATIC_ROOT),
     $staticRoot: configManager.getVariable(VariableNames.STATIC_ROOT),
+    $soundManager: getValue(SOUND_MANAGER),
     URLNames,
     PropertyNames,
     VariableNames,

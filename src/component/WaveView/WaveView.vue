@@ -7,8 +7,8 @@
   <div>
     <canvas
       ref="canvas"
-      width="700px"
-      height="100px"
+      :width="`${width}px`"
+      :height="`${height}px`"
     />
   </div>
 </template>

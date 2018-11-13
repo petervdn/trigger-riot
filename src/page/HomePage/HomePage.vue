@@ -4,13 +4,15 @@
 <template>
   <div style="padding: 20px">
     <h1>{{ time.toFixed(2) }}</h1>
-    <button @click="togglePlay">{{ isPlaying ? 'stop' : 'start' }}</button>
+    <button @click="start">start</button>
+    <button @click="stop">stop</button>
     <WaveView
-      :start-time="time"
       :matrix-items="activeMatrixItems"
-      :end-time="time + viewWindow"
+      :time-window="20"
+      :width="700"
+      :height="100"
     />
-    <input v-model.number="bpm">
+    <!--<input v-model.number="bpm">-->
     <ModeSelector />
     <Matrix />
   </div>

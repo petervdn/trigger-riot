@@ -1,11 +1,12 @@
 import ConfigManager from 'seng-config';
 import * as axios from 'axios';
-import { CONFIG_MANAGER, GATEWAY } from '../data/Injectables';
+import { CONFIG_MANAGER, GATEWAY, SOUND_MANAGER } from '../data/Injectables';
 import config from '../config/config';
 import { URLNames } from '../data/enum/configNames';
 
 import { setValue } from './injector';
 import { responseFormatter, errorFormatter } from './gatewayFormatter';
+import SoundManager from '../sound/SoundManager';
 
 const setupInjects = () => {
   const configManager = new ConfigManager();
@@ -28,6 +29,7 @@ const setupInjects = () => {
 
   setValue(CONFIG_MANAGER, configManager);
   setValue(GATEWAY, gateway);
+  setValue(SOUND_MANAGER, new SoundManager());
 };
 
 export default setupInjects;
