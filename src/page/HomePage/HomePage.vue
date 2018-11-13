@@ -7,11 +7,11 @@
     <button @click="togglePlay">{{ isPlaying ? 'stop' : 'start' }}</button>
     <WaveView
       :start-time="time"
-      :grid-item="activeGridItems[0]"
+      :matrix-item="activeMatrixItems[0]"
       :end-time="time + viewWindow"
     />
     <input v-model.number="bpm">
     <ModeSelector />
-    <Grid />
+    <Matrix />
   </div>
 </template>

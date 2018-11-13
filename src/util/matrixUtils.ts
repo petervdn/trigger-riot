@@ -1,19 +1,19 @@
-import { IGridData, IGridItem, ITimeSlot } from '../data/interface';
+import { IMatrixData, IMatrixItem, ITimeSlot } from '../data/interface';
 
 export function getSlotsInRange(
-  gridItem: IGridItem,
+  matrixItem: IMatrixItem,
   bpm: number,
   timeWindow: ITimeSlot,
 ): ITimeSlot[] {
   const secondsPerBeat = 60 / bpm;
-  const itemRepeatTime = gridItem.division * secondsPerBeat;
+  const itemRepeatTime = matrixItem.division * secondsPerBeat;
 
   // get last one that starts before starttme
   let entryStart = Math.floor(timeWindow.start / itemRepeatTime) * itemRepeatTime;
 
   const results: ITimeSlot[] = [];
   while (entryStart < timeWindow.end) {
-    const entryEnd = entryStart + gridItem.pulseWidth * itemRepeatTime;
+    const entryEnd = entryStart + matrixItem.pulseWidth * itemRepeatTime;
 
     if (
       (entryStart > timeWindow.start && entryStart < timeWindow.end) ||
@@ -30,17 +30,17 @@ export function getSlotsInRange(
   return results;
 }
 
-export function createGridData(
+export function createMatrixData(
   numberOfRows = 4,
   numberOfColumns = 4,
   defaultPulseWidth = 0.25,
-): IGridData {
-  const items: Array<IGridItem> = [];
+): IMatrixData {
+  const items: Array<IMatrixItem> = [];
 
   let index = 0;
   for (let y = 0; y < numberOfRows; y += 1) {
     for (let x = 0; x < numberOfColumns; x += 1) {
-      const item: IGridItem = {
+      const item: IMatrixItem = {
         index,
         position: { x, y },
         division: Math.round(Math.random() * 15),
@@ -51,12 +51,12 @@ export function createGridData(
     }
   }
 
-  const columns: Array<Array<IGridItem>> = [];
+  const columns: Array<Array<IMatrixItem>> = [];
   for (let x = 0; x < numberOfColumns; x += 1) {
     columns.push(items.filter(item => item.position.x === x));
   }
 
-  const rows: Array<Array<IGridItem>> = [];
+  const rows: Array<Array<IMatrixItem>> = [];
   for (let y = 0; y < numberOfRows; y += 1) {
     rows.push(items.filter(item => item.position.y === y));
   }

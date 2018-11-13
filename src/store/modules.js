@@ -1,7 +1,7 @@
 import app from './module/app';
-import grid from './module/grid';
+import matrix from './module/matrix';
 
 export default {
   app,
-  grid,
+  matrix,
 };

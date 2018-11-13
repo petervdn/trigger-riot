@@ -1,6 +1,6 @@
 import { mapState } from 'vuex';
 import WaveView from '../../component/WaveView/WaveView';
-import Grid from '../../component/Grid/Grid';
+import Matrix from '../../component/Matrix/Matrix';
 import ModeSelector from '../../component/ModeSelector/ModeSelector';
 import AnimationFrame from '../../util/AnimationFrame';
 
@@ -9,7 +9,7 @@ export default {
   name: 'HomePage',
   components: {
     WaveView,
-    Grid,
+    Matrix,
     ModeSelector,
   },
   data() {
@@ -22,8 +22,8 @@ export default {
   },
   computed: {
     ...mapState({
-      grid: state => state.grid.grid,
-      activeGridItems: state => state.grid.activeItems,
+      matrix: state => state.matrix.matrix,
+      activeMatrixItems: state => state.matrix.activeItems,
     }),
   },
   mounted() {

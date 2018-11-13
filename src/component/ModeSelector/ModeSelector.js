@@ -1,23 +1,23 @@
 // @vue/component
 import { mapState, mapMutations } from 'vuex';
-import GridMode from '../../data/enum/GridMode';
-import { SET_ACTIVE_GRID_MODE } from '../../store/module/grid/grid';
+import MatrixMode from '../../data/enum/MatrixMode';
+import { SET_ACTIVE_MATRIX_MODE } from '../../store/module/matrix/matrix';
 
 export default {
   name: 'ModeSelector',
   data() {
     return {
-      modes: [GridMode.DIVISION, GridMode.PULSE_WIDTH],
+      modes: [MatrixMode.DIVISION, MatrixMode.PULSE_WIDTH],
     };
   },
   computed: {
     ...mapState({
-      activeGridMode: state => state.grid.activeGridMode,
+      activeMatrixMode: state => state.matrix.activeMatrixMode,
     }),
   },
   methods: {
     ...mapMutations({
-      setActiveGridMode: SET_ACTIVE_GRID_MODE,
+      setActiveMatrixMode: SET_ACTIVE_MATRIX_MODE,
     }),
   },
 };

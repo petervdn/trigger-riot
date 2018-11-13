@@ -1,9 +1,9 @@
-import { IGridItem, IPosition, ITimeSlot } from '../data/interface';
-import { getSlotsInRange } from './gridUtils';
+import { IMatrixItem, IPosition, ITimeSlot } from '../data/interface';
+import { getSlotsInRange } from './matrixUtils';
 
 export function drawWaveForItems(
   context: CanvasRenderingContext2D,
-  gridItem: IGridItem | null,
+  matrixItem: IMatrixItem | null,
   bpm: number,
   timeWindow: ITimeSlot,
 ) {
@@ -11,17 +11,17 @@ export function drawWaveForItems(
   context.fillStyle = 'black'; // todo move color somewhere (all default draw options actually)
   context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
-  if (!gridItem) {
+  if (!matrixItem) {
     return;
   }
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
   drawBeats(context, timeWindow, bpm, pixelsPerSecond);
-  drawTimeSlots(context, gridItem, timeWindow, bpm, pixelsPerSecond);
+  drawTimeSlots(context, matrixItem, timeWindow, bpm, pixelsPerSecond);
 }
 
 function drawTimeSlots(
   context: CanvasRenderingContext2D,
-  gridItem: IGridItem,
+  matrixItem: IMatrixItem,
   timeWindow: ITimeSlot,
   bpm: number,
   pixelsPerSecond: number,
@@ -32,7 +32,7 @@ function drawTimeSlots(
   context.lineWidth = lineWidth;
   context.strokeStyle = color;
 
-  const slots = getSlotsInRange(gridItem, bpm, timeWindow);
+  const slots = getSlotsInRange(matrixItem, bpm, timeWindow);
   const points = getLinePointsForTimeSlots(context, timeWindow, slots, pixelsPerSecond);
 
   context.beginPath();

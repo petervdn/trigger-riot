@@ -8,7 +8,7 @@ export default {
   props: {
     startTime: VueTypes.number.isRequired,
     endTime: VueTypes.number.isRequired,
-    gridItem: VueTypes.any.isRequired,
+    matrixItem: VueTypes.any.isRequired,
   },
   computed: {
     ...mapState({
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     draw() {
-      drawWaveForItems(this.context, this.gridItem, this.bpm, {
+      drawWaveForItems(this.context, this.matrixItem, this.bpm, {
         start: this.startTime,
         end: this.endTime,
       });

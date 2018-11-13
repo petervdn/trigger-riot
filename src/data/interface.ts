@@ -8,15 +8,15 @@ export interface ITimeSlot {
   end: number;
 }
 
-export interface IGridItem {
+export interface IMatrixItem {
   index: number;
   position: IPosition;
   division: number;
   pulseWidth: number;
 }
 
-export interface IGridData {
-  rows: Array<Array<IGridItem>>;
-  columns: Array<Array<IGridItem>>;
-  items: Array<IGridItem>;
+export interface IMatrixData {
+  rows: Array<Array<IMatrixItem>>;
+  columns: Array<Array<IMatrixItem>>;
+  items: Array<IMatrixItem>;
 }

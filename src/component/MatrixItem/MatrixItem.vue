@@ -1,6 +1,6 @@
-<style src="./GridItem.scss" module lang="scss">
+<style src="./MatrixItem.scss" module lang="scss">
 </style>
-<script src="./GridItem.js">
+<script src="./MatrixItem.js">
 </script>
 
 <template>

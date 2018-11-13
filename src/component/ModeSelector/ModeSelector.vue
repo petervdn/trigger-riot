@@ -8,9 +8,9 @@
     <ul>
       <li
         v-for="mode in modes"
-        :class="{[$style.active]: mode === activeGridMode}"
+        :class="{[$style.active]: mode === activeMatrixMode}"
         :key="mode"
-        @click="setActiveGridMode(mode)"
+        @click="setActiveMatrixMode(mode)"
       >{{ mode }}</li>
     </ul>
   </div>

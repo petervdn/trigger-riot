@@ -1,15 +1,15 @@
 import { mapState } from 'vuex';
-import GridItem from '../GridItem/GridItem';
+import MatrixItem from '../MatrixItem/MatrixItem';
 
 // @vue/component
 export default {
-  name: 'Grid',
+  name: 'Matrix',
   components: {
-    GridItem,
+    MatrixItem,
   },
   computed: {
     ...mapState({
-      grid: state => state.grid.grid,
+      matrix: state => state.matrix.matrix,
     }),
   },
 };
