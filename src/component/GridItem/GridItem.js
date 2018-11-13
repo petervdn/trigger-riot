@@ -11,7 +11,7 @@ export default {
     Dial,
   },
   props: {
-    gridItem: VueTypes.any,
+    gridItem: VueTypes.any, // todo define better
   },
   computed: {
     dialData() {
@@ -35,11 +35,10 @@ export default {
   watch: {},
   methods: {
     onValueChange(value) {
-      console.log(this.activeGridMode);
       if (this.activeGridMode === GridMode.DIVISION) {
-        this.setDivision({ gridItemIndex: 0, division: value });
+        this.setDivision({ gridItemIndex: this.gridItem.index, division: value });
       } else if (this.activeGridMode === GridMode.PULSE_WIDTH) {
-        this.setPulseWidth({ gridItemIndex: 0, pulseWidth: value });
+        this.setPulseWidth({ gridItemIndex: this.gridItem.index, pulseWidth: value });
       }
     },
     ...mapMutations({
