@@ -6,6 +6,7 @@ export function drawWaveForItems(
   matrixItems: IMatrixItem[],
   bpm: number,
   timeWindow: ITimeSlot,
+  waveMargin: number,
 ) {
   // clear canvas
   context.fillStyle = 'black'; // todo move color somewhere (all default draw options actually)
@@ -15,7 +16,7 @@ export function drawWaveForItems(
   drawBeats(context, timeWindow, bpm, pixelsPerSecond);
 
   if (matrixItems[0] !== undefined) {
-    drawTimeSlots(context, matrixItems[0], timeWindow, bpm, pixelsPerSecond);
+    drawTimeSlots(context, matrixItems[0], timeWindow, bpm, pixelsPerSecond, waveMargin);
   }
 }
 
@@ -25,7 +26,7 @@ function drawTimeSlots(
   timeWindow: ITimeSlot,
   bpm: number,
   pixelsPerSecond: number,
-  yMargin = 10,
+  waveMargin = 10,
   lineWidth = 2,
   color = 'deepskyblue',
 ): void {
@@ -33,7 +34,7 @@ function drawTimeSlots(
   context.strokeStyle = color;
 
   const slots = getSlotsInRange(matrixItem, bpm, timeWindow);
-  const points = getLinePointsForTimeSlots(context, timeWindow, slots, pixelsPerSecond);
+  const points = getLinePointsForTimeSlots(context, timeWindow, slots, pixelsPerSecond, waveMargin);
 
   context.beginPath();
   points.forEach((point, index) => {
@@ -52,11 +53,11 @@ function getLinePointsForTimeSlots(
   timeWindow: ITimeSlot,
   slots: ITimeSlot[],
   pixelsPerSecond: number,
-  yMargin = 20,
+  waveMargin: number,
 ): IPosition[] {
   const results: IPosition[] = [];
-  const yTop = yMargin;
-  const yBottom = context.canvas.height - yMargin;
+  const yTop = waveMargin;
+  const yBottom = context.canvas.height - waveMargin;
   let endX: number = 0;
 
   context.beginPath();

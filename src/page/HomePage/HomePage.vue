@@ -11,6 +11,7 @@
       :time-window="20"
       :width="700"
       :height="100"
+      :wave-margin="20"
     />
     <!--<input v-model.number="bpm">-->
     <ModeSelector />

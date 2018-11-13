@@ -12,6 +12,7 @@ export default {
     width: VueTypes.number.isRequired,
     height: VueTypes.number.isRequired,
     timeWindow: VueTypes.number.isRequired,
+    waveMargin: VueTypes.number.isRequired,
   },
   data() {
     return {
@@ -51,10 +52,16 @@ export default {
       this.draw();
     },
     draw() {
-      drawWaveForItems(this.context, this.matrixItems, this.bpm, {
-        start: this.startTime,
-        end: this.startTime + this.timeWindow,
-      });
+      drawWaveForItems(
+        this.context,
+        this.matrixItems,
+        this.bpm,
+        {
+          start: this.startTime,
+          end: this.startTime + this.timeWindow,
+        },
+        this.waveMargin,
+      );
     },
   },
 };

@@ -43,7 +43,7 @@ export function createMatrixData(
       const item: IMatrixItem = {
         index,
         position: { x, y },
-        division: Math.round(Math.random() * 15),
+        division: Math.round(Math.random() * 7), // todo
         pulseWidth: Math.random(),
       };
       items.push(item);
