@@ -35,7 +35,7 @@ export function createMatrixData(
   numberOfColumns = 4,
   defaultPulseWidth = 0.25,
 ): IMatrixData {
-  const items: Array<IMatrixItem> = [];
+  const items: IMatrixItem[] = [];
 
   let index = 0;
   for (let y = 0; y < numberOfRows; y += 1) {
@@ -51,7 +51,7 @@ export function createMatrixData(
     }
   }
 
-  const columns: Array<Array<IMatrixItem>> = [];
+  const columns: IMatrixItem[][] = [];
   for (let x = 0; x < numberOfColumns; x += 1) {
     columns.push(items.filter(item => item.position.x === x));
   }

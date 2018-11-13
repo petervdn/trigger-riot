@@ -7,7 +7,7 @@
     <button @click="togglePlay">{{ isPlaying ? 'stop' : 'start' }}</button>
     <WaveView
       :start-time="time"
-      :matrix-item="activeMatrixItems[0]"
+      :matrix-items="activeMatrixItems"
       :end-time="time + viewWindow"
     />
     <input v-model.number="bpm">

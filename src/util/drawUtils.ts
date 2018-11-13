@@ -3,7 +3,7 @@ import { getSlotsInRange } from './matrixUtils';
 
 export function drawWaveForItems(
   context: CanvasRenderingContext2D,
-  matrixItem: IMatrixItem | null,
+  matrixItems: IMatrixItem[],
   bpm: number,
   timeWindow: ITimeSlot,
 ) {
@@ -11,12 +11,12 @@ export function drawWaveForItems(
   context.fillStyle = 'black'; // todo move color somewhere (all default draw options actually)
   context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
-  if (!matrixItem) {
-    return;
-  }
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
   drawBeats(context, timeWindow, bpm, pixelsPerSecond);
-  drawTimeSlots(context, matrixItem, timeWindow, bpm, pixelsPerSecond);
+
+  for (let i = 0; i < matrixItems.length; i += 1) {
+    drawTimeSlots(context, matrixItems[i], timeWindow, bpm, pixelsPerSecond, 0.2);
+  }
 }
 
 function drawTimeSlots(
@@ -25,6 +25,7 @@ function drawTimeSlots(
   timeWindow: ITimeSlot,
   bpm: number,
   pixelsPerSecond: number,
+  alpha: number,
   yMargin = 10,
   lineWidth = 2,
   color = 'deepskyblue',
@@ -35,6 +36,7 @@ function drawTimeSlots(
   const slots = getSlotsInRange(matrixItem, bpm, timeWindow);
   const points = getLinePointsForTimeSlots(context, timeWindow, slots, pixelsPerSecond);
 
+  context.globalAlpha = alpha;
   context.beginPath();
   points.forEach((point, index) => {
     if (index === 0) {

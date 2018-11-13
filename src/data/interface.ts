@@ -16,7 +16,7 @@ export interface IMatrixItem {
 }
 
 export interface IMatrixData {
-  rows: Array<Array<IMatrixItem>>;
-  columns: Array<Array<IMatrixItem>>;
-  items: Array<IMatrixItem>;
+  rows: IMatrixItem[][];
+  columns: IMatrixItem[][];
+  items: IMatrixItem[];
 }
