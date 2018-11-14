@@ -87,6 +87,10 @@ function getLinePointsForTimeSlots(
     if (results[results.length - 1].x < context.canvas.width) {
       results.push({ x: context.canvas.width, y: yBottom });
     }
+  } else {
+    // when there are no results, draw a low line
+    results.push({ x: 0, y: yBottom });
+    results.push({ x: context.canvas.width, y: yBottom });
   }
 
   return results;
@@ -106,7 +110,7 @@ export function drawBeats(
   bpm: number,
   pixelsPerSecond: number,
   color = 'red',
-  lineWidth = 1,
+  lineWidth = 0.5,
 ): void {
   const secondsPerBeat = 60 / bpm;
 

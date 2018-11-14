@@ -17,7 +17,8 @@ export function getSlotsInRange(
 
     if (
       (entryStart > timeWindow.start && entryStart < timeWindow.end) ||
-      (entryEnd > timeWindow.start && entryEnd < timeWindow.end)
+      (entryEnd > timeWindow.start && entryEnd < timeWindow.end) ||
+      (entryStart < timeWindow.start && entryEnd > timeWindow.end)
     ) {
       results.push({
         start: entryStart,
