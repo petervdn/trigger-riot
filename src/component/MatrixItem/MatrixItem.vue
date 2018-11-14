@@ -4,7 +4,10 @@
 </script>
 
 <template>
-  <div :class="$style.wrap">
+  <div
+    :class="$style.wrap"
+    @click="onActivateClick"
+  >
     <Dial
       :min="dialData.min"
       :max="dialData.max"
@@ -12,7 +15,7 @@
       :value="dialData.value"
       @change="onValueChange"
     />
-    <button @click="onActivateClick">activate</button>
+    <!--<button @click="onActivateClick">activate</button>-->
     <!--<input v-model.number="gridItem.division">-->
     <!--<input v-model.number="gridItem.pulseWidth">-->
   </div>

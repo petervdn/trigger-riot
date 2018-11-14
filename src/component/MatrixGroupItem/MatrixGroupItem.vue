@@ -2,7 +2,7 @@
 <script src="./MatrixGroupItem.js"></script>
 
 <template>
-  <div>
+  <div @click="onActivateClick">
     <WaveView
       :matrix-items="matrixItems"
       :time-window="5"
@@ -10,6 +10,6 @@
       :height="30"
       :wave-margin="5"
     />
-    <button @click="onActivateClick">activate</button>
+    <!--<button @click="onActivateClick">activate</button>-->
   </div>
 </template>
