@@ -8,6 +8,8 @@ export function drawDial(
   valueFactor: number, // [0, 1]
   rotation: number = 0.25,
   range: number = 0.7,
+  arcWidth: number = 8,
+  lineInnerMargin: number = 10,
   color: string = 'deepskyblue',
   bgColor: string = 'black',
 ) {
@@ -19,10 +21,10 @@ export function drawDial(
   const startRadians = rotation * pi2 + (1 - range) * 0.5 * pi2;
   const endRadians = startRadians + range * pi2;
   const valueRadians = startRadians + valueFactor * (endRadians - startRadians);
-  drawArc(context, startRadians, valueRadians, color, center, halfSize);
-  drawArc(context, valueRadians, endRadians, bgColor, center, halfSize);
+  drawArc(context, startRadians, valueRadians, color, center, halfSize, arcWidth);
+  drawArc(context, valueRadians, endRadians, bgColor, center, halfSize, arcWidth);
 
-  drawLine(context, valueRadians, center, 20, halfSize, color);
+  drawLine(context, valueRadians, center, lineInnerMargin, halfSize, color);
 }
 
 export function drawLine(
@@ -32,12 +34,13 @@ export function drawLine(
   inner: number,
   outer: number,
   color: string,
-  width: number = 4,
+  width: number = 2,
 ): void {
+  const inner2 = window.devicePixelRatio * inner;
   context.strokeStyle = color;
-  context.lineWidth = width;
+  context.lineWidth = width * window.devicePixelRatio;
   context.beginPath();
-  context.moveTo(center.x + Math.cos(radians) * inner, center.y + Math.sin(radians) * inner);
+  context.moveTo(center.x + Math.cos(radians) * inner2, center.y + Math.sin(radians) * inner2);
   context.lineTo(center.x + Math.cos(radians) * outer, center.y + Math.sin(radians) * outer);
   context.stroke();
   context.closePath();
@@ -50,13 +53,14 @@ export function drawArc(
   color: string,
   center: { x: number; y: number },
   radius: number,
-  lineWidth: number = 16, // todo clean up params, move (all?) to other draw method
+  arcWidth: number,
   outerMargin: number = 0,
 ) {
+  const width = arcWidth * window.devicePixelRatio;
   context.beginPath();
-  context.arc(center.x, center.y, radius - lineWidth * 0.5 - outerMargin, startRadians, endRadians);
+  context.arc(center.x, center.y, radius - width * 0.5 - outerMargin, startRadians, endRadians);
   context.strokeStyle = color;
-  context.lineWidth = lineWidth;
+  context.lineWidth = width;
   context.stroke();
   context.closePath();
 }
