@@ -1,17 +1,16 @@
 /* stylelint-disable-next-line block-no-empty */
 
 .row {
-  margin-bottom: 5px;
+  display: flex;
 }
 
 .rowItem {
-  margin-right: 5px;
-  padding: 10px;
+  margin: 0 4px 4px 0;
   width: 100px;
-  display: inline-block;
   background-color: rgba(255, 255, 255, 0.1);
   height: 100px;
   overflow: hidden;
+  padding: 10px;
 }
 
 .active {
@@ -19,9 +18,9 @@
 }
 
 .rowGroupItem {
-  // width: 150px;
+  //width: 100px;
 }
 
 .columnGroupItem {
-  // height: 150px;
+  //height: 150px;
 }
