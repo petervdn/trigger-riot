@@ -1,5 +1,5 @@
 import { IMatrixItem, IPosition, ITimeSlot } from '../data/interface';
-import { getSlotsInRange } from './matrixUtils';
+import { flattenTimeSlots, getSlotsInRange } from './matrixUtils';
 
 export function drawWaveForItems(
   context: CanvasRenderingContext2D,
@@ -15,14 +15,12 @@ export function drawWaveForItems(
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
   drawBeats(context, timeWindow, bpm, pixelsPerSecond);
 
-  if (matrixItems[0] !== undefined) {
-    drawTimeSlots(context, matrixItems[0], timeWindow, bpm, pixelsPerSecond, waveMargin);
-  }
+  drawTimeSlots(context, matrixItems, timeWindow, bpm, pixelsPerSecond, waveMargin);
 }
 
 function drawTimeSlots(
   context: CanvasRenderingContext2D,
-  matrixItem: IMatrixItem,
+  matrixItems: IMatrixItem[],
   timeWindow: ITimeSlot,
   bpm: number,
   pixelsPerSecond: number,
@@ -33,7 +31,12 @@ function drawTimeSlots(
   context.lineWidth = lineWidth;
   context.strokeStyle = color;
 
-  const slots = getSlotsInRange(matrixItem, bpm, timeWindow);
+  let slots: ITimeSlot[] = [];
+  for (let i = 0; i < matrixItems.length; i += 1) {
+    slots.push(...getSlotsInRange(matrixItems[i], bpm, timeWindow));
+  }
+  // always flatten, even if there was only 1 matrixItem (will make a correct wave when pulseWidth = 1)
+  slots = flattenTimeSlots(slots);
   const points = getLinePointsForTimeSlots(context, timeWindow, slots, pixelsPerSecond, waveMargin);
 
   context.beginPath();

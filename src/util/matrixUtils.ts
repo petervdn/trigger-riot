@@ -44,8 +44,8 @@ export function createMatrixData(
       const item: IMatrixItem = {
         index,
         position: { x, y },
-        division: 1 + Math.round(Math.random() * 5), // todo
-        pulseWidth: Math.random(),
+        division: 0,
+        pulseWidth: defaultPulseWidth,
       };
       items.push(item);
       index += 1;
@@ -63,4 +63,25 @@ export function createMatrixData(
   }
 
   return { rows, columns, items };
+}
+
+export function flattenTimeSlots(timeSlots: ITimeSlot[]): ITimeSlot[] {
+  timeSlots.sort((a, b) => a.start - b.start);
+  const results: ITimeSlot[] = [];
+
+  for (let i = 0; i < timeSlots.length; i += 1) {
+    if (
+      results.length &&
+      timeSlots[i].start >= results[results.length - 1].start &&
+      timeSlots[i].start <= results[results.length - 1].end
+    ) {
+      if (timeSlots[i].end > results[results.length - 1].end) {
+        results[results.length - 1].end = timeSlots[i].end;
+      }
+    } else {
+      results.push(Object.assign({}, timeSlots[i]));
+    }
+  }
+
+  return results;
 }
