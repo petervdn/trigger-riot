@@ -3,9 +3,14 @@
 
 <template>
   <div>
-    <div :class="$style.playstop">
+    <div :class="$style.transport">
+      <div :class="$style.time">
+        0.0s
+      </div>
+      <div :class="$style.bpm">
+        120bpm
+      </div>
       <div :class="$style.playstop">
-        <!--<h1>{{ time.toFixed(2) }}</h1>-->
         <button @click="start">start</button>
         <button @click="stop">stop</button>
       </div>
