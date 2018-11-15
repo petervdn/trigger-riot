@@ -4,7 +4,7 @@
 </script>
 
 <template>
-  <div>
+  <div :class="$style.wrap">
     <div
       v-for="(row, index) in matrix.rows"
       :key="index"

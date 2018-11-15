@@ -1,0 +1,23 @@
+/* stylelint-disable-next-line block-no-empty */
+:local {
+}
+
+.wrap {
+  background-color: black;
+  // padding: 10px;
+
+  h1 {
+    width: 900px;
+    // background-color: red;
+    margin: 0 auto;
+    padding: 20px;
+    font-weight: bold;
+
+    small {
+      font-weight: normal;
+      font-size: 12px;
+      display: block;
+      margin-top: 5px;
+    }
+  }
+}

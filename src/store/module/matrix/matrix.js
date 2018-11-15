@@ -9,7 +9,7 @@ export const SET_DIVISION = `${namespace}/setDivision`;
 
 export default {
   state: {
-    activeMatrixMode: MatrixMode.PULSE_WIDTH,
+    activeMatrixMode: MatrixMode.DIVISION,
     matrix: createMatrixData(),
     activeItems: [],
   },
