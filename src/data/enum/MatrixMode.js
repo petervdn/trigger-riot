@@ -1,5 +1,5 @@
 export default {
   // todo rename matrixmode
-  DIVISION: 'division',
+  DIVISION: 'divide',
   PULSE_WIDTH: 'pulse-width',
 };

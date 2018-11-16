@@ -5,7 +5,7 @@
 
 <template>
   <div
-    :class="$style.wrap"
+    class="item"
     @click="onActivateClick"
   >
     <Dial

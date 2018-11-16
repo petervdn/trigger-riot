@@ -13,6 +13,7 @@ export default {
     height: VueTypes.number.isRequired,
     timeWindow: VueTypes.number.isRequired,
     waveMargin: VueTypes.number.isRequired,
+    showInfoBar: VueTypes.bool.def(false),
   },
   data() {
     return {
