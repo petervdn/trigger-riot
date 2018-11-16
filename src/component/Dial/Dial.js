@@ -6,11 +6,13 @@ import { setCanvasSize } from '../../util/drawUtils';
 export default {
   name: 'Dial',
   props: {
+    width: VueTypes.number.isRequired,
     min: VueTypes.number.isRequired,
     max: VueTypes.number.isRequired,
     integer: VueTypes.bool.def(false),
     value: VueTypes.number.isRequired,
     pixelsForFullRange: VueTypes.number.def(200),
+    showValue: VueTypes.bool.def(true),
   },
   data() {
     return {

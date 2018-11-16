@@ -4,12 +4,13 @@
 <template>
   <div
     ref="wrap"
+    :style="{ width: `${width}px` } "
     :class="$style.dial"
   >
     <canvas
       ref="canvas"
       @mousedown="onCanvasMouseDown"
     />
-    <p>{{ displayValue }}</p>
+    <p v-if="showValue">{{ displayValue }}</p>
   </div>
 </template>

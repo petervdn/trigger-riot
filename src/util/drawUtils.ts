@@ -24,7 +24,7 @@ function drawTimeSlots(
   timeWindow: ITimeSlot,
   bpm: number,
   pixelsPerSecond: number,
-  waveMargin = 10,
+  waveMargin: number,
   lineWidth = 2,
   color = 'deepskyblue',
 ): void {

@@ -6,14 +6,16 @@ ul {
   list-style-type: none;
   display: flex;
   font-size: 12px;
+  margin: 5px 0;
 
   li {
     padding: 5px;
     margin-right: 5px;
+    border-radius: 3px;
     // border: 1px solid black;
   }
   li.active {
     background-color: dodgerblue;
-    color: white;
+    color: black;
   }
 }

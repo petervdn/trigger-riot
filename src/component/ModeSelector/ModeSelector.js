@@ -7,7 +7,15 @@ export default {
   name: 'ModeSelector',
   data() {
     return {
-      modes: [MatrixMode.DIVISION, MatrixMode.PULSE_WIDTH],
+      modes: [
+        MatrixMode.DIVISION,
+        MatrixMode.STEPS,
+        MatrixMode.PROBABILITY,
+        MatrixMode.SPEED,
+        MatrixMode.CLOCK_SHIFT,
+        MatrixMode.TIME_SHIFT,
+        MatrixMode.PULSE_WIDTH,
+      ],
     };
   },
   computed: {

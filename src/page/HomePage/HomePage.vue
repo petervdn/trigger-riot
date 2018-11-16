@@ -11,9 +11,9 @@
       <div :class="$style.matrix">
         <WaveView
           :matrix-items="activeMatrixItems"
-          :time-window="20"
+          :initial-time-window="20"
           :width="580"
-          :height="80"
+          :height="70"
           :wave-margin="20"
           :show-info-bar="true"
         />

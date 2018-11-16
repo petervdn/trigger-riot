@@ -5,7 +5,7 @@
   <div @click="onActivateClick">
     <WaveView
       :matrix-items="matrixItems"
-      :time-window="5"
+      :initial-time-window="5"
       :width="80"
       :height="30"
       :wave-margin="5"
