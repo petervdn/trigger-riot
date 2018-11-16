@@ -17,6 +17,11 @@ export default {
       dialValue: this.value,
     };
   },
+  computed: {
+    displayValue() {
+      return this.integer ? Math.trunc(this.dialValue) : this.dialValue.toFixed(2);
+    },
+  },
   watch: {
     value(value) {
       // set the dial to the correct value when set from outside

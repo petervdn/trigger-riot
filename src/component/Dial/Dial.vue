@@ -10,7 +10,6 @@
       ref="canvas"
       @mousedown="onCanvasMouseDown"
     />
-    <!--<input v-model.number="dialValue">-->
-    <p>{{ dialValue.toFixed(2) }}</p>
+    <p>{{ displayValue }}</p>
   </div>
 </template>
