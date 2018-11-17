@@ -19,7 +19,7 @@ export default {
         ? {
             value: this.matrixItem.division,
             min: 0,
-            max: 16,
+            max: 255,
             integer: true,
           }
         : {

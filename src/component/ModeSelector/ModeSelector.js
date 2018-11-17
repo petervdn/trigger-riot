@@ -24,6 +24,9 @@ export default {
     }),
   },
   methods: {
+    modeIsEnabled(mode) {
+      return mode === MatrixMode.DIVISION || mode === MatrixMode.PULSE_WIDTH;
+    },
     ...mapMutations({
       setActiveMatrixMode: SET_ACTIVE_MATRIX_MODE,
     }),

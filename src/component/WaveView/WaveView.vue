@@ -13,10 +13,13 @@
     <div
       v-if="showInfoBar"
       :class="$style.infoBar">
-      <span>viewing: {{ selectedViewLabel }}</span>
-      <span>
+      <div>viewing: {{ selectedViewLabel }}</div>
+      <div>
         window: {{ timeWindow }}s
-      </span>
+      </div>
+      <div>
+        <input type="range">
+      </div>
     </div>
   </div>
 </template>
