@@ -10,7 +10,7 @@
           target="_blank"
           href="http://tiptopaudio.com/trigger-riot/"
         >
-          intellijel's eurorack rhythm generator
+          tiptop audio's eurorack rhythm generator
         </a>
       </p>
     </div>

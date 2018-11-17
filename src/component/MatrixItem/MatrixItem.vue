@@ -14,6 +14,7 @@
       :max="dialData.max"
       :integer="dialData.integer"
       :value="dialData.value"
+      style="margin: 0 auto"
       @change="onValueChange"
     />
   </div>
