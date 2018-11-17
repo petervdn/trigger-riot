@@ -1,8 +1,8 @@
 import VueTypes from 'vue-types';
 import { mapState } from 'vuex';
-import SliderValueMapper from 'map-slider-value';
 import { drawWaveForItems } from '../../util/drawUtils';
 import AnimationFrame from '../../util/AnimationFrame';
+import WaveViewControls from '../WaveViewControls/WaveViewControls';
 import Dial from '../Dial/Dial';
 
 // @vue/component
@@ -10,6 +10,7 @@ export default {
   name: 'WaveView',
   components: {
     Dial,
+    WaveViewControls,
   },
   props: {
     matrixItems: VueTypes.array.isRequired,
@@ -17,7 +18,7 @@ export default {
     height: VueTypes.number.isRequired,
     initialTimeWindow: VueTypes.number.isRequired,
     waveMargin: VueTypes.number.isRequired,
-    showInfoBar: VueTypes.bool.def(false),
+    showControls: VueTypes.bool.def(false),
   },
   data() {
     return {
@@ -26,19 +27,6 @@ export default {
     };
   },
   computed: {
-    selectedViewLabel() {
-      if (this.matrixItems.length === 0) {
-        return 'nothing';
-      }
-      if (this.matrixItems.length === 1) {
-        return `${this.matrixItems[0].position.x + 1}.${this.matrixItems[0].position.y + 1}`;
-      }
-
-      if (this.matrixItems[0].position.x === this.matrixItems[1].position.x) {
-        return `column-${this.matrixItems[0].position.x + 1}`;
-      }
-      return `row-${this.matrixItems[0].position.y + 1}`;
-    },
     ...mapState({
       bpm: state => state.app.bpm,
       playStartTime: state => state.app.playStartTime,
@@ -60,17 +48,13 @@ export default {
     },
   },
   mounted() {
-    if (this.showInfoBar) {
-      this.mapper = new SliderValueMapper(1, 30);
-      this.$refs.zoom.value = this.mapper.reverseMap(this.timeWindow);
-    }
     this.context = this.$refs.canvas.getContext('2d');
     this.frame = new AnimationFrame(this.onFrame);
     this.draw();
   },
   methods: {
-    onZoomSliderChange(event) {
-      this.timeWindow = this.mapper.map(parseInt(event.target.value, 10));
+    onTimeWindowChange(value) {
+      this.timeWindow = value;
     },
     onFrame() {
       // todo duplicate time stuff

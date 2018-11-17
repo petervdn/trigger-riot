@@ -10,20 +10,11 @@
       :width="`${width}px`"
       :height="`${height}px`"
     />
-    <div
-      v-if="showInfoBar"
-      :class="$style.infoBar">
-      <div>viewing: {{ selectedViewLabel }}</div>
-      <div>
-        window: {{ timeWindow.toFixed(2) }}s
-      </div>
-      <div>
-        <input
-          ref="zoom"
-          type="range"
-          @input="onZoomSliderChange"
-        >
-      </div>
-    </div>
+    <WaveViewControls
+      v-if="showControls"
+      :time-window="timeWindow"
+      :matrix-items="matrixItems"
+      @timeWindowChange="onTimeWindowChange"
+    />
   </div>
 </template>

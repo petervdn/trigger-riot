@@ -15,7 +15,7 @@
           :width="580"
           :height="70"
           :wave-margin="20"
-          :show-info-bar="true"
+          :show-controls="true"
         />
         <!--<input v-model.number="bpm">-->
         <ModeSelector />
