@@ -3,7 +3,16 @@
 
 <template>
   <div :class="$style.wrap">
-    <h1>trigger riot <small>online recreation of intellijel's eurorack rhythm generator</small></h1>
-
+    <div :class="$style.content">
+      <h1>trigger riot</h1>
+      <p>
+        online recreation of <a
+          target="_blank"
+          href="http://tiptopaudio.com/trigger-riot/"
+        >
+          intellijel's eurorack rhythm generator
+        </a>
+      </p>
+    </div>
   </div>
 </template>

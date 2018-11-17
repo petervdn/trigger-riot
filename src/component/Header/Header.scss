@@ -6,18 +6,26 @@
   background-color: black;
   // padding: 10px;
 
-  h1 {
-    width: 950px;
-    // background-color: red;
+  .content {
+    width: $mainWidth;
     margin: 0 auto;
-    padding: 20px;
-    font-weight: bold;
+    padding: 20px 0;
+    //background-color: red;
+    h1 {
+      // padding: 20px;
+      font-weight: bold;
+    }
 
-    small {
+    p {
       font-weight: normal;
       font-size: 12px;
       display: block;
       margin-top: 5px;
+
+      a {
+        color: inherit;
+        text-decoration-color: #999;
+      }
     }
   }
 }
