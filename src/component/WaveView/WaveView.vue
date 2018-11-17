@@ -15,10 +15,14 @@
       :class="$style.infoBar">
       <div>viewing: {{ selectedViewLabel }}</div>
       <div>
-        window: {{ timeWindow }}s
+        window: {{ timeWindow.toFixed(2) }}s
       </div>
       <div>
-        <input type="range">
+        <input
+          ref="zoom"
+          type="range"
+          @input="onZoomSliderChange"
+        >
       </div>
     </div>
   </div>

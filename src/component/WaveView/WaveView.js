@@ -1,5 +1,6 @@
 import VueTypes from 'vue-types';
 import { mapState } from 'vuex';
+import SliderValueMapper from 'map-slider-value';
 import { drawWaveForItems } from '../../util/drawUtils';
 import AnimationFrame from '../../util/AnimationFrame';
 import Dial from '../Dial/Dial';
@@ -22,11 +23,6 @@ export default {
     return {
       startTime: 0,
       timeWindow: this.initialTimeWindow,
-      zoomDial: {
-        min: 1,
-        max: 30,
-        value: 10,
-      },
     };
   },
   computed: {
@@ -64,11 +60,18 @@ export default {
     },
   },
   mounted() {
+    if (this.showInfoBar) {
+      this.mapper = new SliderValueMapper(1, 30);
+      this.$refs.zoom.value = this.mapper.reverseMap(this.timeWindow);
+    }
     this.context = this.$refs.canvas.getContext('2d');
     this.frame = new AnimationFrame(this.onFrame);
     this.draw();
   },
   methods: {
+    onZoomSliderChange(event) {
+      this.timeWindow = this.mapper.map(parseInt(event.target.value, 10));
+    },
     onFrame() {
       // todo duplicate time stuff
       this.startTime = this.$soundManager.context.currentTime - this.playStartTime;
