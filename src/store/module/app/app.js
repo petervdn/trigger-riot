@@ -33,6 +33,7 @@ export default {
       if (audioContext.state === 'suspended') {
         audioContext.resume();
       }
+      console.log(audioContext.currentTime);
       if (context.state.playStartTime === -1) {
         context.commit(SET_PLAY_START_TIME, audioContext.currentTime);
       }

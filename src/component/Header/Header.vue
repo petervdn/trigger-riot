@@ -6,7 +6,7 @@
     <div :class="$style.content">
       <h1>trigger riot</h1>
       <p>
-        online recreation of <a
+        reimagining of <a
           target="_blank"
           href="http://tiptopaudio.com/trigger-riot/"
         >

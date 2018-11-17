@@ -33,8 +33,11 @@ export default {
     }),
   },
   watch: {
-    matrixItems() {
-      this.draw();
+    matrixItems: {
+      handler() {
+        this.draw();
+      },
+      deep: true,
     },
     playStartTime(time) {
       // todo duplicate time stuff from homepage, move to soundmanager?
@@ -59,6 +62,7 @@ export default {
   methods: {
     onTimeWindowChange(value) {
       this.timeWindow = value;
+      this.draw();
     },
     onFrame() {
       // todo duplicate time stuff
