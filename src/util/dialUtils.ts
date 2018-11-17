@@ -8,7 +8,7 @@ export function drawDial(
   valueFactor: number, // [0, 1]
   rotation: number = 0.25,
   range: number = 0.7,
-  arcWidth: number = 14,
+  arcWidth: number = 18,
   lineInnerMargin: number = 10,
   color: string = 'deepskyblue',
   bgColor: string = 'black',

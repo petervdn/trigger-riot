@@ -1,5 +1,6 @@
 export default class SoundManager {
-  public context: AudioContext = new AudioContext();
+  // @ts-ignore
+  public context: AudioContext = new (window.AudioContext || window.webkitAudioContext)();
 
   constructor() {}
 }

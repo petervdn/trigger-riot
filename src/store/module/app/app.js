@@ -29,8 +29,12 @@ export default {
   },
   actions: {
     [START_PLAY](context) {
+      const audioContext = getValue(SOUND_MANAGER).context;
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
       if (context.state.playStartTime === -1) {
-        context.commit(SET_PLAY_START_TIME, getValue(SOUND_MANAGER).context.currentTime);
+        context.commit(SET_PLAY_START_TIME, audioContext.currentTime);
       }
     },
     [STOP_PLAY](context) {
