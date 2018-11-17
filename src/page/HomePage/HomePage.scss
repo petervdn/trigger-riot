@@ -1,23 +1,26 @@
 /* stylelint-disable-next-line block-no-empty */
 :local {
-}
+  .wrap {
+    //background-color: blue;
+    width: $mainWidth;
+    margin: $elementSpace auto 0 auto;
 
-.wrap {
-  //background-color: blue;
-  width: $mainWidth;
-  margin: $elementSpace auto 0 auto;
+    .modeAndTransport {
+      margin: 10px 0;
+    }
 
-  .columns {
-    display: flex;
-    justify-content: space-between;
-  }
+    .columns {
+      display: flex;
+      justify-content: space-between;
+    }
 
-  .matrix {
-    //background-color: red;
-    width: $mainContentWidth;
-  }
-  .sidebar {
-    //background-color: green;
-    width: $sideBarWidth;
+    .mainColumn {
+      //background-color: red;
+      width: $mainContentWidth;
+    }
+    .sideColumn {
+      //background-color: green;
+      width: $sideBarWidth;
+    }
   }
 }

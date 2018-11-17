@@ -1,12 +1,12 @@
 import { mapState } from 'vuex';
-import MatrixItem from '../MatrixItem/MatrixItem';
+import MatrixElement from '../MatrixElement/MatrixElement';
 import MatrixGroupItem from '../MatrixGroupItem/MatrixGroupItem';
 
 // @vue/component
 export default {
   name: 'Matrix',
   components: {
-    MatrixItem,
+    MatrixElement,
     MatrixGroupItem,
   },
   computed: {

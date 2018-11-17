@@ -2,7 +2,7 @@ import { mapState, mapMutations } from 'vuex';
 import VueTypes from 'vue-types';
 import Dial from '../Dial/Dial';
 import MatrixMode from '../../data/enum/MatrixMode';
-import { SET_PULSE_WIDTH, SET_DIVISION, SET_ACTIVE_ITEMS } from '../../store/module/matrix/matrix';
+import { SET_PULSE_WIDTH, SET_DIVISION } from '../../store/module/matrix/matrix';
 
 // @vue/component
 export default {
@@ -46,10 +46,6 @@ export default {
     ...mapMutations({
       setPulseWidth: SET_PULSE_WIDTH,
       setDivision: SET_DIVISION,
-      setActiveItems: SET_ACTIVE_ITEMS,
     }),
-    onActivateClick() {
-      this.setActiveItems([this.matrixItem]);
-    },
   },
 };

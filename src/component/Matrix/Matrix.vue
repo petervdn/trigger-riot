@@ -16,10 +16,11 @@
           :key="`${item.position.x}-${item.position.y}`"
           :class="[$style.rowItem, itemIsActive(item) ? $style.active : null]"
         >
-          <MatrixItem :matrix-item="item" />
+          <MatrixElement :items="[item]" />
         </div>
         <div :class="[$style.rowItem, $style.rowGroupItem]">
-          <MatrixGroupItem :matrix-items="row"/>
+          <!--<MatrixGroupItem :matrix-items="row"/>-->
+          <MatrixElement :items="row" />
         </div>
       </div>
       <div :class="$style.row">
@@ -28,7 +29,8 @@
           :key="index"
           :class="[$style.rowItem, $style.columnGroupItem]"
         >
-          <MatrixGroupItem :matrix-items="column"/>
+          <!--<MatrixGroupItem :matrix-items="column"/>-->
+          <MatrixElement :items="column" />
         </div>
       </div>
     </template>

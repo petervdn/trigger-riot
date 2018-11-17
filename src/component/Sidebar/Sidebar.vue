@@ -2,22 +2,7 @@
 <script src="./Sidebar.js"></script>
 
 <template>
-  <div>
-    <div :class="$style.transport">
-      <div :class="$style.time">
-        0.0s
-      </div>
-      <div :class="$style.bpm">
-        120bpm
-      </div>
-      <div :class="$style.playstop">
-        <button @click="start">start</button>
-        <button @click="stop">stop</button>
-      </div>
-    </div>
-
-    <div :class="$style.content">
-      content
-    </div>
+  <div :class="$style.content">
+    Lorem ipsum dolor sit amet, fusce ut nam curabitur mattis velit neque, eget integer malesuada, voluptatibus tempus pellentesque, nec dapibus et urna, vitae quam ut quis. Suspendisse sed erat sed. Mi dis tincidunt dolor eleifend lectus, praesent pellentesque nec vivamus dolor suspendisse congue, convallis ut semper iaculis. Magna porttitor nunc nunc amet, tempor porta, dolor cillum laoreet diam ut ut sit, ornare ligula penatibus aliquam sed nunc adipiscing,
   </div>
 </template>

@@ -3,6 +3,7 @@ import WaveView from '../../component/WaveView/WaveView';
 import Sidebar from '../../component/Sidebar/Sidebar';
 import Header from '../../component/Header/Header';
 import Matrix from '../../component/Matrix/Matrix';
+import Transport from '../../component/Transport/Transport';
 import ModeSelector from '../../component/ModeSelector/ModeSelector';
 
 // @vue/component
@@ -14,6 +15,7 @@ export default {
     ModeSelector,
     Sidebar,
     Header,
+    Transport,
   },
   computed: {
     ...mapState({

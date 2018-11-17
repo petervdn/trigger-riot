@@ -4,9 +4,9 @@
 <template>
   <div
     :class="$style.controls">
-    <div>viewing: {{ selectedViewLabel }}</div>
+    <div>viewing: <strong>{{ selectedViewLabel }}</strong></div>
     <div>
-      window: {{ timeWindow.toFixed(2) }}s
+      window: <strong>{{ timeWindow.toFixed(2) }}s</strong>
     </div>
     <div>
       <input

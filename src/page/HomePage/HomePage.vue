@@ -15,16 +15,17 @@
         :wave-margin="20"
         :show-controls="true"
       />
-      <div :class="$style.columns">
-        <div :class="$style.matrix">
-          <ModeSelector />
-          <Matrix />
-        </div>
 
-        <div :class="$style.sidebar">
-          <Sidebar />
-        </div>
+      <div :class="[$style.columns, $style.modeAndTransport]">
+        <ModeSelector :class="$style.mainColumn" />
+        <Transport :class="$style.sideColumn" />
       </div>
+
+      <div :class="$style.columns">
+        <Matrix :class="$style.mainColumn" />
+        <Sidebar :class="$style.sideColumn" />
+      </div>
+
     </div>
   </div>
 </template>

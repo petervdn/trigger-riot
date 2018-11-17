@@ -2,20 +2,9 @@
 :local {
 }
 
-.transport {
-  height: 80px;
-  margin-bottom: 20px;
-  display: flex;
-  // background-color: rgba(255, 255, 255, 0.1);
-  .time,
-  .bpm {
-    font-size: 30px;
-    //align-self: end;
-    //display: inline;
-  }
-}
-
 .content {
-  background-color: rgba(255, 255, 255, 0.4);
-  font-size: 16px;
+  //background-color: rgba(255, 255, 255, 0.05);
+  font-size: 13px;
+  color: #ddd;
+  line-height: 1.5em;
 }

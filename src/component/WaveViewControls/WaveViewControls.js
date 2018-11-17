@@ -23,7 +23,7 @@ export default {
         return 'nothing';
       }
       if (this.matrixItems.length === 1) {
-        return `${this.matrixItems[0].position.x + 1}.${this.matrixItems[0].position.y + 1}`;
+        return `item-${this.matrixItems[0].position.x + 1}.${this.matrixItems[0].position.y + 1}`;
       }
 
       if (this.matrixItems[0].position.x === this.matrixItems[1].position.x) {
