@@ -4,7 +4,7 @@
 </script>
 
 <template>
-  <div :style="{width: `${width}px`}">
+  <div ref="wrap">
     <canvas
       ref="canvas"
       :width="`${width}px`"

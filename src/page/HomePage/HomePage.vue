@@ -12,7 +12,6 @@
         <WaveView
           :matrix-items="activeMatrixItems"
           :initial-time-window="20"
-          :width="580"
           :height="70"
           :wave-margin="20"
           :show-controls="true"

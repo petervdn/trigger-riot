@@ -9,8 +9,6 @@ $elementSpace: 20px;
 $mainContentWidth: 580px;
 $sideBarWidth: calc(#{$mainWidth} - #{$mainContentWidth} - #{$elementSpace});
 
-// Colors
-
 // $mediaQueries
 @import '../../../data/mediaQueries.json';
 

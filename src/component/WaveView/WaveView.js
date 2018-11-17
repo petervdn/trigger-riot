@@ -14,7 +14,6 @@ export default {
   },
   props: {
     matrixItems: VueTypes.array.isRequired,
-    width: VueTypes.number.isRequired,
     height: VueTypes.number.isRequired,
     initialTimeWindow: VueTypes.number.isRequired,
     waveMargin: VueTypes.number.isRequired,
@@ -22,6 +21,7 @@ export default {
   },
   data() {
     return {
+      width: 0,
       startTime: 0,
       timeWindow: this.initialTimeWindow,
     };
@@ -48,9 +48,13 @@ export default {
     },
   },
   mounted() {
-    this.context = this.$refs.canvas.getContext('2d');
-    this.frame = new AnimationFrame(this.onFrame);
-    this.draw();
+    setTimeout(() => {
+      // todo fix these 2 timeouts
+      this.width = this.$refs.wrap.offsetWidth;
+      this.context = this.$refs.canvas.getContext('2d');
+      this.frame = new AnimationFrame(this.onFrame);
+      setTimeout(this.draw);
+    });
   },
   methods: {
     onTimeWindowChange(value) {
