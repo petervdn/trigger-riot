@@ -6,8 +6,11 @@
   //background-color: blue;
   width: $mainWidth;
   margin: $elementSpace auto 0 auto;
-  display: flex;
-  justify-content: space-between;
+
+  .columns {
+    display: flex;
+    justify-content: space-between;
+  }
 
   .matrix {
     //background-color: red;
