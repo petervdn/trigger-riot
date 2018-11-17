@@ -3,19 +3,18 @@
 }
 
 .wrap {
-  padding: 20px 0;
+  //background-color: blue;
   width: $mainWidth;
-  margin: 0 auto;
-  // background-color: rgba(0,0,0,0.8);
+  margin: $elementSpace auto 0 auto;
   display: flex;
   justify-content: space-between;
 
   .matrix {
-    width: 580px;
-    // background-color: red;
+    //background-color: red;
+    width: $mainContentWidth;
   }
   .sidebar {
-    // background-color: green;
+    //background-color: green;
     width: $sideBarWidth;
   }
 }

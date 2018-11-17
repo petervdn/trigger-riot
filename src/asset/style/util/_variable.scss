@@ -5,7 +5,9 @@ $zLayout: default;
 
 // Sizes
 $mainWidth: 950px;
-$sideBarWidth: 300px;
+$elementSpace: 20px;
+$mainContentWidth: 580px;
+$sideBarWidth: calc(#{$mainWidth} - #{$mainContentWidth} - #{$elementSpace});
 
 // Colors
 
