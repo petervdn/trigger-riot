@@ -5,7 +5,7 @@
 
 <template>
   <Dial
-    :width="60"
+    :width="80"
     :min="dialData.min"
     :max="dialData.max"
     :integer="dialData.integer"

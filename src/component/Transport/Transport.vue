@@ -10,8 +10,8 @@
       120bpm
     </div>
     <div :class="$style.playstop">
-      <!--<button @click="start">start</button>-->
-      <!--<button @click="stop">stop</button>-->
+      <button @click="start">start</button>
+      <button @click="stop">stop</button>
     </div>
   </div>
 </template>
