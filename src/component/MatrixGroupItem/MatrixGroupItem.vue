@@ -6,7 +6,6 @@
     <WaveView
       :matrix-items="matrixItems"
       :initial-time-window="5"
-      :width="80"
       :height="30"
       :wave-margin="5"
     />

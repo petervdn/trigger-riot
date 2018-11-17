@@ -9,6 +9,7 @@
     @click="onActivateClick"
   >
     <Dial
+      :width="60"
       :min="dialData.min"
       :max="dialData.max"
       :integer="dialData.integer"
