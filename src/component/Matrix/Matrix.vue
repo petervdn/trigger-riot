@@ -11,27 +11,25 @@
         :key="index"
         :class="$style.row"
       >
-        <div
+        <MatrixElement
           v-for="item in row"
           :key="`${item.position.x}-${item.position.y}`"
           :class="[$style.rowItem, itemIsActive(item) ? $style.active : null]"
-        >
-          <MatrixElement :items="[item]" />
-        </div>
-        <div :class="[$style.rowItem, $style.rowGroupItem]">
-          <!--<MatrixGroupItem :matrix-items="row"/>-->
-          <MatrixElement :items="row" />
-        </div>
+          :items="[item]"
+        />
+
+        <MatrixElement
+          :items="row"
+          :class="[$style.rowItem, $style.rowGroupItem]"
+        />
       </div>
       <div :class="$style.row">
-        <div
+        <MatrixElement
           v-for="(column, index) in matrix.columns"
+          :items="column"
           :key="index"
           :class="[$style.rowItem, $style.columnGroupItem]"
-        >
-          <!--<MatrixGroupItem :matrix-items="column"/>-->
-          <MatrixElement :items="column" />
-        </div>
+        />
       </div>
     </template>
   </div>
