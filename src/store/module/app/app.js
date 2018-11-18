@@ -1,19 +1,14 @@
-import { getValue } from '../../../util/injector';
-import { SOUND_MANAGER } from '../../../data/Injectables';
-
 const namespace = 'app';
 
 export const SET_DEVICE_STATE = `${namespace}/setDeviceState`;
 export const SET_BPM = `${namespace}/setBPM`;
-export const START_PLAY = `${namespace}/startPlay`;
-export const STOP_PLAY = `${namespace}/stopPlay`;
-export const SET_PLAY_START_TIME = `${namespace}/setPlayStartTime`;
+export const SET_IS_PLAYING = `${namespace}/setIsPlaying`;
 
 export default {
   state: {
     deviceState: null,
     bpm: 120,
-    playStartTime: -1,
+    isPlaying: false,
   },
   getters: {},
   mutations: {
@@ -23,23 +18,8 @@ export default {
     [SET_BPM](state, bpm) {
       state.deviceState = bpm;
     },
-    [SET_PLAY_START_TIME](state, time) {
-      state.playStartTime = time;
-    },
-  },
-  actions: {
-    [START_PLAY](context) {
-      const audioContext = getValue(SOUND_MANAGER).context;
-      if (audioContext.state === 'suspended') {
-        audioContext.resume();
-      }
-      console.log(audioContext.currentTime);
-      if (context.state.playStartTime === -1) {
-        context.commit(SET_PLAY_START_TIME, audioContext.currentTime);
-      }
-    },
-    [STOP_PLAY](context) {
-      context.commit(SET_PLAY_START_TIME, -1);
+    [SET_IS_PLAYING](state, value) {
+      state.isPlaying = value;
     },
   },
 };

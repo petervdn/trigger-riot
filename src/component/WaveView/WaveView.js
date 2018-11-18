@@ -21,15 +21,14 @@ export default {
   },
   data() {
     return {
-      width: 0,
-      startTime: 0,
+      width: 0, // todo rename
       timeWindow: this.initialTimeWindow,
     };
   },
   computed: {
     ...mapState({
       bpm: state => state.app.bpm,
-      playStartTime: state => state.app.playStartTime,
+      isPlaying: state => state.app.isPlaying,
     }),
   },
   watch: {
@@ -39,14 +38,12 @@ export default {
       },
       deep: true,
     },
-    playStartTime(time) {
-      // todo duplicate time stuff from homepage, move to soundmanager?
-      if (time === -1) {
-        this.frame.stop();
-        this.startTime = 0;
-        this.draw();
-      } else {
+    isPlaying(value) {
+      if (value) {
         this.frame.start();
+      } else {
+        this.frame.stop();
+        this.draw();
       }
     },
   },
@@ -65,8 +62,6 @@ export default {
       this.draw();
     },
     onFrame() {
-      // todo duplicate time stuff
-      this.startTime = this.$soundManager.context.currentTime - this.playStartTime;
       this.draw();
     },
     draw() {
@@ -75,8 +70,8 @@ export default {
         this.matrixItems,
         this.bpm,
         {
-          start: this.startTime,
-          end: this.startTime + this.timeWindow,
+          start: this.$soundManager.currentPlayTime,
+          end: this.$soundManager.currentPlayTime + this.timeWindow,
         },
         this.waveMargin,
       );

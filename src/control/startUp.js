@@ -10,6 +10,7 @@ import { getValue } from '../util/injector';
 import { CONFIG_MANAGER, GATEWAY, SOUND_MANAGER } from '../data/Injectables';
 import localeLoader from '../util/localeLoader';
 import { mediaQueries, deviceState } from '../data/mediaQueries.json';
+import { setupStoreInteraction } from '../sound/soundUtils';
 
 const initPlugins = () => {
   const configManager = getValue(CONFIG_MANAGER);
@@ -54,6 +55,7 @@ const startUp = store => {
   // Initialise plugins
   initPlugins();
 
+  setupStoreInteraction(getValue(SOUND_MANAGER), store);
   const configManager = getValue(CONFIG_MANAGER);
 
   // Add async methods to the Promise.all array

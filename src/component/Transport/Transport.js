@@ -1,6 +1,5 @@
 // @vue/component
-import { mapActions, mapState } from 'vuex';
-import { START_PLAY, STOP_PLAY } from '../../store/module/app/app';
+import { mapState } from 'vuex';
 import { drawStartButton, drawStopButton } from '../../util/drawUtils';
 import AnimationFrame from '../../util/AnimationFrame';
 
@@ -17,31 +16,31 @@ export default {
       startStopButtonSize: 45,
     };
   },
-  computed: {
-    isPlaying() {
-      return this.playStartTime !== -1;
+  watch: {
+    isPlaying(value) {
+      if (value) {
+        this.frame.start();
+      } else {
+        this.frame.stop();
+        this.time = 0; // todo find better way to do this?
+      }
     },
+  },
+  computed: {
     ...mapState({
       bpm: state => state.app.bpm,
-      playStartTime: state => state.app.playStartTime,
+      isPlaying: state => state.app.isPlaying,
     }),
   },
   methods: {
     startPlay() {
-      this.start();
-      this.frame.start();
+      this.$soundManager.start();
     },
     stopPlay() {
-      this.stop();
-      this.frame.stop();
-      this.time = 0;
+      this.$soundManager.stop();
     },
     onFrame() {
-      this.time = this.$soundManager.context.currentTime - this.playStartTime;
+      this.time = this.$soundManager.currentPlayTime;
     },
-    ...mapActions({
-      start: START_PLAY,
-      stop: STOP_PLAY,
-    }),
   },
 };
