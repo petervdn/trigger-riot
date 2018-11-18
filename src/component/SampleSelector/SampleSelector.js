@@ -15,12 +15,15 @@ export default {
   },
   watch: {
     selectedSample(sample) {
-      if (sample && !sample.audioBuffer) {
+      if (!sample) {
+        this.$emit('change', null);
+      } else if (!sample.audioBuffer) {
         this.isLoading = true;
         this.$soundManager.sampleManager
           .loadSamplesByName([sample.name])
           .then(() => {
             this.isLoading = false;
+            this.$emit('change', sample);
           })
           .catch(() => {
             this.isLoading = false;

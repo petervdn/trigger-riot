@@ -9,6 +9,6 @@
       :height="30"
       :wave-margin="5"
     />
-    <SampleSelector />
+    <SampleSelector @change="onSampleChange" />
   </div>
 </template>

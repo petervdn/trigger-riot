@@ -4,9 +4,10 @@ import { createMatrixData } from '../../../util/matrixUtils';
 const namespace = 'matrix';
 export const SET_ACTIVE_MATRIX_MODE = `${namespace}/setActiveMatrixMode`;
 export const SET_ACTIVE_ITEMS = `${namespace}/setActiveItems`;
-export const SET_PULSE_WIDTH = `${namespace}/setPulseWidth`;
+export const SET_PULSE_WIDTH = `${namespace}/setPulseWidth`; // todo combine into 1
 export const SET_DIVISION = `${namespace}/setDivision`;
 export const SET_MATRIX = `${namespace}/setMatrix`;
+export const SET_SAMPLE_FOR_GROUP = `${namespace}/setSampleForGroup`;
 export const INIT = `${namespace}/init`;
 
 export default {
@@ -17,6 +18,9 @@ export default {
   },
   getters: {},
   mutations: {
+    [SET_SAMPLE_FOR_GROUP](state, { group, sample }) {
+      group.sample = sample;
+    },
     [SET_MATRIX](state, matrix) {
       state.matrix = matrix;
     },
