@@ -1,9 +1,6 @@
 import SoundManager, { SoundManagerEvent } from './SoundManager';
 import { SET_IS_PLAYING } from '../store/module/app/app';
-
-interface IStore {
-  commit: (mutation: string, payload: any) => void;
-}
+import { IStore } from '../data/interface';
 
 export function setupStoreInteraction(soundManager: SoundManager, store: IStore): void {
   soundManager.addEventListener(SoundManagerEvent.START, () => {
@@ -13,4 +10,6 @@ export function setupStoreInteraction(soundManager: SoundManager, store: IStore)
   soundManager.addEventListener(SoundManagerEvent.STOP, () => {
     store.commit(SET_IS_PLAYING, false);
   });
+
+  soundManager.setStore(store);
 }

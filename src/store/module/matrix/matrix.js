@@ -14,7 +14,7 @@ export default {
   state: {
     activeMatrixMode: MatrixMode.DIVISION,
     matrix: null,
-    activeItems: [],
+    activeItems: [], // todo rename to selected
   },
   getters: {},
   mutations: {
@@ -46,7 +46,6 @@ export default {
   actions: {
     [INIT](context) {
       context.commit(SET_MATRIX, createMatrixData());
-      console.log(createMatrixData());
       context.commit(SET_ACTIVE_ITEMS, [context.state.matrix.items[0]]);
     },
   },

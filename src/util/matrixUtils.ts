@@ -1,10 +1,4 @@
-import {
-  IMatrixData,
-  IMatrixItem,
-  IMatrixItemGroup,
-  ITimeSlot,
-  MatrixGroupType,
-} from '../data/interface';
+import { IMatrixData, IMatrixItem, IMatrixItemGroup, ITimeSlot } from '../data/interface';
 import MatrixMode from '../data/enum/MatrixMode';
 
 export function getSlotsInRange(
@@ -63,7 +57,7 @@ export function createMatrixData(
   for (let x = 0; x < numberOfColumns; x += 1) {
     columns.push({
       items: items.filter(item => item.position.x === x),
-      type: MatrixGroupType.COLUM,
+      id: `column-${x + 1}`,
     });
   }
 
@@ -71,7 +65,7 @@ export function createMatrixData(
   for (let y = 0; y < numberOfRows; y += 1) {
     rows.push({
       items: items.filter(item => item.position.y === y),
-      type: MatrixGroupType.ROW,
+      id: `row-${y + 1}`,
     });
   }
 

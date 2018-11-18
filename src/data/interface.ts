@@ -1,5 +1,18 @@
 import { ISample } from 'sample-manager';
 
+export interface IStore {
+  commit: (mutation: string, payload: any) => void;
+  state: IStoreState;
+}
+
+export interface IStoreState {
+  matrix: IMatrixStoreState;
+}
+
+export interface IMatrixStoreState {
+  matrix: IMatrixData;
+}
+
 export interface IPosition {
   x: number;
   y: number;
@@ -23,14 +36,14 @@ export interface IMatrixData {
   items: IMatrixItem[];
 }
 
-export enum MatrixGroupType {
-  ROW = 'row',
-  COLUM = 'column',
-}
+// export enum MatrixGroupType {
+//   ROW = 'row',
+//   COLUM = 'column',
+// }
 
 export interface IMatrixItemGroup {
   // a row or colum
   sample?: ISample;
-  type: MatrixGroupType;
+  id: string;
   items: IMatrixItem[];
 }
