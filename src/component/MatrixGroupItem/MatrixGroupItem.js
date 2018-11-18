@@ -12,12 +12,9 @@ export default {
     SampleSelector,
   },
   props: {
-    matrixItems: VueTypes.array.isRequired, // todo define better
+    matrixItemsGroup: VueTypes.any.isRequired, // todo define better, is IMatrixGroup
   },
   methods: {
-    onActivateClick() {
-      this.setActiveItems(this.matrixItems);
-    },
     ...mapMutations({
       setActiveItems: SET_ACTIVE_ITEMS,
     }),

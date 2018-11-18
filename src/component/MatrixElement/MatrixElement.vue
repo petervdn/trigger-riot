@@ -14,12 +14,12 @@
     <MatrixItem
       v-if="!isGroup"
       :class="$style.content"
-      :matrix-item="items[0]"
+      :matrix-item="data"
     />
     <MatrixGroupItem
       v-if="isGroup"
       :class="$style.content"
-      :matrix-items="items"
+      :matrix-items-group="data"
     />
   </div>
 </template>

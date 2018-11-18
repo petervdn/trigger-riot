@@ -1,4 +1,10 @@
-import { IMatrixData, IMatrixItem, ITimeSlot } from '../data/interface';
+import {
+  IMatrixData,
+  IMatrixItem,
+  IMatrixItemGroup,
+  ITimeSlot,
+  MatrixGroupType,
+} from '../data/interface';
 import MatrixMode from '../data/enum/MatrixMode';
 
 export function getSlotsInRange(
@@ -53,17 +59,27 @@ export function createMatrixData(
     }
   }
 
-  const columns: IMatrixItem[][] = [];
+  const columns: IMatrixItemGroup[] = [];
   for (let x = 0; x < numberOfColumns; x += 1) {
-    columns.push(items.filter(item => item.position.x === x));
+    columns.push({
+      items: items.filter(item => item.position.x === x),
+      type: MatrixGroupType.COLUM,
+    });
   }
 
-  const rows: Array<Array<IMatrixItem>> = [];
+  const rows: IMatrixItemGroup[] = [];
   for (let y = 0; y < numberOfRows; y += 1) {
-    rows.push(items.filter(item => item.position.y === y));
+    rows.push({
+      items: items.filter(item => item.position.y === y),
+      type: MatrixGroupType.ROW,
+    });
   }
 
-  return { rows, columns, items };
+  return {
+    items,
+    rows,
+    columns,
+  };
 }
 
 export function flattenTimeSlots(timeSlots: ITimeSlot[]): ITimeSlot[] {

@@ -1,3 +1,5 @@
+import { ISample } from 'sample-manager';
+
 export interface IPosition {
   x: number;
   y: number;
@@ -16,7 +18,19 @@ export interface IMatrixItem {
 }
 
 export interface IMatrixData {
-  rows: IMatrixItem[][];
-  columns: IMatrixItem[][];
+  rows: IMatrixItemGroup[];
+  columns: IMatrixItemGroup[];
+  items: IMatrixItem[];
+}
+
+export enum MatrixGroupType {
+  ROW = 'row',
+  COLUM = 'column',
+}
+
+export interface IMatrixItemGroup {
+  // a row or colum
+  sample?: ISample;
+  type: MatrixGroupType;
   items: IMatrixItem[];
 }

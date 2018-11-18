@@ -12,11 +12,11 @@ export default {
     MatrixGroupItem,
   },
   props: {
-    items: VueTypes.array.isRequired, // todo define better
+    data: VueTypes.any.isRequired,
   },
   computed: {
     isGroup() {
-      return this.items.length > 1;
+      return !this.data.position; // todo change this approach
     },
   },
   methods: {
@@ -24,7 +24,7 @@ export default {
       setActiveItems: SET_ACTIVE_ITEMS,
     }),
     onActivateClick() {
-      this.setActiveItems(this.items);
+      this.setActiveItems(this.isGroup ? this.data.items : [this.data]);
     },
   },
 };
