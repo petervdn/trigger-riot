@@ -1292,6 +1292,13 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
+audiobuffer-loader@^1.0.1:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/audiobuffer-loader/-/audiobuffer-loader-1.0.3.tgz#8a09b1943ebc279b8ef4b9fb7d21eb97a54eab98"
+  integrity sha512-M2FtAJVvAQLmbhVFZ+/LDk8SD5eW271+YJpo92h/2RUxFtG1fqI7plxfI9YFmY94NCXukPmzCwptiM0s1EGviw==
+  dependencies:
+    "@babel/runtime" "^7.0.0-beta.35"
+
 autolinker@~0.15.0:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/autolinker/-/autolinker-0.15.3.tgz#342417d8f2f3461b14cf09088d5edf8791dc9832"
@@ -9577,6 +9584,14 @@ safe-regex@^1.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
+
+sample-manager@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/sample-manager/-/sample-manager-2.1.3.tgz#c713dd0f8d7478631f117aa9b3d2f07adf405b5a"
+  integrity sha512-fmNcha/BXduvAbhocnXNnPNnEPMZX0xdxBWtPW8mecVYz/bk0CprSBa5Upd1bQ42B64dKHWKj3iI9pQgcukKPg==
+  dependencies:
+    "@babel/runtime" "^7.0.0-beta.35"
+    audiobuffer-loader "^1.0.1"
 
 sass-graph@^2.2.4:
   version "2.2.4"

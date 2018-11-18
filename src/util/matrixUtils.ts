@@ -1,4 +1,5 @@
 import { IMatrixData, IMatrixItem, ITimeSlot } from '../data/interface';
+import MatrixMode from '../data/enum/MatrixMode';
 
 export function getSlotsInRange(
   matrixItem: IMatrixItem,
@@ -85,3 +86,21 @@ export function flattenTimeSlots(timeSlots: ITimeSlot[]): ITimeSlot[] {
 
   return results;
 }
+
+interface IMatrixItemValueDefinition {
+  min: number;
+  max: number;
+  integer?: boolean;
+}
+
+export const matrixItemValueDefinitions: { [key: string]: IMatrixItemValueDefinition } = {
+  [MatrixMode.DIVISION]: {
+    min: 0,
+    max: 255,
+    integer: true,
+  },
+  [MatrixMode.PULSE_WIDTH]: {
+    min: 0,
+    max: 1,
+  },
+};

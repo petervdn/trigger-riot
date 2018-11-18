@@ -15,6 +15,9 @@ export default {
   },
   computed: {
     dialData() {
+      // todo
+      // const definition = matrixItemValueDefinitions[this.activeMatrixMode];
+      //
       return this.activeMatrixMode === MatrixMode.DIVISION
         ? {
             value: this.matrixItem.division,

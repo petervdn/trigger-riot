@@ -33,6 +33,7 @@ const config = {
   },
   urls: {
     [URLNames.API]: `${process.env.PUBLIC_PATH}api/`,
+    [URLNames.SAMPLES]: `{${VariableNames.VERSIONED_STATIC_ROOT}}audio/`,
   },
   properties: {
     [PropertyNames.DEFAULT_LOCALE]: 'en-gb',

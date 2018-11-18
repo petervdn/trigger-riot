@@ -9,6 +9,6 @@
       :height="30"
       :wave-margin="5"
     />
-    <!--<button @click="onActivateClick">activate</button>-->
+    <SampleSelector />
   </div>
 </template>

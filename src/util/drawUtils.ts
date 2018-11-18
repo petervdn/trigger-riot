@@ -180,7 +180,7 @@ export function drawStartButton(context: CanvasRenderingContext2D, size: number)
 
 function drawStartStopButtonCircle(context: CanvasRenderingContext2D, size: number): void {
   const halfSize = size * 0.5;
-  const lineWidth = 3;
+  const lineWidth = 2;
   const margin = 2;
   const pi2 = Math.PI * 2;
   context.beginPath();

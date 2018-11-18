@@ -8,6 +8,7 @@ export const EnvironmentNames = {
 export const URLNames = {
   LOCALE: 'locale',
   API: 'api',
+  SAMPLES: 'samples',
 };
 
 export const VariableNames = {

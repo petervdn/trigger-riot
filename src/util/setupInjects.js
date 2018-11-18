@@ -29,7 +29,7 @@ const setupInjects = () => {
 
   setValue(CONFIG_MANAGER, configManager);
   setValue(GATEWAY, gateway);
-  setValue(SOUND_MANAGER, new SoundManager());
+  setValue(SOUND_MANAGER, new SoundManager(configManager.getURL(URLNames.SAMPLES), 'wav'));
 };
 
 export default setupInjects;
