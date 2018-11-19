@@ -65,7 +65,7 @@ function drawTimeSlots(
     return;
   }
   context.fillStyle = color;
-  context.font = '15px monospace';
+  context.font = '13px monospace';
   context.textAlign = 'center';
   for (let i = 0; i < drawData.indexPoints.length; i += 1) {
     context.fillText(
@@ -149,7 +149,7 @@ export function drawBeats(
   timeWindow: ITimeSlot,
   bpm: number,
   pixelsPerSecond: number,
-  color = 'red',
+  color = 'dodgerblue',
   lineWidth = 0.5,
 ): void {
   const secondsPerBeat = 60 / bpm;
