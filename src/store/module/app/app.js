@@ -7,7 +7,7 @@ export const SET_IS_PLAYING = `${namespace}/setIsPlaying`;
 export default {
   state: {
     deviceState: null,
-    bpm: 120,
+    bpm: 119,
     isPlaying: false,
   },
   getters: {},

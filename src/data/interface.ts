@@ -23,6 +23,10 @@ export interface ITimeSlot {
   end: number;
 }
 
+export interface IIndexedTimeSlot extends ITimeSlot {
+  startTimeIndex: number; // index of the beat
+}
+
 export interface IMatrixItem {
   index: number;
   position: IPosition;

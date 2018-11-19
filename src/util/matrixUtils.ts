@@ -1,7 +1,31 @@
-import { IMatrixData, IMatrixItem, IMatrixItemGroup, ITimeSlot } from '../data/interface';
+import {
+  IIndexedTimeSlot,
+  IMatrixData,
+  IMatrixItem,
+  IMatrixItemGroup,
+  ITimeSlot,
+} from '../data/interface';
 import MatrixMode from '../data/enum/MatrixMode';
 
-export function getSlotsInRange(
+export function getIndexedSlotsInRangeForMatrixItems(
+  matrixItems: IMatrixItem[],
+  bpm: number,
+  timeWindow: ITimeSlot,
+): IIndexedTimeSlot[] {
+  const slots: ITimeSlot[] = [];
+  for (let i = 0; i < matrixItems.length; i += 1) {
+    slots.push(...getSlotsInRangeForMatrixItem(matrixItems[i], bpm, timeWindow));
+  }
+  // always flatten, even if there was only 1 matrixItem (will make a correct wave when pulseWidth = 1)
+  // todo fix pulsewidth = 0
+  return flattenTimeSlots(slots).map(entry => ({
+    start: entry.start,
+    end: entry.end,
+    startTimeIndex: Math.round(entry.start / (60 / bpm)), // todo can we do this without the rounding?
+  }));
+}
+
+export function getSlotsInRangeForMatrixItem(
   matrixItem: IMatrixItem,
   bpm: number,
   timeWindow: ITimeSlot,

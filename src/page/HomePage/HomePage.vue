@@ -16,6 +16,7 @@
           :height="70"
           :wave-margin="20"
           :show-controls="true"
+          :draw-index-labels="true"
         />
         <Transport :class="$style.sideColumn" />
       </div>

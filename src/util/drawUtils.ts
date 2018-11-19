@@ -1,5 +1,5 @@
-import { IMatrixItem, IPosition, ITimeSlot } from '../data/interface';
-import { flattenTimeSlots, getSlotsInRange } from './matrixUtils';
+import { IIndexedTimeSlot, IMatrixItem, IPosition, ITimeSlot } from '../data/interface';
+import { getIndexedSlotsInRangeForMatrixItems } from './matrixUtils';
 
 export function drawWaveForItems(
   context: CanvasRenderingContext2D,
@@ -7,6 +7,7 @@ export function drawWaveForItems(
   bpm: number,
   timeWindow: ITimeSlot,
   waveMargin: number,
+  drawIndexLabels: boolean,
 ) {
   // clear canvas
   context.fillStyle = 'black'; // todo move color somewhere (all default draw options actually)
@@ -15,7 +16,15 @@ export function drawWaveForItems(
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
   drawBeats(context, timeWindow, bpm, pixelsPerSecond);
 
-  drawTimeSlots(context, matrixItems, timeWindow, bpm, pixelsPerSecond, waveMargin);
+  drawTimeSlots(
+    context,
+    matrixItems,
+    timeWindow,
+    bpm,
+    pixelsPerSecond,
+    waveMargin,
+    drawIndexLabels,
+  );
 }
 
 function drawTimeSlots(
@@ -25,40 +34,63 @@ function drawTimeSlots(
   bpm: number,
   pixelsPerSecond: number,
   waveMargin: number,
+  drawIndexLabels: boolean,
   lineWidth = 2,
   color = 'deepskyblue',
 ): void {
   context.lineWidth = lineWidth;
   context.strokeStyle = color;
 
-  let slots: ITimeSlot[] = [];
-  for (let i = 0; i < matrixItems.length; i += 1) {
-    slots.push(...getSlotsInRange(matrixItems[i], bpm, timeWindow));
-  }
-  // always flatten, even if there was only 1 matrixItem (will make a correct wave when pulseWidth = 1)
-  slots = flattenTimeSlots(slots);
-  const points = getLinePointsForTimeSlots(context, timeWindow, slots, pixelsPerSecond, waveMargin);
+  const slots = getIndexedSlotsInRangeForMatrixItems(matrixItems, bpm, timeWindow);
+  const drawData = getDrawDataForTimeSlots(
+    context,
+    timeWindow,
+    slots,
+    bpm,
+    pixelsPerSecond,
+    waveMargin,
+  );
 
   context.beginPath();
-  points.forEach((point, index) => {
-    if (index === 0) {
-      context.moveTo(point.x, point.y);
+  for (let i = 0; i < drawData.linePoints.length; i += 1) {
+    if (i === 0) {
+      context.moveTo(drawData.linePoints[i].x, drawData.linePoints[i].y);
     } else {
-      context.lineTo(point.x, point.y);
+      context.lineTo(drawData.linePoints[i].x, drawData.linePoints[i].y);
     }
-  });
-
+  }
   context.stroke();
+
+  if (!drawIndexLabels) {
+    return;
+  }
+  context.fillStyle = color;
+  context.font = '15px monospace';
+  context.textAlign = 'center';
+  for (let i = 0; i < drawData.indexPoints.length; i += 1) {
+    context.fillText(
+      drawData.indexPoints[i].label,
+      drawData.indexPoints[i].position.x,
+      drawData.indexPoints[i].position.y - 4,
+    );
+  }
 }
 
-function getLinePointsForTimeSlots(
+interface IIndexPoint {
+  label: string;
+  position: IPosition;
+}
+
+function getDrawDataForTimeSlots(
   context: CanvasRenderingContext2D,
   timeWindow: ITimeSlot,
-  slots: ITimeSlot[],
+  slots: IIndexedTimeSlot[],
+  bpm: number,
   pixelsPerSecond: number,
   waveMargin: number,
-): IPosition[] {
-  const results: IPosition[] = [];
+): { linePoints: IPosition[]; indexPoints: IIndexPoint[] } {
+  const linePoints: IPosition[] = [];
+  const indexPoints: IIndexPoint[] = [];
   const yTop = waveMargin;
   const yBottom = context.canvas.height - waveMargin;
   let endX: number = 0;
@@ -75,28 +107,33 @@ function getLinePointsForTimeSlots(
     );
     endX = getPositionXInCanvasForTime(context, slot.end, timeWindow.start, pixelsPerSecond);
 
-    results.push({ x: startX, y: yBottom });
-    results.push({ x: startX, y: yTop });
-    results.push({ x: endX, y: yTop });
-    results.push({ x: endX, y: yBottom });
+    linePoints.push({ x: startX, y: yBottom });
+    linePoints.push({ x: startX, y: yTop });
+    linePoints.push({ x: endX, y: yTop });
+    linePoints.push({ x: endX, y: yBottom });
+
+    indexPoints.push({
+      label: slot.startTimeIndex.toString(),
+      position: { x: startX, y: yTop },
+    });
   }
 
-  if (results.length) {
+  if (linePoints.length) {
     // make sure line starts from full left
-    if (results[0].x > 0) {
-      results.unshift({ x: 0, y: yBottom });
+    if (linePoints[0].x > 0) {
+      linePoints.unshift({ x: 0, y: yBottom });
     }
     // and make sure it reaches the end
-    if (results[results.length - 1].x < context.canvas.width) {
-      results.push({ x: context.canvas.width, y: yBottom });
+    if (linePoints[linePoints.length - 1].x < context.canvas.width) {
+      linePoints.push({ x: context.canvas.width, y: yBottom });
     }
   } else {
-    // when there are no results, draw a low line
-    results.push({ x: 0, y: yBottom });
-    results.push({ x: context.canvas.width, y: yBottom });
+    // when there are no results, draw a low line todo fix high line, when not playing, that goes beyond the canvas range
+    linePoints.push({ x: 0, y: yBottom });
+    linePoints.push({ x: context.canvas.width, y: yBottom });
   }
 
-  return results;
+  return { linePoints, indexPoints };
 }
 
 export function setCanvasSize(canvas: HTMLCanvasElement, width: number, height: number): void {
