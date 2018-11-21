@@ -1,6 +1,5 @@
 import VueTypes from 'vue-types';
 import { mapState } from 'vuex';
-import { drawWaveForItems } from '../../util/drawUtils';
 import AnimationFrame from '../../util/AnimationFrame';
 import WaveViewControls from '../WaveViewControls/WaveViewControls';
 import Dial from '../Dial/Dial';
@@ -69,32 +68,18 @@ export default {
       this.draw();
     },
     draw(forceRedraw) {
-      if (this.useCache) {
-        this.drawer.draw(
-          this.context,
-          this.matrixItems,
-          this.bpm,
-          {
-            start: this.$soundManager.currentPlayTime,
-            end: this.$soundManager.currentPlayTime + this.timeWindow,
-          },
-          this.waveMargin,
-          this.drawIndexLabels,
-          forceRedraw,
-        );
-      } else {
-        drawWaveForItems(
-          this.context,
-          this.matrixItems,
-          this.bpm,
-          {
-            start: this.$soundManager.currentPlayTime,
-            end: this.$soundManager.currentPlayTime + this.timeWindow,
-          },
-          this.waveMargin,
-          this.drawIndexLabels,
-        );
-      }
+      this.drawer.draw(
+        this.context,
+        this.matrixItems,
+        this.bpm,
+        {
+          start: this.$soundManager.currentPlayTime,
+          end: this.$soundManager.currentPlayTime + this.timeWindow,
+        },
+        this.waveMargin,
+        this.drawIndexLabels,
+        forceRedraw,
+      );
     },
   },
 };
