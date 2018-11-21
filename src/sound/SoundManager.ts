@@ -20,7 +20,7 @@ const settings = {
 
 export default class SoundManager extends EventDispatcher {
   public currentPlayTime: number = 0;
-  public context: AudioContext;
+  public context!: AudioContext;
 
   private timeFrame: AnimationFrame; // for updating time info todo combine schedule interval into this?
   private scheduleIntervalId: number = -1;

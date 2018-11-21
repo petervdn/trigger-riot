@@ -18,6 +18,7 @@
           :show-controls="true"
           :draw-index-labels="true"
         />
+
         <Transport :class="$style.sideColumn" />
       </div>
 

@@ -4,6 +4,7 @@ import { drawWaveForItems } from '../../util/drawUtils';
 import AnimationFrame from '../../util/AnimationFrame';
 import WaveViewControls from '../WaveViewControls/WaveViewControls';
 import Dial from '../Dial/Dial';
+import CachedWaveDrawer from '../../util/CachedWaveDrawer';
 
 // @vue/component
 export default {
@@ -19,6 +20,7 @@ export default {
     waveMargin: VueTypes.number.isRequired,
     showControls: VueTypes.bool.def(false),
     drawIndexLabels: VueTypes.bool.def(false),
+    useCache: VueTypes.bool.def(true),
   },
   data() {
     return {
@@ -35,7 +37,7 @@ export default {
   watch: {
     matrixItems: {
       handler() {
-        this.draw();
+        this.draw(true);
       },
       deep: true,
     },
@@ -44,12 +46,13 @@ export default {
         this.frame.start();
       } else {
         this.frame.stop();
-        this.draw();
+        this.draw(true);
       }
     },
   },
   mounted() {
     setTimeout(() => {
+      this.drawer = new CachedWaveDrawer();
       // todo fix these 2 timeouts
       this.width = this.$refs.wrap.offsetWidth;
       this.context = this.$refs.canvas.getContext('2d');
@@ -60,23 +63,38 @@ export default {
   methods: {
     onTimeWindowChange(value) {
       this.timeWindow = value;
-      this.draw();
+      this.draw(true);
     },
     onFrame() {
       this.draw();
     },
-    draw() {
-      drawWaveForItems(
-        this.context,
-        this.matrixItems,
-        this.bpm,
-        {
-          start: this.$soundManager.currentPlayTime,
-          end: this.$soundManager.currentPlayTime + this.timeWindow,
-        },
-        this.waveMargin,
-        this.drawIndexLabels,
-      );
+    draw(forceRedraw) {
+      if (this.useCache) {
+        this.drawer.draw(
+          this.context,
+          this.matrixItems,
+          this.bpm,
+          {
+            start: this.$soundManager.currentPlayTime,
+            end: this.$soundManager.currentPlayTime + this.timeWindow,
+          },
+          this.waveMargin,
+          this.drawIndexLabels,
+          forceRedraw,
+        );
+      } else {
+        drawWaveForItems(
+          this.context,
+          this.matrixItems,
+          this.bpm,
+          {
+            start: this.$soundManager.currentPlayTime,
+            end: this.$soundManager.currentPlayTime + this.timeWindow,
+          },
+          this.waveMargin,
+          this.drawIndexLabels,
+        );
+      }
     },
   },
 };

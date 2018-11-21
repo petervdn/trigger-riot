@@ -27,7 +27,7 @@ export function drawWaveForItems(
   );
 }
 
-function drawTimeSlots(
+export function drawTimeSlots(
   context: CanvasRenderingContext2D,
   matrixItems: IMatrixItem[],
   timeWindow: ITimeSlot,
@@ -136,8 +136,13 @@ function getDrawDataForTimeSlots(
   return { linePoints, indexPoints };
 }
 
-export function setCanvasSize(canvas: HTMLCanvasElement, width: number, height: number): void {
-  const scale = window.devicePixelRatio;
+export function setCanvasSize(
+  canvas: HTMLCanvasElement,
+  width: number,
+  height: number,
+  scaleToPixelRatio = true,
+): void {
+  const scale = scaleToPixelRatio ? window.devicePixelRatio : 1;
   canvas.style.width = `${width}px`;
   canvas.style.height = `${height}px`;
   canvas.width = width * scale;
@@ -150,7 +155,7 @@ export function drawBeats(
   bpm: number,
   pixelsPerSecond: number,
   color = 'dodgerblue',
-  lineWidth = 0.5,
+  lineWidth = 1,
 ): void {
   const secondsPerBeat = 60 / bpm;
 
