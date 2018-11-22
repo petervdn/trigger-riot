@@ -1,14 +1,15 @@
 // @vue/component
 import { mapState } from 'vuex';
 import { drawStartButton, drawStopButton } from '../../util/drawUtils';
-import AnimationFrame from '../../util/AnimationFrame';
+import { globalPlayFrame } from '../../util/globalPlayFrame';
 
 export default {
   name: 'Transport',
   mounted() {
     drawStartButton(this.$refs.start.getContext('2d'), this.startStopButtonSize);
     drawStopButton(this.$refs.stop.getContext('2d'), this.startStopButtonSize);
-    this.frame = new AnimationFrame(this.onFrame);
+    // this.frame = new AnimationFrame(this.onFrame);
+    globalPlayFrame.addCallback(this.onFrame);
   },
   data() {
     return {
@@ -19,9 +20,9 @@ export default {
   watch: {
     isPlaying(value) {
       if (value) {
-        this.frame.start();
+        // this.frame.start();
       } else {
-        this.frame.stop();
+        // this.frame.stop();
         this.time = 0; // todo find better way to do this?
       }
     },

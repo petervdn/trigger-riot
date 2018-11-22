@@ -96,7 +96,7 @@ function getCacheRedrawData(
  */
 export default class CachedWaveDrawer {
   private cache: ICachedCanvas | undefined;
-  private refreshTime = 2;
+  private refreshTime = 0.5;
 
   draw(
     context: CanvasRenderingContext2D,
@@ -108,7 +108,7 @@ export default class CachedWaveDrawer {
     forceRedraw: boolean,
   ) {
     const cacheRedrawData = getCacheRedrawData(this.cache, context, timeWindow);
-    if (!cacheRedrawData || forceRedraw) {
+    if (forceRedraw || !cacheRedrawData) {
       this.cache = createCache(
         context,
         matrixItems,
@@ -120,12 +120,10 @@ export default class CachedWaveDrawer {
       );
     }
 
-    if (this.cache) {
-      context.drawImage(
-        this.cache.context.canvas,
-        cacheRedrawData ? cacheRedrawData.xPosition : 0,
-        0,
-      );
-    }
+    context.drawImage(
+      this.cache!.context.canvas,
+      cacheRedrawData ? cacheRedrawData.xPosition : 0,
+      0,
+    );
   }
 }

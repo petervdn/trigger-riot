@@ -1,10 +1,11 @@
-import AnimationFrame from '../util/AnimationFrame';
+// import AnimationFrame from '../util/AnimationFrame';
 import EventDispatcher from 'seng-event/lib/EventDispatcher';
 import { EVENT_TYPE_PLACEHOLDER, generateEventTypes } from 'seng-event/lib/util/eventTypeUtils';
 import BasicEvent from 'seng-event/lib/event/BasicEvent';
 import SampleManager from 'sample-manager/lib/SampleManager';
 import { sampleNames } from '../data/samples';
 import { IMatrixItem, IMatrixItemGroup, IStore } from '../data/interface';
+import { globalPlayFrame } from '../util/globalPlayFrame';
 
 // Create your own event class
 export class SoundManagerEvent extends BasicEvent {
@@ -22,7 +23,7 @@ export default class SoundManager extends EventDispatcher {
   public currentPlayTime: number = 0;
   public context!: AudioContext;
 
-  private timeFrame: AnimationFrame; // for updating time info todo combine schedule interval into this?
+  // private timeFrame: AnimationFrame; // for updating time info todo combine schedule interval into this?
   private scheduleIntervalId: number = -1;
   private startTime: number = -1;
   private sampleManager: SampleManager;
@@ -34,7 +35,9 @@ export default class SoundManager extends EventDispatcher {
     // @ts-ignore
     this.context = new (window.AudioContext || window.webkitAudioContext)();
     this.sampleManager = new SampleManager(this.context, this.samplesPath, extension);
-    this.timeFrame = new AnimationFrame(this.onFrame);
+    // this.timeFrame = new AnimationFrame(this.onFrame);
+
+    globalPlayFrame.addCallback(this.onFrame);
 
     this.sampleManager.addSamples(
       Object.keys(sampleNames).map(key => ({
@@ -49,7 +52,7 @@ export default class SoundManager extends EventDispatcher {
 
   public start(): void {
     this.startTime = this.context.currentTime;
-    this.timeFrame.start();
+    // this.timeFrame.start();
     this.schedule();
     this.scheduleIntervalId = setInterval(this.schedule, settings.SCHEDULE_INTERVAL * 1000);
 
@@ -57,7 +60,7 @@ export default class SoundManager extends EventDispatcher {
   }
 
   public stop(): void {
-    this.timeFrame.stop();
+    // this.timeFrame.stop();
     this.startTime = -1;
     this.currentPlayTime = 0;
     clearInterval(this.scheduleIntervalId);

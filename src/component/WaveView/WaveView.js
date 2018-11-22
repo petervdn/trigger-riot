@@ -1,9 +1,10 @@
 import VueTypes from 'vue-types';
 import { mapState } from 'vuex';
-import AnimationFrame from '../../util/AnimationFrame';
+// import AnimationFrame from '../../util/AnimationFrame';
 import WaveViewControls from '../WaveViewControls/WaveViewControls';
 import Dial from '../Dial/Dial';
 import CachedWaveDrawer from '../../util/CachedWaveDrawer';
+import { globalPlayFrame } from '../../util/globalPlayFrame';
 
 // @vue/component
 export default {
@@ -42,9 +43,9 @@ export default {
     },
     isPlaying(value) {
       if (value) {
-        this.frame.start();
+        // this.frame.start();
       } else {
-        this.frame.stop();
+        // this.frame.stop();
         this.draw(true);
       }
     },
@@ -55,7 +56,8 @@ export default {
       // todo fix these 2 timeouts
       this.width = this.$refs.wrap.offsetWidth;
       this.context = this.$refs.canvas.getContext('2d');
-      this.frame = new AnimationFrame(this.onFrame);
+      // this.frame = new AnimationFrame(this.onFrame);
+      globalPlayFrame.addCallback(this.onFrame);
       setTimeout(this.draw);
     });
   },

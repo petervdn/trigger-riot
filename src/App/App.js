@@ -2,6 +2,7 @@ import { DeviceStateEvent } from 'seng-device-state-tracker';
 import { mapMutations, mapState, mapActions } from 'vuex';
 import { SET_DEVICE_STATE } from '../store/module/app/app';
 import { INIT } from '../store/module/matrix/matrix';
+import { globalPlayFrame } from '../util/globalPlayFrame';
 
 // @vue/component
 export default {
@@ -9,7 +10,17 @@ export default {
   computed: {
     ...mapState({
       deviceState: state => state.app.deviceState,
+      isPlaying: state => state.app.isPlaying,
     }),
+  },
+  watch: {
+    isPlaying(value) {
+      if (value) {
+        globalPlayFrame.start();
+      } else {
+        globalPlayFrame.stop();
+      }
+    },
   },
   created() {
     this.$deviceStateTracker.addEventListener(
