@@ -96,7 +96,7 @@ function getCacheRedrawData(
  */
 export default class CachedWaveDrawer {
   private cache: ICachedCanvas | undefined;
-  private refreshTime = 0.5;
+  private refreshTime = 3;
 
   draw(
     context: CanvasRenderingContext2D,

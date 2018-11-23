@@ -46,7 +46,12 @@ export default {
   actions: {
     [INIT](context) {
       context.commit(SET_MATRIX, createMatrixData());
-      context.commit(SET_ACTIVE_ITEMS, [context.state.matrix.items[0]]);
+
+      // select first row
+      context.commit(
+        SET_ACTIVE_ITEMS,
+        context.state.matrix.items.filter(item => item.position.y === 0),
+      );
     },
   },
 };

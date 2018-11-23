@@ -19,7 +19,7 @@ const settings = {
   SCHEDULE_LOOKAHEAD: 1.5,
 };
 
-const timeOffset = 130;
+const timeOffset = 0;
 
 export default class SoundManager extends EventDispatcher {
   public currentPlayTime: number = timeOffset;
