@@ -1,17 +1,11 @@
-import {
-  IIndexedTimeSlot,
-  IMatrixData,
-  IMatrixItem,
-  IMatrixItemGroup,
-  ITimeSlot,
-} from '../data/interface';
+import { IMatrixData, IMatrixItem, IMatrixItemGroup, ITimeSlot } from '../data/interface';
 import MatrixMode from '../data/enum/MatrixMode';
 
-export function getIndexedSlotsInRangeForMatrixItems(
+export function getTimeSlotsInRangeForMatrixItems(
   matrixItems: IMatrixItem[],
   bpm: number,
   timeWindow: ITimeSlot,
-): IIndexedTimeSlot[] {
+): ITimeSlot[] {
   const slots: ITimeSlot[] = [];
   for (let i = 0; i < matrixItems.length; i += 1) {
     slots.push(...getSlotsInRangeForMatrixItem(matrixItems[i], bpm, timeWindow));

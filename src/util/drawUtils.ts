@@ -1,5 +1,5 @@
-import { IIndexedTimeSlot, IMatrixItem, IPosition, ITimeSlot } from '../data/interface';
-import { getIndexedSlotsInRangeForMatrixItems } from './matrixUtils';
+import { IMatrixItem, IPosition, ITimeSlot } from '../data/interface';
+import { getTimeSlotsInRangeForMatrixItems } from './matrixUtils';
 
 export function drawWaveForItems(
   context: CanvasRenderingContext2D,
@@ -41,7 +41,7 @@ export function drawTimeSlots(
   context.lineWidth = lineWidth;
   context.strokeStyle = color;
 
-  const slots = getIndexedSlotsInRangeForMatrixItems(matrixItems, bpm, timeWindow);
+  const slots = getTimeSlotsInRangeForMatrixItems(matrixItems, bpm, timeWindow);
   const drawData = getDrawDataForTimeSlots(
     context,
     timeWindow,
@@ -60,29 +60,10 @@ export function drawTimeSlots(
     }
   }
   context.stroke();
-
-  if (!drawIndexLabels) {
-    return;
-  }
-  context.fillStyle = color;
-  context.font = '13px monospace';
-  context.textAlign = 'center';
-  for (let i = 0; i < drawData.indexPoints.length; i += 1) {
-    context.fillText(
-      drawData.indexPoints[i].label,
-      drawData.indexPoints[i].position.x,
-      drawData.indexPoints[i].position.y - 4,
-    );
-  }
-}
-
-interface IIndexPoint {
-  label: string;
-  position: IPosition;
 }
 
 /**
- * Returns both the positions for the pulse-wave and the positions for the beat-index labels
+ * Returns both the positions for the pulse-wave
  * @param context
  * @param timeWindow
  * @param slots
@@ -93,13 +74,12 @@ interface IIndexPoint {
 function getDrawDataForTimeSlots(
   context: CanvasRenderingContext2D,
   timeWindow: ITimeSlot,
-  slots: IIndexedTimeSlot[],
+  slots: ITimeSlot[],
   bpm: number,
   pixelsPerSecond: number,
   waveMargin: number,
-): { linePoints: IPosition[]; indexPoints: IIndexPoint[] } {
+): { linePoints: IPosition[] } {
   const linePoints: IPosition[] = [];
-  const indexPoints: IIndexPoint[] = [];
   const yTop = waveMargin;
   const yBottom = context.canvas.height - waveMargin;
   let endX: number = 0;
@@ -120,11 +100,6 @@ function getDrawDataForTimeSlots(
     linePoints.push({ x: startX, y: yTop });
     linePoints.push({ x: endX, y: yTop });
     linePoints.push({ x: endX, y: yBottom });
-
-    indexPoints.push({
-      label: slot.startTimeIndex.toString(),
-      position: { x: startX, y: yTop },
-    });
   }
 
   if (linePoints.length) {
@@ -142,7 +117,7 @@ function getDrawDataForTimeSlots(
     linePoints.push({ x: context.canvas.width, y: yBottom });
   }
 
-  return { linePoints, indexPoints };
+  return { linePoints };
 }
 
 export function setCanvasSize(
