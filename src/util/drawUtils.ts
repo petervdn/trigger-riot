@@ -156,7 +156,7 @@ export function drawBeats(
     const x = getPositionXInCanvasForTime(context, time, timeWindow.start, pixelsPerSecond);
     let bottomY = context.canvas.height;
 
-    const beatIndex = Math.floor(time / secondsPerBeat);
+    const beatIndex = Math.round(time / secondsPerBeat);
     if (drawBeatIndex && beatIndex > 0 && beatIndex % 4 === 0) {
       context.fillText(beatIndex.toString(), x, context.canvas.height - verticalMargin);
 

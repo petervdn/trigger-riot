@@ -24,7 +24,7 @@ function getXPositionForCachedCanvas(cache: ICachedCanvas, timeWindow: ITimeSlot
  * @param bpm
  * @param timeWindow
  * @param waveMargin
- * @param drawIndexLabels
+ * @param drawBeatIndex
  * @param increaseTime
  */
 function createCache(
