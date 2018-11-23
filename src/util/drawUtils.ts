@@ -7,24 +7,16 @@ export function drawWaveForItems(
   bpm: number,
   timeWindow: ITimeSlot,
   waveMargin: number,
-  drawIndexLabels: boolean,
+  drawBeatIndex: boolean,
 ) {
   // clear canvas
   context.fillStyle = 'black'; // todo move color somewhere (all default draw options actually)
   context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
-  drawBeats(context, timeWindow, bpm, pixelsPerSecond);
+  drawBeats(context, timeWindow, bpm, pixelsPerSecond, drawBeatIndex);
 
-  drawTimeSlots(
-    context,
-    matrixItems,
-    timeWindow,
-    bpm,
-    pixelsPerSecond,
-    waveMargin,
-    drawIndexLabels,
-  );
+  drawTimeSlots(context, matrixItems, timeWindow, bpm, pixelsPerSecond, waveMargin);
 }
 
 export function drawTimeSlots(
@@ -34,7 +26,6 @@ export function drawTimeSlots(
   bpm: number,
   pixelsPerSecond: number,
   waveMargin: number,
-  drawIndexLabels: boolean,
   lineWidth = 2,
   color = 'deepskyblue',
 ): void {
@@ -138,6 +129,7 @@ export function drawBeats(
   timeWindow: ITimeSlot,
   bpm: number,
   pixelsPerSecond: number,
+  drawBeatIndex: boolean,
   color = 'dodgerblue',
   lineWidth = 1,
 ): void {
@@ -145,18 +137,35 @@ export function drawBeats(
 
   const firstBeatAfterStart = Math.ceil(timeWindow.start / secondsPerBeat) * secondsPerBeat;
   if (firstBeatAfterStart > timeWindow.end) {
+    // so much zoomed in that the first beat isn't in view
     return;
   }
 
   context.strokeStyle = color;
+  context.fillStyle = color;
+  context.textAlign = 'center';
   context.lineWidth = lineWidth;
+
+  const fontSize = 10;
+  const verticalMargin = 2;
+  const factor = 0.6;
+  context.font = `${factor * fontSize * devicePixelRatio}px 'Noto Sans KR'`;
 
   let time = firstBeatAfterStart;
   while (time < timeWindow.end) {
     const x = getPositionXInCanvasForTime(context, time, timeWindow.start, pixelsPerSecond);
+    let bottomY = context.canvas.height;
+
+    const beatIndex = Math.floor(time / secondsPerBeat);
+    if (drawBeatIndex && beatIndex > 0 && beatIndex % 4 === 0) {
+      context.fillText(beatIndex.toString(), x, context.canvas.height - verticalMargin);
+
+      bottomY = context.canvas.height - 2 * verticalMargin - fontSize;
+    }
+
     context.beginPath();
     context.moveTo(x, 0);
-    context.lineTo(x, context.canvas.height);
+    context.lineTo(x, bottomY);
     context.stroke();
 
     time += secondsPerBeat;

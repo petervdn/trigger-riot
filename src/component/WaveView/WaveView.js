@@ -18,7 +18,7 @@ export default {
     initialTimeWindow: VueTypes.number.isRequired,
     waveMargin: VueTypes.number.isRequired,
     showControls: VueTypes.bool.def(false),
-    drawIndexLabels: VueTypes.bool.def(false),
+    drawBeatIndex: VueTypes.bool.def(false),
     useCache: VueTypes.bool.def(true),
   },
   data() {
@@ -74,7 +74,7 @@ export default {
           end: this.$soundManager.currentPlayTime + this.timeWindow,
         },
         this.waveMargin,
-        this.drawIndexLabels,
+        this.drawBeatIndex,
         forceRedraw,
       );
     },
