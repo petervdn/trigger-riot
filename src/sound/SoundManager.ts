@@ -19,8 +19,10 @@ const settings = {
   SCHEDULE_LOOKAHEAD: 1.5,
 };
 
+const timeOffset = 130;
+
 export default class SoundManager extends EventDispatcher {
-  public currentPlayTime: number = 0;
+  public currentPlayTime: number = timeOffset;
   public context!: AudioContext;
 
   // private timeFrame: AnimationFrame; // for updating time info todo combine schedule interval into this?
@@ -52,7 +54,6 @@ export default class SoundManager extends EventDispatcher {
 
   public start(): void {
     this.startTime = this.context.currentTime;
-    // this.timeFrame.start();
     this.schedule();
     this.scheduleIntervalId = setInterval(this.schedule, settings.SCHEDULE_INTERVAL * 1000);
 
@@ -60,11 +61,9 @@ export default class SoundManager extends EventDispatcher {
   }
 
   public stop(): void {
-    // this.timeFrame.stop();
     this.startTime = -1;
-    this.currentPlayTime = 0;
+    this.currentPlayTime = timeOffset;
     clearInterval(this.scheduleIntervalId);
-
     this.dispatchEvent(new SoundManagerEvent(SoundManagerEvent.STOP));
   }
 
@@ -94,6 +93,6 @@ export default class SoundManager extends EventDispatcher {
   };
 
   private onFrame = () => {
-    this.currentPlayTime = this.context.currentTime - this.startTime;
+    this.currentPlayTime = timeOffset + this.context.currentTime - this.startTime;
   };
 }

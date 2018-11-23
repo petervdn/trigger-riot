@@ -66,10 +66,18 @@ export function createMatrixData(
   let index = 0;
   for (let y = 0; y < numberOfRows; y += 1) {
     for (let x = 0; x < numberOfColumns; x += 1) {
+      let div = 0;
+      if (y === 0) {
+        if (x === 0) div = 8;
+        if (x === 1) div = 12;
+        if (x === 2) div = 2;
+        if (x === 3) div = 6;
+      }
+
       const item: IMatrixItem = {
         index,
         position: { x, y },
-        division: 0,
+        division: div,
         pulseWidth: defaultPulseWidth,
       };
       items.push(item);

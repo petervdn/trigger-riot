@@ -84,7 +84,7 @@ function getCacheRedrawData(
   }
 
   const xPosition = getXPositionForCachedCanvas(cache, originalTimeWindow);
-  return xPosition + cache.context.canvas.width > originalContext.canvas.width
+  return xPosition <= 0 && xPosition + cache.context.canvas.width > originalContext.canvas.width
     ? { xPosition }
     : null;
 }

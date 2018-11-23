@@ -8,22 +8,18 @@ export default {
   mounted() {
     drawStartButton(this.$refs.start.getContext('2d'), this.startStopButtonSize);
     drawStopButton(this.$refs.stop.getContext('2d'), this.startStopButtonSize);
-    // this.frame = new AnimationFrame(this.onFrame);
     globalPlayFrame.addCallback(this.onFrame);
   },
   data() {
     return {
-      time: 0,
+      time: this.$soundManager.currentPlayTime,
       startStopButtonSize: 45,
     };
   },
   watch: {
     isPlaying(value) {
-      if (value) {
-        // this.frame.start();
-      } else {
-        // this.frame.stop();
-        this.time = 0; // todo find better way to do this?
+      if (!value) {
+        this.onFrame(); // forces a draw after a stop with the correct time
       }
     },
   },
