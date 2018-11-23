@@ -81,6 +81,15 @@ interface IIndexPoint {
   position: IPosition;
 }
 
+/**
+ * Returns both the positions for the pulse-wave and the positions for the beat-index labels
+ * @param context
+ * @param timeWindow
+ * @param slots
+ * @param bpm
+ * @param pixelsPerSecond
+ * @param waveMargin
+ */
 function getDrawDataForTimeSlots(
   context: CanvasRenderingContext2D,
   timeWindow: ITimeSlot,

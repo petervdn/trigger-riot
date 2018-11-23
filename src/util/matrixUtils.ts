@@ -16,6 +16,7 @@ export function getIndexedSlotsInRangeForMatrixItems(
   for (let i = 0; i < matrixItems.length; i += 1) {
     slots.push(...getSlotsInRangeForMatrixItem(matrixItems[i], bpm, timeWindow));
   }
+
   // always flatten, even if there was only 1 matrixItem (will make a correct wave when pulseWidth = 1)
   // todo fix pulsewidth = 0
   return flattenTimeSlots(slots).map(entry => ({
@@ -25,20 +26,51 @@ export function getIndexedSlotsInRangeForMatrixItems(
   }));
 }
 
+function round(value: any, decimals: number) {
+  let number: any = +value;
+  const precision = decimals ? +decimals : 0;
+  if (precision === 0) {
+    return Math.round(number);
+  }
+  let sign = 1;
+  if (number < 0) {
+    sign = -1;
+    number = Math.abs(number);
+  }
+
+  // Shift
+  number = number.toString().split('e');
+  /* tslint:disable */
+  number = Math.round(+(number[0] + 'e' + (number[1] ? +number[1] + precision : precision)));
+  // Shift back
+  number = number.toString().split('e');
+  return +(number[0] + 'e' + (number[1] ? +number[1] - precision : -precision)) * sign;
+  /* tslint:enable */
+}
+
 export function getSlotsInRangeForMatrixItem(
   matrixItem: IMatrixItem,
   bpm: number,
   timeWindow: ITimeSlot,
 ): ITimeSlot[] {
+  if (matrixItem.division === 0) {
+    return [];
+  }
   const secondsPerBeat = 60 / bpm;
   const itemRepeatTime = matrixItem.division * secondsPerBeat;
 
   // get last one that starts before starttme
-  let entryStart = Math.floor(timeWindow.start / itemRepeatTime) * itemRepeatTime;
+  let entryStart = -1;
+  const lastEntryStartBeforeWindowStart =
+    Math.floor(timeWindow.start / itemRepeatTime) * itemRepeatTime;
 
   const results: ITimeSlot[] = [];
+  let iteration = 0;
   while (entryStart < timeWindow.end) {
-    const entryEnd = entryStart + matrixItem.pulseWidth * itemRepeatTime;
+    entryStart = lastEntryStartBeforeWindowStart + iteration * itemRepeatTime;
+    let entryEnd = entryStart + matrixItem.pulseWidth * itemRepeatTime;
+    entryStart = round(entryStart, 10);
+    entryEnd = round(entryEnd, 10);
 
     if (
       (entryStart > timeWindow.start && entryStart < timeWindow.end) ||
@@ -51,7 +83,7 @@ export function getSlotsInRangeForMatrixItem(
       });
     }
 
-    entryStart += itemRepeatTime;
+    iteration += 1;
   }
   return results;
 }
@@ -66,18 +98,10 @@ export function createMatrixData(
   let index = 0;
   for (let y = 0; y < numberOfRows; y += 1) {
     for (let x = 0; x < numberOfColumns; x += 1) {
-      let div = 0;
-      if (y === 0) {
-        if (x === 0) div = 8;
-        if (x === 1) div = 12;
-        if (x === 2) div = 2;
-        if (x === 3) div = 6;
-      }
-
       const item: IMatrixItem = {
         index,
         position: { x, y },
-        division: div,
+        division: 0,
         pulseWidth: defaultPulseWidth,
       };
       items.push(item);
@@ -135,6 +159,7 @@ interface IMatrixItemValueDefinition {
   integer?: boolean;
 }
 
+// todo use this
 export const matrixItemValueDefinitions: { [key: string]: IMatrixItemValueDefinition } = {
   [MatrixMode.DIVISION]: {
     min: 0,
