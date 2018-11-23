@@ -16,7 +16,6 @@ export function getTimeSlotsInRangeForMatrixItems(
   return flattenTimeSlots(slots).map(entry => ({
     start: entry.start,
     end: entry.end,
-    startTimeIndex: Math.round(entry.start / (60 / bpm)), // todo can we do this without the rounding?
   }));
 }
 

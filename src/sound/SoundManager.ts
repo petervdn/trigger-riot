@@ -6,6 +6,8 @@ import SampleManager from 'sample-manager/lib/SampleManager';
 import { sampleNames } from '../data/samples';
 import { IMatrixItem, IMatrixItemGroup, IStore } from '../data/interface';
 import { globalPlayFrame } from '../util/globalPlayFrame';
+import { getTimeSlotsInRangeForMatrixItems } from '../util/matrixUtils';
+import { SamplePlayer } from './SamplePlayer';
 
 // Create your own event class
 export class SoundManagerEvent extends BasicEvent {
@@ -25,10 +27,10 @@ export default class SoundManager extends EventDispatcher {
   public currentPlayTime: number = timeOffset;
   public context!: AudioContext;
 
-  // private timeFrame: AnimationFrame; // for updating time info todo combine schedule interval into this?
   private scheduleIntervalId: number = -1;
   private startTime: number = -1;
   private sampleManager: SampleManager;
+  private samplePlayer: SamplePlayer;
   private store: IStore | undefined;
 
   constructor(private samplesPath: string, extension: string) {
@@ -37,7 +39,7 @@ export default class SoundManager extends EventDispatcher {
     // @ts-ignore
     this.context = new (window.AudioContext || window.webkitAudioContext)();
     this.sampleManager = new SampleManager(this.context, this.samplesPath, extension);
-    // this.timeFrame = new AnimationFrame(this.onFrame);
+    this.samplePlayer = new SamplePlayer(this.context);
 
     globalPlayFrame.addCallback(this.onFrame);
 
@@ -64,11 +66,11 @@ export default class SoundManager extends EventDispatcher {
     this.startTime = -1;
     this.currentPlayTime = timeOffset;
     clearInterval(this.scheduleIntervalId);
+    this.samplePlayer.stopAll();
     this.dispatchEvent(new SoundManagerEvent(SoundManagerEvent.STOP));
   }
 
   private schedule = () => {
-    // console.log('schedule');
     const groups: IMatrixItemGroup[] = [
       ...this.store!.state.matrix.matrix.columns,
       ...this.store!.state.matrix.matrix.rows,
@@ -78,6 +80,7 @@ export default class SoundManager extends EventDispatcher {
       const group = groups[groupIndex];
       if (!group.sample) continue;
 
+      // only collect items which have a division > 0
       const itemsWithDivisionSet: IMatrixItem[] = [];
       for (let itemIndex = 0; itemIndex < group.items.length; itemIndex += 1) {
         if (group.items[itemIndex].division > 0) {
@@ -86,8 +89,23 @@ export default class SoundManager extends EventDispatcher {
       }
 
       if (itemsWithDivisionSet.length > 0) {
-        // group has a sample, and there is at least 1 item in this group with a division > 0
-        // console.log(group.sample.name, itemsWithDivisionSet.length);
+        // group has a sample, and there is at least 1 item in this group with a division > 0;
+        const slots = getTimeSlotsInRangeForMatrixItems(
+          itemsWithDivisionSet,
+          this.store!.state.app.bpm,
+          {
+            start: this.currentPlayTime,
+            end: this.currentPlayTime + settings.SCHEDULE_LOOKAHEAD,
+          },
+        );
+
+        for (let slotIndex = 0; slotIndex < slots.length; slotIndex += 1) {
+          this.samplePlayer.playSampleAtTime(
+            group.sample,
+            group.id,
+            slots[slotIndex].start + this.startTime,
+          );
+        }
       }
     }
   };

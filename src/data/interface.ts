@@ -7,10 +7,15 @@ export interface IStore {
 
 export interface IStoreState {
   matrix: IMatrixStoreState;
+  app: IAppStoreState;
 }
 
 export interface IMatrixStoreState {
   matrix: IMatrixData;
+}
+
+export interface IAppStoreState {
+  bpm: number;
 }
 
 export interface IPosition {

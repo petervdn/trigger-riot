@@ -27,7 +27,6 @@ export default {
           })
           .catch(() => {
             this.isLoading = false;
-            console.log(111);
           });
       }
     },

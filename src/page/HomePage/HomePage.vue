@@ -12,7 +12,7 @@
         <WaveView
           :class="$style.mainColumn"
           :matrix-items="activeMatrixItems"
-          :initial-time-window="20"
+          :initial-time-window="10"
           :height="70"
           :wave-margin="20"
           :show-controls="true"

@@ -14,7 +14,7 @@ export default {
   state: {
     activeMatrixMode: MatrixMode.DIVISION,
     matrix: null,
-    activeItems: [], // todo rename to selected
+    activeItems: [], // todo rename to selected?
   },
   getters: {},
   mutations: {
