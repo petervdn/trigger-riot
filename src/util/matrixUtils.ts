@@ -1,5 +1,6 @@
 import { IMatrixData, IMatrixItem, IMatrixItemGroup, ITimeSlot } from '../data/interface';
 import MatrixMode from '../data/enum/MatrixMode';
+import { round } from './miscUtils';
 
 export function getTimeSlotsInRangeForMatrixItems(
   matrixItems: IMatrixItem[],
@@ -17,28 +18,6 @@ export function getTimeSlotsInRangeForMatrixItems(
     start: entry.start,
     end: entry.end,
   }));
-}
-
-function round(value: any, decimals: number) {
-  let number: any = +value;
-  const precision = decimals ? +decimals : 0;
-  if (precision === 0) {
-    return Math.round(number);
-  }
-  let sign = 1;
-  if (number < 0) {
-    sign = -1;
-    number = Math.abs(number);
-  }
-
-  // Shift
-  number = number.toString().split('e');
-  /* tslint:disable */
-  number = Math.round(+(number[0] + 'e' + (number[1] ? +number[1] + precision : precision)));
-  // Shift back
-  number = number.toString().split('e');
-  return +(number[0] + 'e' + (number[1] ? +number[1] - precision : -precision)) * sign;
-  /* tslint:enable */
 }
 
 export function getSlotsInRangeForMatrixItem(
@@ -91,10 +70,17 @@ export function createMatrixData(
   let index = 0;
   for (let y = 0; y < numberOfRows; y += 1) {
     for (let x = 0; x < numberOfColumns; x += 1) {
+      let division = 0;
+      if (y === 0 && x === 0) {
+        division = 3;
+      }
+      if (y === 0 && x === 1) {
+        division = 5;
+      }
       const item: IMatrixItem = {
+        division,
         index,
         position: { x, y },
-        division: 0,
         pulseWidth: defaultPulseWidth,
       };
       items.push(item);

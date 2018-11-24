@@ -4,6 +4,7 @@ import WaveViewControls from '../WaveViewControls/WaveViewControls';
 import Dial from '../Dial/Dial';
 import CachedWaveDrawer from '../../util/CachedWaveDrawer';
 import { globalPlayFrame } from '../../util/globalPlayFrame';
+import { drawWaveForItems } from '../../util/drawUtils';
 
 // @vue/component
 export default {
@@ -65,18 +66,32 @@ export default {
       this.draw();
     },
     draw(forceRedraw) {
-      this.drawer.draw(
-        this.context,
-        this.matrixItems,
-        this.bpm,
-        {
-          start: this.$soundManager.currentPlayTime,
-          end: this.$soundManager.currentPlayTime + this.timeWindow,
-        },
-        this.waveMargin,
-        this.drawBeatIndex,
-        forceRedraw,
-      );
+      if (this.useCache) {
+        this.drawer.draw(
+          this.context,
+          this.matrixItems,
+          this.bpm,
+          {
+            start: this.$soundManager.currentPlayTime,
+            end: this.$soundManager.currentPlayTime + this.timeWindow,
+          },
+          this.waveMargin,
+          this.drawBeatIndex,
+          forceRedraw,
+        );
+      } else {
+        drawWaveForItems(
+          this.context,
+          this.matrixItems,
+          this.bpm,
+          {
+            start: this.$soundManager.currentPlayTime,
+            end: this.$soundManager.currentPlayTime + this.timeWindow,
+          },
+          this.waveMargin,
+          this.drawBeatIndex,
+        );
+      }
     },
   },
 };

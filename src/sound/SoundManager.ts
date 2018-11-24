@@ -9,7 +9,6 @@ import { globalPlayFrame } from '../util/globalPlayFrame';
 import { getTimeSlotsInRangeForMatrixItems } from '../util/matrixUtils';
 import { SamplePlayer } from './SamplePlayer';
 
-// Create your own event class
 export class SoundManagerEvent extends BasicEvent {
   public static START: string = EVENT_TYPE_PLACEHOLDER;
   public static STOP: string = EVENT_TYPE_PLACEHOLDER;
@@ -21,7 +20,7 @@ const settings = {
   SCHEDULE_LOOKAHEAD: 1.5,
 };
 
-const timeOffset = 0;
+const timeOffset = 26;
 
 export default class SoundManager extends EventDispatcher {
   public currentPlayTime: number = timeOffset;
@@ -71,6 +70,7 @@ export default class SoundManager extends EventDispatcher {
   }
 
   private schedule = () => {
+    // console.log('schedule', this.currentPlayTime, this.currentPlayTime + settings.SCHEDULE_LOOKAHEAD);
     const groups: IMatrixItemGroup[] = [
       ...this.store!.state.matrix.matrix.columns,
       ...this.store!.state.matrix.matrix.rows,
@@ -99,12 +99,15 @@ export default class SoundManager extends EventDispatcher {
           },
         );
 
+        // slots.forEach(slot => console.log(slot.start, slot.end));
         for (let slotIndex = 0; slotIndex < slots.length; slotIndex += 1) {
-          this.samplePlayer.playSampleAtTime(
-            group.sample,
-            group.id,
-            slots[slotIndex].start + this.startTime,
-          );
+          if (slots[slotIndex].start > this.currentPlayTime) {
+            this.samplePlayer.playSampleAtTime(
+              group.sample,
+              group.id,
+              slots[slotIndex].start + this.startTime - timeOffset,
+            );
+          }
         }
       }
     }

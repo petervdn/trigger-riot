@@ -130,6 +130,7 @@ export function drawBeats(
   bpm: number,
   pixelsPerSecond: number,
   drawBeatIndex: boolean,
+  drawTime = true,
   color = 'dodgerblue',
   lineWidth = 1,
 ): void {
@@ -146,10 +147,10 @@ export function drawBeats(
   context.textAlign = 'center';
   context.lineWidth = lineWidth;
 
-  const fontSize = 10;
+  const fontSize = 11;
   const verticalMargin = 2;
-  const factor = 0.6;
-  context.font = `${factor * fontSize * devicePixelRatio}px 'Noto Sans KR'`;
+  context.font = `${fontSize}px 'Noto Sans KR'`;
+  // context.font = `${fontSize}px monospace`;
 
   let time = firstBeatAfterStart;
   while (time < timeWindow.end) {
@@ -157,8 +158,12 @@ export function drawBeats(
     let bottomY = context.canvas.height;
 
     const beatIndex = Math.round(time / secondsPerBeat);
-    if (drawBeatIndex && beatIndex > 0 && beatIndex % 4 === 0) {
-      context.fillText(beatIndex.toString(), x, context.canvas.height - verticalMargin);
+    if (drawBeatIndex && beatIndex > 0 && beatIndex % 1 === 0) {
+      context.fillText(
+        drawTime ? time.toFixed(2) : beatIndex.toString(),
+        x,
+        context.canvas.height - 2 * verticalMargin,
+      ); // that 2 * margin shouldn't be there, but it seems to center it better todo probably fix with measuring the text?
 
       bottomY = context.canvas.height - 2 * verticalMargin - fontSize;
     }
