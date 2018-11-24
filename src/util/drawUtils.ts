@@ -136,7 +136,7 @@ export function drawBeats(
 ): void {
   const secondsPerBeat = 60 / bpm;
 
-  const firstBeatAfterStart = Math.ceil(timeWindow.start / secondsPerBeat) * secondsPerBeat;
+  const firstBeatAfterStart = Math.floor(timeWindow.start / secondsPerBeat) * secondsPerBeat;
   if (firstBeatAfterStart > timeWindow.end) {
     // so much zoomed in that the first beat isn't in view
     return;

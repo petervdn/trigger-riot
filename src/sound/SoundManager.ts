@@ -20,7 +20,7 @@ const settings = {
   SCHEDULE_LOOKAHEAD: 1.5,
 };
 
-const timeOffset = 26;
+const timeOffset = 0;
 
 export default class SoundManager extends EventDispatcher {
   public currentPlayTime: number = timeOffset;
@@ -55,8 +55,14 @@ export default class SoundManager extends EventDispatcher {
 
   public start(): void {
     this.startTime = this.context.currentTime;
-    this.schedule();
-    this.scheduleIntervalId = setInterval(this.schedule, settings.SCHEDULE_INTERVAL * 1000);
+
+    // force first schedule with time = 0, otherwise the first samples (on 0.0) will not fire
+    // (playtime might be something like 0.000005 on first schedule)
+    this.schedule(0);
+
+    this.scheduleIntervalId = setInterval(() => {
+      this.schedule(this.currentPlayTime);
+    }, settings.SCHEDULE_INTERVAL * 1000);
 
     this.dispatchEvent(new SoundManagerEvent(SoundManagerEvent.START));
   }
@@ -69,8 +75,7 @@ export default class SoundManager extends EventDispatcher {
     this.dispatchEvent(new SoundManagerEvent(SoundManagerEvent.STOP));
   }
 
-  private schedule = () => {
-    // console.log('schedule', this.currentPlayTime, this.currentPlayTime + settings.SCHEDULE_LOOKAHEAD);
+  private schedule = (playTime: number) => {
     const groups: IMatrixItemGroup[] = [
       ...this.store!.state.matrix.matrix.columns,
       ...this.store!.state.matrix.matrix.rows,
@@ -94,14 +99,14 @@ export default class SoundManager extends EventDispatcher {
           itemsWithDivisionSet,
           this.store!.state.app.bpm,
           {
-            start: this.currentPlayTime,
-            end: this.currentPlayTime + settings.SCHEDULE_LOOKAHEAD,
+            start: playTime,
+            end: playTime + settings.SCHEDULE_LOOKAHEAD,
           },
         );
 
-        // slots.forEach(slot => console.log(slot.start, slot.end));
         for (let slotIndex = 0; slotIndex < slots.length; slotIndex += 1) {
-          if (slots[slotIndex].start > this.currentPlayTime) {
+          // only play sample if the slot is in the future (or now)
+          if (slots[slotIndex].start >= playTime) {
             this.samplePlayer.playSampleAtTime(
               group.sample,
               group.id,
