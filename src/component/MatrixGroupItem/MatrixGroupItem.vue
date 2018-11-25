@@ -5,7 +5,7 @@
   <div>
     <WaveView
       :matrix-items="matrixItemsGroup.items"
-      :initial-time-window="5"
+      :initial-time-window="2"
       :height="30"
       :wave-margin="7"
       :show-beats="false"

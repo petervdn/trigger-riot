@@ -21,6 +21,25 @@ export function getTimeSlotsInRangeForMatrixItems(
   }));
 }
 
+const getClockMultiplierByStepType = (stepType: string) => {
+  const multipliers = {
+    [StepTypes.QUARTER]: 1,
+    [StepTypes.EIGHTH_D]: 3 / 4,
+    [StepTypes.QUARTER_T]: 2 / 3,
+    [StepTypes.EIGHTH]: 1 / 2,
+    [StepTypes.SIXTEENTH_D]: 3 / 8,
+    [StepTypes.EIGHTH_T]: 1 / 3,
+    [StepTypes.SIXTEENTH]: 1 / 4,
+    [StepTypes.THIRTYSECOND_D]: 3 / 16,
+    [StepTypes.SIXTEENTH_T]: 1 / 6,
+    [StepTypes.THIRTYSECOND]: 1 / 8,
+    [StepTypes.THIRTYSECOND_T]: 1 / 12,
+    [StepTypes.SIXTYFOURTH]: 1 / 16,
+  };
+
+  return multipliers[stepType] / 4;
+};
+
 export function getSlotsInRangeForMatrixItem(
   matrixItem: IMatrixItem,
   bpm: number,
@@ -29,7 +48,8 @@ export function getSlotsInRangeForMatrixItem(
   if (matrixItem.division === 0) {
     return [];
   }
-  const secondsPerBeat = 60 / bpm;
+  // const secondsPerBeat = (60 / bpm) * clockMultiplierByStepType[matrixItem.steps];
+  const secondsPerBeat = (60 / bpm) * getClockMultiplierByStepType(matrixItem.steps);
   const itemRepeatTime = matrixItem.division * secondsPerBeat;
 
   // get last one that starts before starttme
@@ -67,16 +87,9 @@ export function createMatrixData(numberOfRows = 4, numberOfColumns = 4): IMatrix
   let index = 0;
   for (let y = 0; y < numberOfRows; y += 1) {
     for (let x = 0; x < numberOfColumns; x += 1) {
-      let division = 0;
-      if (y === 0 && x === 0) {
-        division = 3;
-      }
-      if (y === 0 && x === 1) {
-        division = 5;
-      }
       const item: IMatrixItem = {
-        division,
         index,
+        division: 0,
         position: { x, y },
         pulseWidth: 0.25,
         steps: StepTypes.QUARTER,
