@@ -165,7 +165,7 @@ export function drawBeats(
     const beatIndex = Math.round(time / secondsPerBeat);
     if (beatLabelType && beatIndex > 0 && beatIndex % beatLabelRepeat === 0) {
       context.fillText(
-        beatLabelType === BeatLabelTypes.SECONDS ? time.toFixed(2) : beatIndex.toString(),
+        beatLabelType === BeatLabelTypes.SECONDS ? time.toFixed(2) : (beatIndex + 1).toString(),
         x,
         context.canvas.height - 2 * verticalMargin,
       ); // that 2 * margin shouldn't be there, but it seems to center it better todo probably fix with measuring the text?
