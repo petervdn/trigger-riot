@@ -8,6 +8,7 @@ export function drawWaveForItems(
   bpm: number,
   timeWindow: ITimeSlot,
   waveMargin: number,
+  showBeats: boolean,
   beatLabelType: string,
   beatLabelRepeat: number,
 ) {
@@ -16,7 +17,9 @@ export function drawWaveForItems(
   context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
-  drawBeats(context, timeWindow, bpm, pixelsPerSecond, beatLabelType, beatLabelRepeat);
+  if (showBeats) {
+    drawBeats(context, timeWindow, bpm, pixelsPerSecond, beatLabelType, beatLabelRepeat);
+  }
 
   drawTimeSlots(context, matrixItems, timeWindow, bpm, pixelsPerSecond, waveMargin);
 }

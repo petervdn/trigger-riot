@@ -7,7 +7,8 @@
       :matrix-items="matrixItemsGroup.items"
       :initial-time-window="5"
       :height="30"
-      :wave-margin="5"
+      :wave-margin="7"
+      :show-beats="false"
     />
     <SampleSelector @change="onSampleChange" />
   </div>

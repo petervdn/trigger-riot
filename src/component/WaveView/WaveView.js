@@ -21,6 +21,7 @@ export default {
     showControls: VueTypes.bool.def(false),
     drawBeatIndex: VueTypes.bool.def(false),
     useCache: VueTypes.bool.def(true),
+    showBeats: VueTypes.bool.def(true),
     beatLabelType: VueTypes.string.def(''), // todo set better default value
   },
 
@@ -88,6 +89,7 @@ export default {
             end: this.$soundManager.currentPlayTime + this.timeWindow,
           },
           this.waveMargin,
+          this.showBeats,
           this.activeBeatLabelType,
           this.beatLabelRepeat,
           forceRedraw,
@@ -103,6 +105,7 @@ export default {
             end: this.$soundManager.currentPlayTime + this.timeWindow,
           },
           this.waveMargin,
+          this.showBeats,
           this.activeBeatLabelType,
           this.beatLabelRepeat,
         );
