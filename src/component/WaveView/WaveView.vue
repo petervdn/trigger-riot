@@ -14,6 +14,8 @@
       v-if="showControls"
       :time-window="timeWindow"
       :matrix-items="matrixItems"
+      :beat-label-type="activeBeatLabelType"
+      @beatLabelTypeChange="onBeatLabelTypeChange"
       @timeWindowChange="onTimeWindowChange"
     />
   </div>

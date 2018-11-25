@@ -15,5 +15,19 @@
         @input="onZoomSliderChange"
       >
     </div>
+    <div :class="$style.beatLabelOptions">
+      show
+      <a
+        href="#"
+        @click="changeBeatLabelType"
+      >
+        {{ beatLabelType }}</a>
+      every
+      <a
+        href="#"
+        @click="changeBeatLabelRepeat"
+      >
+        beat</a>
+    </div>
   </div>
 </template>

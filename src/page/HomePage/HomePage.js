@@ -6,6 +6,7 @@ import Dial from '../../component/Dial/Dial';
 import Matrix from '../../component/Matrix/Matrix';
 import Transport from '../../component/Transport/Transport';
 import ModeSelector from '../../component/ModeSelector/ModeSelector';
+import BeatLabelTypes from '../../data/enum/BeatLabelTypes';
 
 // @vue/component
 export default {
@@ -18,6 +19,11 @@ export default {
     Sidebar,
     Header,
     Transport,
+  },
+  data() {
+    return {
+      BeatLabelTypes,
+    };
   },
   computed: {
     ...mapState({

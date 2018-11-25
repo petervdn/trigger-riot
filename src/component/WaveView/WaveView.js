@@ -21,11 +21,13 @@ export default {
     showControls: VueTypes.bool.def(false),
     drawBeatIndex: VueTypes.bool.def(false),
     useCache: VueTypes.bool.def(true),
+    beatLabelType: VueTypes.string.def(null),
   },
   data() {
     return {
       width: 0, // todo rename
       timeWindow: this.initialTimeWindow,
+      activeBeatLabelType: this.beatLabelType,
     };
   },
   computed: {
@@ -58,6 +60,10 @@ export default {
     });
   },
   methods: {
+    onBeatLabelTypeChange(value) {
+      this.activeBeatLabelType = value;
+      this.draw(true);
+    },
     onTimeWindowChange(value) {
       this.timeWindow = value;
       this.draw(true);
@@ -76,10 +82,11 @@ export default {
             end: this.$soundManager.currentPlayTime + this.timeWindow,
           },
           this.waveMargin,
-          this.drawBeatIndex,
+          this.activeBeatLabelType,
           forceRedraw,
         );
       } else {
+        // will just draw every frame // todo move elsewhere
         drawWaveForItems(
           this.context,
           this.matrixItems,
@@ -89,7 +96,7 @@ export default {
             end: this.$soundManager.currentPlayTime + this.timeWindow,
           },
           this.waveMargin,
-          this.drawBeatIndex,
+          this.activeBeatLabelType,
         );
       }
     },

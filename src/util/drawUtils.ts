@@ -1,4 +1,5 @@
 import { IMatrixItem, IPosition, ITimeSlot } from '../data/interface';
+import BeatLabelTypes from '../data/enum/BeatLabelTypes';
 import { getTimeSlotsInRangeForMatrixItems } from './matrixUtils';
 
 export function drawWaveForItems(
@@ -7,14 +8,14 @@ export function drawWaveForItems(
   bpm: number,
   timeWindow: ITimeSlot,
   waveMargin: number,
-  drawBeatIndex: boolean,
+  beatLabelType: string,
 ) {
   // clear canvas
   context.fillStyle = 'black'; // todo move color somewhere (all default draw options actually)
   context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
-  drawBeats(context, timeWindow, bpm, pixelsPerSecond, drawBeatIndex);
+  drawBeats(context, timeWindow, bpm, pixelsPerSecond, beatLabelType);
 
   drawTimeSlots(context, matrixItems, timeWindow, bpm, pixelsPerSecond, waveMargin);
 }
@@ -129,8 +130,7 @@ export function drawBeats(
   timeWindow: ITimeSlot,
   bpm: number,
   pixelsPerSecond: number,
-  drawBeatIndex: boolean,
-  drawTime = true,
+  beatLabelType: string,
   color = 'dodgerblue',
   lineWidth = 1,
 ): void {
@@ -158,9 +158,9 @@ export function drawBeats(
     let bottomY = context.canvas.height;
 
     const beatIndex = Math.round(time / secondsPerBeat);
-    if (drawBeatIndex && beatIndex > 0 && beatIndex % 1 === 0) {
+    if (beatLabelType && beatIndex > 0 && beatIndex % 1 === 0) {
       context.fillText(
-        drawTime ? time.toFixed(2) : beatIndex.toString(),
+        beatLabelType === BeatLabelTypes.SECONDS ? time.toFixed(2) : beatIndex.toString(),
         x,
         context.canvas.height - 2 * verticalMargin,
       ); // that 2 * margin shouldn't be there, but it seems to center it better todo probably fix with measuring the text?
