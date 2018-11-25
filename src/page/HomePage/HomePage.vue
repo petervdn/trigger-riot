@@ -17,7 +17,7 @@
           :wave-margin="20"
           :show-controls="true"
           :draw-beat-index="true"
-          :beat-label-type="BeatLabelTypes.SECONDS"
+          :beat-label-type="BeatLabelTypes.BEAT_INDEX"
         />
 
         <Transport :class="$style.sideColumn" />

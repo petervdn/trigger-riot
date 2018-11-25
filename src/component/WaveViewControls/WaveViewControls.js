@@ -16,6 +16,7 @@ export default {
     matrixItems: VueTypes.array.isRequired,
     timeWindow: VueTypes.number.isRequired,
     beatLabelType: VueTypes.string.isRequired,
+    beatLabelRepeat: VueTypes.number.isRequired,
   },
   mounted() {
     this.mapper = new SliderValueMapper(1, 30);
@@ -32,7 +33,7 @@ export default {
       );
     },
     changeBeatLabelRepeat() {
-      console.log(1);
+      this.$emit('beatLabelRepeatChange', getNextItem([1, 2, 4], this.beatLabelRepeat));
     },
   },
   computed: {

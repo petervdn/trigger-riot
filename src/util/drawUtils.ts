@@ -9,13 +9,14 @@ export function drawWaveForItems(
   timeWindow: ITimeSlot,
   waveMargin: number,
   beatLabelType: string,
+  beatLabelRepeat: number,
 ) {
   // clear canvas
   context.fillStyle = 'black'; // todo move color somewhere (all default draw options actually)
   context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
-  drawBeats(context, timeWindow, bpm, pixelsPerSecond, beatLabelType);
+  drawBeats(context, timeWindow, bpm, pixelsPerSecond, beatLabelType, beatLabelRepeat);
 
   drawTimeSlots(context, matrixItems, timeWindow, bpm, pixelsPerSecond, waveMargin);
 }
@@ -131,6 +132,7 @@ export function drawBeats(
   bpm: number,
   pixelsPerSecond: number,
   beatLabelType: string,
+  beatLabelRepeat: number,
   color = 'dodgerblue',
   lineWidth = 1,
 ): void {
@@ -158,7 +160,7 @@ export function drawBeats(
     let bottomY = context.canvas.height;
 
     const beatIndex = Math.round(time / secondsPerBeat);
-    if (beatLabelType && beatIndex > 0 && beatIndex % 1 === 0) {
+    if (beatLabelType && beatIndex > 0 && beatIndex % beatLabelRepeat === 0) {
       context.fillText(
         beatLabelType === BeatLabelTypes.SECONDS ? time.toFixed(2) : beatIndex.toString(),
         x,

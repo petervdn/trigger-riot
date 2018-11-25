@@ -27,7 +27,7 @@
         href="#"
         @click="changeBeatLabelRepeat"
       >
-        beat</a>
+        {{ beatLabelRepeat === 1 ? 'beat' : `${beatLabelRepeat} beats` }}</a>
     </div>
   </div>
 </template>

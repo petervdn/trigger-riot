@@ -15,7 +15,9 @@
       :time-window="timeWindow"
       :matrix-items="matrixItems"
       :beat-label-type="activeBeatLabelType"
+      :beat-label-repeat="beatLabelRepeat"
       @beatLabelTypeChange="onBeatLabelTypeChange"
+      @beatLabelRepeatChange="onBeatLabelRepeatChange"
       @timeWindowChange="onTimeWindowChange"
     />
   </div>

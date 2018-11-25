@@ -28,6 +28,7 @@ export default {
       width: 0, // todo rename
       timeWindow: this.initialTimeWindow,
       activeBeatLabelType: this.beatLabelType,
+      beatLabelRepeat: 2,
     };
   },
   computed: {
@@ -64,6 +65,11 @@ export default {
       this.activeBeatLabelType = value;
       this.draw(true);
     },
+    onBeatLabelRepeatChange(value) {
+      console.log(value);
+      this.beatLabelRepeat = value;
+      this.draw(true);
+    },
     onTimeWindowChange(value) {
       this.timeWindow = value;
       this.draw(true);
@@ -83,6 +89,7 @@ export default {
           },
           this.waveMargin,
           this.activeBeatLabelType,
+          this.beatLabelRepeat,
           forceRedraw,
         );
       } else {
@@ -97,6 +104,7 @@ export default {
           },
           this.waveMargin,
           this.activeBeatLabelType,
+          this.beatLabelRepeat,
         );
       }
     },

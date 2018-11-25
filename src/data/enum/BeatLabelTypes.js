@@ -1,4 +1,4 @@
 export default {
-  BEAT_INDEX: 'beat-index',
+  BEAT_INDEX: 'beat-number',
   SECONDS: 'seconds',
 };

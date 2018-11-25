@@ -34,6 +34,7 @@ function createCache(
   timeWindow: ITimeSlot,
   waveMargin: number,
   beatLabelType: string,
+  beatLabelRepeat: number,
   increaseTime: number,
 ): ICachedCanvas {
   const pixelsPerSecond = context.canvas.width / (timeWindow.end - timeWindow.start);
@@ -52,7 +53,15 @@ function createCache(
   setCanvasSize(bufferContext.canvas, extendedWidth, context.canvas.height, false);
 
   // draw into the cache
-  drawWaveForItems(bufferContext, matrixItems, bpm, extendedTimeWindow, waveMargin, beatLabelType);
+  drawWaveForItems(
+    bufferContext,
+    matrixItems,
+    bpm,
+    extendedTimeWindow,
+    waveMargin,
+    beatLabelType,
+    beatLabelRepeat,
+  );
 
   // return cache canvas,  including its time-window
   return {
@@ -98,6 +107,7 @@ export default class CachedWaveDrawer {
     timeWindow: ITimeSlot,
     waveMargin: number,
     beatLabelType: string,
+    beatLabelRepeat: number,
     forceRedraw: boolean,
   ) {
     const cacheRedrawData = getCacheRedrawData(this.cache, context, timeWindow);
@@ -109,6 +119,7 @@ export default class CachedWaveDrawer {
         timeWindow,
         waveMargin,
         beatLabelType,
+        beatLabelRepeat,
         this.refreshTime,
       );
     }
