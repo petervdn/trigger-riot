@@ -29,6 +29,7 @@ export default {
             value: this.matrixItem.pulseWidth,
             min: 0,
             max: 1,
+            formatter: value => `${Math.round(value * 100)} %`,
           };
     },
     ...mapState({

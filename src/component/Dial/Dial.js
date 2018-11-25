@@ -6,13 +6,15 @@ import { setCanvasSize } from '../../util/drawUtils';
 export default {
   name: 'Dial',
   props: {
-    width: VueTypes.number.isRequired,
+    size: VueTypes.number.isRequired,
     min: VueTypes.number.isRequired,
     max: VueTypes.number.isRequired,
     integer: VueTypes.bool.def(false),
     value: VueTypes.number.isRequired,
     pixelsForFullRange: VueTypes.number.def(200),
     showValue: VueTypes.bool.def(true),
+    formatter: VueTypes.func,
+    options: VueTypes.array,
   },
   data() {
     return {
@@ -21,12 +23,14 @@ export default {
   },
   computed: {
     displayValue() {
-      return this.integer ? Math.trunc(this.dialValue) : this.dialValue.toFixed(2);
+      const value = this.integer ? Math.trunc(this.dialValue) : this.dialValue;
+
+      return this.formatter ? this.formatter(value) : value;
     },
   },
   watch: {
     value(value) {
-      // set the dial to the correct value when set from outside
+      // set the dial to the correct value when value changes from outside
       this.dialValue = value;
       this.draw();
     },
@@ -41,8 +45,8 @@ export default {
       drawDial(this.context, (this.dialValue - this.min) / (this.max - this.min));
     },
     resize() {
-      const size = this.$refs.wrap.offsetWidth;
-      setCanvasSize(this.context.canvas, size, size);
+      // const size = this.$refs.wrap.offsetWidth; todo why was it with offsetwidth
+      setCanvasSize(this.context.canvas, this.size, this.size);
       this.draw();
     },
     onCanvasMouseDown(event) {

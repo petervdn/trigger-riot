@@ -4,7 +4,7 @@
 <template>
   <div
     ref="wrap"
-    :style="{ width: `${width}px` } "
+    :style="{ width: `${size}px` } "
     :class="$style.dial"
   >
     <canvas
