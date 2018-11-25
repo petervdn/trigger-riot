@@ -26,6 +26,8 @@ export default {
         return `item-${this.matrixItems[0].position.x + 1}.${this.matrixItems[0].position.y + 1}`;
       }
 
+      // row or group
+      // todo show sample
       if (this.matrixItems[0].position.x === this.matrixItems[1].position.x) {
         return `column-${this.matrixItems[0].position.x + 1}`;
       }
