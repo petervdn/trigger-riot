@@ -2,7 +2,7 @@ import { mapState, mapMutations } from 'vuex';
 import VueTypes from 'vue-types';
 import Dial from '../Dial/Dial';
 import MatrixItemValueType from '../../data/enum/MatrixItemValueType';
-import { SET_PULSE_WIDTH, SET_DIVISION } from '../../store/module/matrix/matrix';
+import { UPDATE_ITEM_VALUE } from '../../store/module/matrix/matrix';
 import { dialDataByType } from '../../util/matrixUtils';
 
 // @vue/component
@@ -42,16 +42,14 @@ export default {
   watch: {},
   methods: {
     onValueChange(value) {
-      if (this.activeMatrixItemValueType === MatrixItemValueType.DIVISION) {
-        // todo move logic to store
-        this.setDivision({ matrixItemIndex: this.matrixItem.index, division: value });
-      } else if (this.activeMatrixItemValueType === MatrixItemValueType.PULSE_WIDTH) {
-        this.setPulseWidth({ matrixItemIndex: this.matrixItem.index, pulseWidth: value });
-      }
+      this.updateItemValue({
+        value,
+        itemIndex: this.matrixItem.index,
+        valueType: this.activeMatrixItemValueType,
+      });
     },
     ...mapMutations({
-      setPulseWidth: SET_PULSE_WIDTH,
-      setDivision: SET_DIVISION,
+      updateItemValue: UPDATE_ITEM_VALUE,
     }),
   },
 };

@@ -4,10 +4,11 @@ import { createMatrixData } from '../../../util/matrixUtils';
 const namespace = 'matrix';
 export const SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE = `${namespace}/setActiveMatrixItemValueType`;
 export const SET_ACTIVE_ITEMS = `${namespace}/setActiveItems`;
-export const SET_PULSE_WIDTH = `${namespace}/setPulseWidth`; // todo combine into 1
-export const SET_DIVISION = `${namespace}/setDivision`;
+// export const SET_PULSE_WIDTH = `${namespace}/setPulseWidth`; // todo combine into 1
+// export const SET_DIVISION = `${namespace}/setDivision`;
 export const SET_MATRIX = `${namespace}/setMatrix`;
 export const SET_SAMPLE_FOR_GROUP = `${namespace}/setSampleForGroup`;
+export const UPDATE_ITEM_VALUE = `${namespace}/updateItemValue`;
 export const INIT = `${namespace}/init`;
 
 export default {
@@ -30,18 +31,38 @@ export default {
     [SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE](state, mode) {
       state.activeMatrixItemValueType = mode;
     },
-    [SET_PULSE_WIDTH](state, payload) {
-      const item = state.matrix.items[payload.matrixItemIndex];
-      if (item) {
-        item.pulseWidth = payload.pulseWidth;
+    [UPDATE_ITEM_VALUE](state, { itemIndex, valueType, value }) {
+      const item = state.matrix.items[itemIndex];
+      switch (valueType) {
+        case MatrixItemValueType.DIVISION: {
+          item.division = value;
+          break;
+        }
+        case MatrixItemValueType.PULSE_WIDTH: {
+          item.pulseWidth = value;
+          break;
+        }
+        case MatrixItemValueType.STEPS: {
+          item.steps = value;
+          break;
+        }
+        default: {
+          throw new Error(`Unknown valueType: ${valueType}`);
+        }
       }
     },
-    [SET_DIVISION](state, payload) {
-      const item = state.matrix.items[payload.matrixItemIndex];
-      if (item) {
-        item.division = payload.division;
-      }
-    },
+    // [SET_PULSE_WIDTH](state, payload) {
+    //   const item = state.matrix.items[payload.matrixItemIndex];
+    //   if (item) {
+    //     item.pulseWidth = payload.pulseWidth;
+    //   }
+    // },
+    // [SET_DIVISION](state, payload) {
+    //   const item = state.matrix.items[payload.matrixItemIndex];
+    //   if (item) {
+    //     item.division = payload.division;
+    //   }
+    // },
   },
   actions: {
     [INIT](context) {
