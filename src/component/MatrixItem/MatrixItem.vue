@@ -9,7 +9,7 @@
     :min="dialData.min"
     :max="dialData.max"
     :integer="dialData.integer"
-    :value="dialData.value"
+    :value="value"
     :formatter="dialData.formatter"
     style="margin: 0 auto"
     @change="onValueChange"

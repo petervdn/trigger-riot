@@ -7,11 +7,11 @@
   <div>
     <ul>
       <li
-        v-for="mode in modes"
-        :class="{[$style.active]: mode === activeMatrixMode, [$style.disabled]: !modeIsEnabled(mode)}"
-        :key="mode"
-        @click="modeIsEnabled(mode) ? setActiveMatrixMode(mode) : null"
-      >{{ mode }}</li>
+        v-for="type in types"
+        :class="{[$style.active]: type === activeMatrixItemValueType, [$style.disabled]: !typeIsEnabled(type)}"
+        :key="type"
+        @click="typeIsEnabled(type) ? setActiveMatrixItemValueType(type) : null"
+      >{{ type }}</li>
     </ul>
   </div>
 </template>

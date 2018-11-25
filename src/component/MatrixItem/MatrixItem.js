@@ -1,8 +1,9 @@
 import { mapState, mapMutations } from 'vuex';
 import VueTypes from 'vue-types';
 import Dial from '../Dial/Dial';
-import MatrixMode from '../../data/enum/MatrixMode';
+import MatrixItemValueType from '../../data/enum/MatrixItemValueType';
 import { SET_PULSE_WIDTH, SET_DIVISION } from '../../store/module/matrix/matrix';
+import { dialDataByType } from '../../util/matrixUtils';
 
 // @vue/component
 export default {
@@ -14,36 +15,34 @@ export default {
     matrixItem: VueTypes.any.isRequired, // todo define better
   },
   computed: {
+    value() {
+      switch (this.activeMatrixItemValueType) {
+        case MatrixItemValueType.DIVISION: {
+          return this.matrixItem.division;
+        }
+        case MatrixItemValueType.PULSE_WIDTH: {
+          return this.matrixItem.pulseWidth;
+        }
+        default: {
+          return 0;
+        }
+      }
+    },
     dialData() {
-      // todo
-      // const definition = matrixItemValueDefinitions[this.activeMatrixMode];
-      //
-      return this.activeMatrixMode === MatrixMode.DIVISION
-        ? {
-            value: this.matrixItem.division,
-            min: 0,
-            max: 255,
-            integer: true,
-          }
-        : {
-            value: this.matrixItem.pulseWidth,
-            min: 0,
-            max: 1,
-            formatter: value => `${Math.round(value * 100)} %`,
-          };
+      return dialDataByType[this.activeMatrixItemValueType];
     },
     ...mapState({
-      activeMatrixMode: state => state.matrix.activeMatrixMode,
+      activeMatrixItemValueType: state => state.matrix.activeMatrixItemValueType,
       activeMatrixItems: state => state.matrix.activeItems,
     }),
   },
   watch: {},
   methods: {
     onValueChange(value) {
-      if (this.activeMatrixMode === MatrixMode.DIVISION) {
+      if (this.activeMatrixItemValueType === MatrixItemValueType.DIVISION) {
         // todo move logic to store
         this.setDivision({ matrixItemIndex: this.matrixItem.index, division: value });
-      } else if (this.activeMatrixMode === MatrixMode.PULSE_WIDTH) {
+      } else if (this.activeMatrixItemValueType === MatrixItemValueType.PULSE_WIDTH) {
         this.setPulseWidth({ matrixItemIndex: this.matrixItem.index, pulseWidth: value });
       }
     },

@@ -1,5 +1,5 @@
 import { IMatrixData, IMatrixItem, IMatrixItemGroup, ITimeSlot } from '../data/interface';
-import MatrixMode from '../data/enum/MatrixMode';
+import MatrixItemValueType from '../data/enum/MatrixItemValueType';
 import { round } from './miscUtils';
 
 export function getTimeSlotsInRangeForMatrixItems(
@@ -132,21 +132,22 @@ export function flattenTimeSlots(timeSlots: ITimeSlot[]): ITimeSlot[] {
   return results;
 }
 
-interface IMatrixItemValueDefinition {
+interface IDialData {
   min: number;
   max: number;
   integer?: boolean;
+  formatter?: (value: number) => string | number;
 }
 
-// todo use this
-export const matrixItemValueDefinitions: { [key: string]: IMatrixItemValueDefinition } = {
-  [MatrixMode.DIVISION]: {
+export const dialDataByType: { [key: string]: IDialData } = {
+  [MatrixItemValueType.DIVISION]: {
     min: 0,
     max: 255,
     integer: true,
   },
-  [MatrixMode.PULSE_WIDTH]: {
+  [MatrixItemValueType.PULSE_WIDTH]: {
     min: 0,
     max: 1,
+    formatter: value => `${Math.round(value * 100)} %`,
   },
 };

@@ -1,8 +1,8 @@
-import MatrixMode from '../../../data/enum/MatrixMode';
+import MatrixItemValueType from '../../../data/enum/MatrixItemValueType';
 import { createMatrixData } from '../../../util/matrixUtils';
 
 const namespace = 'matrix';
-export const SET_ACTIVE_MATRIX_MODE = `${namespace}/setActiveMatrixMode`;
+export const SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE = `${namespace}/setActiveMatrixItemValueType`;
 export const SET_ACTIVE_ITEMS = `${namespace}/setActiveItems`;
 export const SET_PULSE_WIDTH = `${namespace}/setPulseWidth`; // todo combine into 1
 export const SET_DIVISION = `${namespace}/setDivision`;
@@ -12,7 +12,7 @@ export const INIT = `${namespace}/init`;
 
 export default {
   state: {
-    activeMatrixMode: MatrixMode.DIVISION,
+    activeMatrixItemValueType: MatrixItemValueType.DIVISION, // todo consistent and better naming
     matrix: null,
     activeItems: [], // todo rename to selected?
   },
@@ -27,8 +27,8 @@ export default {
     [SET_ACTIVE_ITEMS](state, items) {
       state.activeItems = items;
     },
-    [SET_ACTIVE_MATRIX_MODE](state, mode) {
-      state.activeMatrixMode = mode;
+    [SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE](state, mode) {
+      state.activeMatrixItemValueType = mode;
     },
     [SET_PULSE_WIDTH](state, payload) {
       const item = state.matrix.items[payload.matrixItemIndex];

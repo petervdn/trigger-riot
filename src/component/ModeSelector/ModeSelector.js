@@ -1,34 +1,34 @@
 // @vue/component
 import { mapState, mapMutations } from 'vuex';
-import MatrixMode from '../../data/enum/MatrixMode';
-import { SET_ACTIVE_MATRIX_MODE } from '../../store/module/matrix/matrix';
+import MatrixItemValueType from '../../data/enum/MatrixItemValueType';
+import { SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE } from '../../store/module/matrix/matrix';
 
 export default {
   name: 'ModeSelector',
   data() {
     return {
-      modes: [
-        MatrixMode.DIVISION,
-        MatrixMode.STEPS,
-        MatrixMode.PROBABILITY,
-        MatrixMode.SPEED,
-        MatrixMode.CLOCK_SHIFT,
-        MatrixMode.TIME_SHIFT,
-        MatrixMode.PULSE_WIDTH,
+      types: [
+        MatrixItemValueType.DIVISION,
+        MatrixItemValueType.STEPS,
+        MatrixItemValueType.PROBABILITY,
+        MatrixItemValueType.SPEED,
+        MatrixItemValueType.CLOCK_SHIFT,
+        MatrixItemValueType.TIME_SHIFT,
+        MatrixItemValueType.PULSE_WIDTH,
       ],
     };
   },
   computed: {
     ...mapState({
-      activeMatrixMode: state => state.matrix.activeMatrixMode,
+      activeMatrixItemValueType: state => state.matrix.activeMatrixItemValueType,
     }),
   },
   methods: {
-    modeIsEnabled(mode) {
-      return mode === MatrixMode.DIVISION || mode === MatrixMode.PULSE_WIDTH;
+    typeIsEnabled(type) {
+      return type === MatrixItemValueType.DIVISION || type === MatrixItemValueType.PULSE_WIDTH;
     },
     ...mapMutations({
-      setActiveMatrixMode: SET_ACTIVE_MATRIX_MODE,
+      setActiveMatrixItemValueType: SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE,
     }),
   },
 };
