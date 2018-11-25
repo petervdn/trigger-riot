@@ -21,8 +21,9 @@ export default {
     showControls: VueTypes.bool.def(false),
     drawBeatIndex: VueTypes.bool.def(false),
     useCache: VueTypes.bool.def(true),
-    beatLabelType: VueTypes.string.def(null),
+    beatLabelType: VueTypes.string.def(''), // todo set better default value
   },
+
   data() {
     return {
       width: 0, // todo rename
@@ -66,7 +67,6 @@ export default {
       this.draw(true);
     },
     onBeatLabelRepeatChange(value) {
-      console.log(value);
       this.beatLabelRepeat = value;
       this.draw(true);
     },
