@@ -2,6 +2,16 @@ import VueTypes from 'vue-types';
 import { drawDial } from '../../util/dialUtils';
 import { setCanvasSize } from '../../util/drawUtils';
 
+function getOptionsEntryLabel(optionEntry) {
+  return typeof optionEntry === 'string' || typeof optionEntry === 'number'
+    ? optionEntry
+    : optionEntry.label || `--${optionEntry}--`;
+}
+
+function getOptionsEntryValue(optionEntry) {
+  return optionEntry.value || optionEntry;
+}
+
 // @vue/component
 export default {
   name: 'Dial',
@@ -10,7 +20,7 @@ export default {
     min: VueTypes.number,
     max: VueTypes.number,
     integer: VueTypes.bool.def(false),
-    value: VueTypes.number.isRequired,
+    value: VueTypes.any.isRequired,
     pixelsForFullRange: VueTypes.number.def(200),
     showValue: VueTypes.bool.def(true),
     formatter: VueTypes.func,
@@ -30,10 +40,12 @@ export default {
       return this.options ? this.options.length - 1 : this.max;
     },
     displayValue() {
+      // get number-value, either float or int
       const value = this.integer || this.options ? Math.trunc(this.dialValue) : this.dialValue;
 
       if (this.options) {
-        return this.options[value];
+        // if option is a number or string, show that. otherwise, use label (or fallback)
+        return getOptionsEntryLabel(this.options[value]);
       }
       return this.formatter ? this.formatter(value) : value;
     },
@@ -41,7 +53,15 @@ export default {
   watch: {
     value(value) {
       // set the dial to the correct value when value changes from outside
-      this.dialValue = value;
+      if (this.options) {
+        this.dialValue = this.options.map(option => getOptionsEntryValue(option)).indexOf(value);
+
+        if (this.dialValue === -1) {
+          console.error('incorrect value', this.options); // todo
+        }
+      } else {
+        this.dialValue = value;
+      }
       this.draw();
     },
   },
@@ -80,7 +100,10 @@ export default {
       }
 
       this.draw();
-      this.$emit('change', this.dialValue);
+      this.$emit(
+        'change',
+        this.options ? getOptionsEntryValue(this.options[this.dialValue]) : this.dialValue,
+      );
     },
   },
 };

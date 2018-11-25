@@ -23,6 +23,9 @@ export default {
         case MatrixItemValueType.PULSE_WIDTH: {
           return this.matrixItem.pulseWidth;
         }
+        case MatrixItemValueType.STEPS: {
+          return this.matrixItem.steps;
+        }
         default: {
           return 0;
         }

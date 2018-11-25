@@ -32,4 +32,9 @@ export default {
       activeMatrixItems: state => state.matrix.activeItems,
     }),
   },
+  methods: {
+    onChange(value) {
+      console.log(value);
+    },
+  },
 };

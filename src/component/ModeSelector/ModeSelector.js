@@ -25,7 +25,11 @@ export default {
   },
   methods: {
     typeIsEnabled(type) {
-      return type === MatrixItemValueType.DIVISION || type === MatrixItemValueType.PULSE_WIDTH;
+      return [
+        MatrixItemValueType.PULSE_WIDTH,
+        MatrixItemValueType.DIVISION,
+        MatrixItemValueType.STEPS,
+      ].includes(type);
     },
     ...mapMutations({
       setActiveMatrixItemValueType: SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE,

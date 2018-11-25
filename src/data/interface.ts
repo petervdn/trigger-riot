@@ -33,6 +33,7 @@ export interface IMatrixItem {
   position: IPosition;
   division: number;
   pulseWidth: number;
+  steps: string;
 }
 
 export interface IMatrixData {

@@ -1,5 +1,6 @@
 import { IMatrixData, IMatrixItem, IMatrixItemGroup, ITimeSlot } from '../data/interface';
 import MatrixItemValueType from '../data/enum/MatrixItemValueType';
+import StepTypes, { orderedStepTypes } from '../data/enum/StepTypes';
 import { round } from './miscUtils';
 
 export function getTimeSlotsInRangeForMatrixItems(
@@ -60,11 +61,7 @@ export function getSlotsInRangeForMatrixItem(
   return results;
 }
 
-export function createMatrixData(
-  numberOfRows = 4,
-  numberOfColumns = 4,
-  defaultPulseWidth = 0.25,
-): IMatrixData {
+export function createMatrixData(numberOfRows = 4, numberOfColumns = 4): IMatrixData {
   const items: IMatrixItem[] = [];
 
   let index = 0;
@@ -81,7 +78,8 @@ export function createMatrixData(
         division,
         index,
         position: { x, y },
-        pulseWidth: defaultPulseWidth,
+        pulseWidth: 0.25,
+        steps: StepTypes.QUARTER,
       };
       items.push(item);
       index += 1;
@@ -133,8 +131,9 @@ export function flattenTimeSlots(timeSlots: ITimeSlot[]): ITimeSlot[] {
 }
 
 interface IDialData {
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
+  options?: string[] | number[] | { label: string; value: any }[];
   integer?: boolean;
   formatter?: (value: number) => string | number;
 }
@@ -144,6 +143,9 @@ export const dialDataByType: { [key: string]: IDialData } = {
     min: 0,
     max: 255,
     integer: true,
+  },
+  [MatrixItemValueType.STEPS]: {
+    options: orderedStepTypes,
   },
   [MatrixItemValueType.PULSE_WIDTH]: {
     min: 0,
