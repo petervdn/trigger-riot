@@ -149,6 +149,7 @@ interface IDialData {
   options?: string[] | number[] | { label: string; value: any }[];
   integer?: boolean;
   formatter?: (value: number) => string | number;
+  pixelsForFullRange?: number;
 }
 
 export const dialDataByType: { [key: string]: IDialData } = {
@@ -156,9 +157,11 @@ export const dialDataByType: { [key: string]: IDialData } = {
     min: 0,
     max: 255,
     integer: true,
+    pixelsForFullRange: 1500, // todo this probably doesnt work very well on different screensizes/pixelratios etc
   },
   [MatrixItemValueType.STEPS]: {
     options: orderedStepTypes,
+    pixelsForFullRange: 150,
   },
   [MatrixItemValueType.PULSE_WIDTH]: {
     min: 0,

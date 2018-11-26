@@ -10,6 +10,7 @@
     :max="dialData.max"
     :integer="dialData.integer"
     :options="dialData.options"
+    :pixels-for-full-range="dialData.pixelsForFullRange"
     :value="value"
     :formatter="dialData.formatter"
     style="margin: 0 auto"
