@@ -20,8 +20,11 @@ export default {
     },
   },
   methods: {
-    onClick() {
-      this.setActiveItems(this.isGroup ? this.data.items : [this.data]);
+    onClick(event) {
+      if (event.target.classList.contains(this.$style.matrixElement)) {
+        // to prevent clicks from children todo maybe another way?
+        this.setActiveItems(this.isGroup ? this.data.items : [this.data]);
+      }
     },
     ...mapMutations({
       setActiveItems: SET_ACTIVE_ITEMS,
