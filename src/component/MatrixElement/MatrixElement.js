@@ -20,11 +20,11 @@ export default {
     },
   },
   methods: {
+    onClick() {
+      this.setActiveItems(this.isGroup ? this.data.items : [this.data]);
+    },
     ...mapMutations({
       setActiveItems: SET_ACTIVE_ITEMS,
     }),
-    onActivateClick() {
-      this.setActiveItems(this.isGroup ? this.data.items : [this.data]);
-    },
   },
 };

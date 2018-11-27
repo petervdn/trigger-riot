@@ -4,9 +4,11 @@
 </script>
 
 <template>
-  <div :class="$style.matrixElement">
+  <div
+    :class="$style.matrixElement"
+    @click="onClick"
+  >
     <div :class="$style.controls">
-      <button @click="onActivateClick">v</button>
       <button>m</button>
       <button>s</button>
     </div>
