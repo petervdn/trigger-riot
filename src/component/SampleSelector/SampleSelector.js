@@ -28,6 +28,8 @@ export default {
           .catch(() => {
             this.isLoading = false;
           });
+      } else {
+        this.$emit('change', sample);
       }
     },
   },
