@@ -23,6 +23,7 @@
     "core-js": "^2.4.1",
     "detect-port": "^1.2.1",
     "fetch-polyfill": "^0.8.2",
+    "firebase": "^5.5.9",
     "gsap": "^2.0.1",
     "lodash": "^4.17.4",
     "map-slider-value": "^2.0.1",
