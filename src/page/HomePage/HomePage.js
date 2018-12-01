@@ -8,6 +8,11 @@ import Transport from '../../component/Transport/Transport';
 import ModeSelector from '../../component/ModeSelector/ModeSelector';
 import BeatLabelTypes from '../../data/enum/BeatLabelTypes';
 
+/*
+- reset button
+- share
+ */
+
 // @vue/component
 export default {
   name: 'HomePage',
@@ -27,14 +32,8 @@ export default {
   },
   computed: {
     ...mapState({
-      // playStartTime: state => state.app.playStartTime,
       matrix: state => state.matrix.matrix,
       activeMatrixItems: state => state.matrix.activeItems,
     }),
-  },
-  methods: {
-    onChange(value) {
-      console.log(value);
-    },
   },
 };

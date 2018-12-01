@@ -3,6 +3,8 @@
 
 <template>
   <div :class="$style.content">
-    Lorem ipsum dolor sit amet, fusce ut nam curabitur mattis velit neque, eget integer malesuada, voluptatibus tempus pellentesque, nec dapibus et urna, vitae quam ut quis. Suspendisse sed erat sed. Mi dis tincidunt dolor eleifend lectus, praesent pellentesque nec vivamus dolor suspendisse congue, convallis ut semper iaculis. Magna porttitor nunc nunc amet, tempor porta, dolor cillum laoreet diam ut ut sit, ornare ligula penatibus aliquam sed nunc adipiscing,
+    <h2>Randomizer</h2>
+    <p :class="$style.info">Click on a name to add it to the values that will be randomized.</p>
+    <Randomizer/>
   </div>
 </template>

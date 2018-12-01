@@ -5,10 +5,10 @@
 
 <template>
   <div>
-    <ul>
+    <ul :class="$style.modeselector">
       <li
         v-for="type in types"
-        :class="{[$style.active]: type === activeMatrixItemValueType, [$style.disabled]: !typeIsEnabled(type)}"
+        :class="{[$style.active]: type === activeMatrixItemValueType, [$style.disabled]: !typeIsEnabled(type), [$style.item]: true }"
         :key="type"
         @click="typeIsEnabled(type) ? setActiveMatrixItemValueType(type) : null"
       >{{ type }}</li>

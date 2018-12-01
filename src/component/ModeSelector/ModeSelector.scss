@@ -1,24 +1,22 @@
 /* stylelint-disable-next-line block-no-empty */
 :local {
-}
+  ul.modeselector {
+    list-style-type: none;
+    display: flex;
+    font-size: 12px;
+    margin: 5px 0;
 
-ul {
-  list-style-type: none;
-  display: flex;
-  font-size: 12px;
-  margin: 5px 0;
-
-  li {
-    padding: 5px;
-    margin-right: 5px;
-    border-radius: 3px;
-    // border: 1px solid black;
-  }
-  li.disabled {
-    color: #666;
-  }
-  li.active {
-    background-color: deepskyblue;
-    color: black;
+    li {
+      padding: 5px;
+      margin-right: 5px;
+      border-radius: 3px;
+    }
+    li.disabled {
+      color: #666;
+    }
+    li.active {
+      background-color: deepskyblue;
+      color: black;
+    }
   }
 }

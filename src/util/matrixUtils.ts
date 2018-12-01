@@ -1,7 +1,9 @@
-import { IMatrixData, IMatrixItem, IMatrixItemGroup, ITimeSlot } from '../data/interface';
-import MatrixItemValueType from '../data/enum/MatrixItemValueType';
+import { IMatrixData, IMatrixItem, IMatrixItemGroup, IStore, ITimeSlot } from '../data/interface';
+import MatrixItemValueType, { valueTypes } from '../data/enum/MatrixItemValueType';
 import StepTypes, { orderedStepTypes } from '../data/enum/StepTypes';
 import { round } from './miscUtils';
+import { getRandomFloat, getRandomInt } from './numberUtils';
+import { UPDATE_ITEM_VALUE } from '../store/module/matrix/matrix';
 
 export function getTimeSlotsInRangeForMatrixItems(
   matrixItems: IMatrixItem[],
@@ -143,7 +145,22 @@ export function flattenTimeSlots(timeSlots: ITimeSlot[]): ITimeSlot[] {
   return results;
 }
 
+// interface IRandomizeData {
+//   matrixItem: IMatrixItem;
+//   min: number;
+//   max: number;
+// }
+
+export function matrixItemValueTypeIsEnabled(type: string) {
+  return [
+    MatrixItemValueType.PULSE_WIDTH,
+    MatrixItemValueType.DIVISION,
+    MatrixItemValueType.STEPS,
+  ].includes(type);
+}
+
 interface IDialData {
+  // todo rename stuff! dialdata, valuetype?
   min?: number;
   max?: number;
   options?: string[] | number[] | { label: string; value: any }[];
@@ -169,3 +186,46 @@ export const dialDataByType: { [key: string]: IDialData } = {
     formatter: value => `${Math.round(value * 100)} %`,
   },
 };
+
+interface IRandomizeData {
+  valueType: string;
+  dialData: IDialData;
+}
+
+export function createRandomizeData(): IRandomizeData[] {
+  return valueTypes.filter(type => dialDataByType[type] !== undefined).map(type => ({
+    valueType: type,
+    dialData: dialDataByType[type],
+  }));
+}
+
+export function randomizeMatrixItems(
+  matrixItems: IMatrixItem[],
+  randomizeData: IRandomizeData[],
+  activeValueTypes: string[],
+  store: IStore,
+) {
+  matrixItems
+    // loop through each matrix-item involved
+    .forEach(matrixItem => {
+      // for each item, loop through each valueType involved
+      randomizeData
+        .filter(randomizeEntry => activeValueTypes.includes(randomizeEntry.valueType))
+        .forEach(randomizeEntry => {
+          // set a value for this item, and for this valueType
+          if (
+            randomizeEntry.dialData.min !== undefined &&
+            randomizeEntry.dialData.max !== undefined
+          ) {
+            store.commit(UPDATE_ITEM_VALUE, {
+              itemIndex: matrixItem.index,
+              valueType: randomizeEntry.valueType,
+              value:
+                randomizeEntry.dialData.integer !== undefined
+                  ? getRandomInt(randomizeEntry.dialData.min, randomizeEntry.dialData.max)
+                  : getRandomFloat(randomizeEntry.dialData.min, randomizeEntry.dialData.max),
+            });
+          }
+        });
+    });
+}

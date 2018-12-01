@@ -6,7 +6,7 @@ $zLayout: default;
 // Sizes
 $mainWidth: 1000px;
 $elementSpace: 20px;
-$mainContentWidth: 690px; // set to match the resulting with from matrix items (+spacing)
+$mainContentWidth: 650px; // set to match the resulting width from matrix items (+spacing) (the rowitems in matrix.scss)
 $sideBarWidth: calc(#{$mainWidth} - #{$mainContentWidth} - #{$elementSpace});
 
 // $mediaQueries
