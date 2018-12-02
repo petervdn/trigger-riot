@@ -1,9 +1,8 @@
 import { mapState, mapMutations } from 'vuex';
 import VueTypes from 'vue-types';
 import Dial from '../Dial/Dial';
-import MatrixItemValueType from '../../data/enum/MatrixItemValueType';
 import { UPDATE_ITEM_VALUE } from '../../store/module/matrix/matrix';
-import { dialDataByType } from '../../util/matrixUtils';
+import { matrixItemValues, MatrixItemValueType } from '../../data/enum/MatrixItemValue';
 
 // @vue/component
 export default {
@@ -32,7 +31,9 @@ export default {
       }
     },
     dialData() {
-      return dialDataByType[this.activeMatrixItemValueType];
+      // todo rename
+      // return dialDataByType[this.activeMatrixItemValueType];
+      return matrixItemValues.find(value => value.type === this.activeMatrixItemValueType); // todo maybe set full object instead of only type?
     },
     ...mapState({
       activeMatrixItemValueType: state => state.matrix.activeMatrixItemValueType,

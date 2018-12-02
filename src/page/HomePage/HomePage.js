@@ -11,6 +11,13 @@ import BeatLabelTypes from '../../data/enum/BeatLabelTypes';
 /*
 - reset button
 - share
+- metronome
+- mobile dials
+- mobile layout
+- other browsers
+- bpm adjustable (layout)
+- loopable region
+- naamgeving
  */
 
 // @vue/component

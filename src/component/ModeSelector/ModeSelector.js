@@ -1,13 +1,13 @@
 // @vue/component
 import { mapState, mapMutations } from 'vuex';
-import MatrixItemValueType, { valueTypes } from '../../data/enum/MatrixItemValueType';
 import { SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE } from '../../store/module/matrix/matrix';
+import { MatrixItemValueType } from '../../data/enum/MatrixItemValue';
 
 export default {
   name: 'ModeSelector',
   data() {
     return {
-      types: valueTypes,
+      types: Object.values(MatrixItemValueType),
     };
   },
   computed: {
@@ -18,7 +18,7 @@ export default {
   methods: {
     typeIsEnabled(type) {
       return [
-        MatrixItemValueType.PULSE_WIDTH,
+        MatrixItemValueType.PULSE_WIDTH, // todo this is already defined elsewhere
         MatrixItemValueType.DIVISION,
         MatrixItemValueType.STEPS,
       ].includes(type);

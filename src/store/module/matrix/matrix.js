@@ -1,5 +1,5 @@
-import MatrixItemValueType from '../../../data/enum/MatrixItemValueType';
 import { createMatrixData } from '../../../util/matrixUtils';
+import { MatrixItemValueType } from '../../../data/enum/MatrixItemValue';
 
 const namespace = 'matrix';
 export const SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE = `${namespace}/setActiveMatrixItemValueType`;
@@ -51,18 +51,6 @@ export default {
         }
       }
     },
-    // [SET_PULSE_WIDTH](state, payload) {
-    //   const item = state.matrix.items[payload.matrixItemIndex];
-    //   if (item) {
-    //     item.pulseWidth = payload.pulseWidth;
-    //   }
-    // },
-    // [SET_DIVISION](state, payload) {
-    //   const item = state.matrix.items[payload.matrixItemIndex];
-    //   if (item) {
-    //     item.division = payload.division;
-    //   }
-    // },
   },
   actions: {
     [INIT](context) {

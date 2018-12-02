@@ -1,4 +1,4 @@
-const stepTypes = {
+export default {
   QUARTER: '4th',
   EIGHTH_D: '8d',
   QUARTER_T: '4t',
@@ -12,19 +12,3 @@ const stepTypes = {
   THIRTYSECOND_T: '32t',
   SIXTYFOURTH: '64th',
 };
-
-export default stepTypes;
-
-export const orderedStepTypes = [
-  stepTypes.QUARTER,
-  stepTypes.EIGHTH_D,
-  stepTypes.QUARTER_T,
-  stepTypes.EIGHTH,
-  stepTypes.SIXTEENTH_D,
-  stepTypes.EIGHTH_T,
-  stepTypes.SIXTEENTH,
-  stepTypes.THIRTYSECOND_D,
-  stepTypes.SIXTEENTH_T,
-  stepTypes.THIRTYSECOND_T,
-  stepTypes.SIXTYFOURTH,
-];

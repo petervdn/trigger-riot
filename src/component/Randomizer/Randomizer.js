@@ -1,11 +1,12 @@
 import { mapState, mapMutations } from 'vuex';
 import { UPDATE_ITEM_VALUE } from '../../store/module/matrix/matrix';
-import MatrixItemValueType, { valueTypes } from '../../data/enum/MatrixItemValueType';
+
 import {
   createRandomizeData,
   randomizeMatrixItems,
   matrixItemValueTypeIsEnabled,
 } from '../../util/matrixUtils';
+import { matrixItemValues, MatrixItemValueType } from '../../data/enum/MatrixItemValue';
 
 const ApplyToMode = {
   ALL: 'all',
@@ -18,9 +19,9 @@ export default {
   data() {
     return {
       ApplyToMode,
-      valueTypes,
-      applyTo: ApplyToMode.SELECTION,
-      activeValueTypes: [MatrixItemValueType.DIVISION, MatrixItemValueType.PULSE_WIDTH],
+      valueTypes: matrixItemValues,
+      applyToMatrixItems: ApplyToMode.SELECTION,
+      activeValueTypes: [MatrixItemValueType.DIVISION, MatrixItemValueType.PULSE_WIDTH], // todo rename activeValueTypes
       randomizeData: createRandomizeData(),
     };
   },
@@ -44,7 +45,7 @@ export default {
     },
     randomize() {
       randomizeMatrixItems(
-        this.applyTo === ApplyToMode.ALL ? this.matrix.items : this.activeMatrixItems,
+        this.applyToMatrixItems === ApplyToMode.ALL ? this.matrix.items : this.activeMatrixItems,
         this.randomizeData,
         this.activeValueTypes,
         this.$store,

@@ -35,12 +35,12 @@
       apply to
       <input
         :value="ApplyToMode.SELECTION"
-        v-model="applyTo"
+        v-model="applyToMatrixItems"
         type="radio"
       > selection
       <input
         :value="ApplyToMode.ALL"
-        v-model="applyTo"
+        v-model="applyToMatrixItems"
         type="radio"
       > all dials
     </div>
