@@ -8,12 +8,12 @@ import {
   IMatrixItemValueType,
 } from '../data/interface';
 
-export const createDivisionValue = () =>
-  createNumberValue(MatrixItemValueId.DIVISION, 0, 0, 255, true);
-export const createPulseWidthValue = () =>
-  createNumberValue(MatrixItemValueId.PULSE_WIDTH, 0.25, 0, 1, false);
-export const createStepsValue = () =>
-  createOptionsValue(MatrixItemValueId.STEPS, StepType.QUARTER, [
+export const createDivisionValue = (defaultValue = 0) =>
+  createNumberValue(MatrixItemValueId.DIVISION, defaultValue, 0, 255, true);
+export const createPulseWidthValue = (defaultValue = 0.25) =>
+  createNumberValue(MatrixItemValueId.PULSE_WIDTH, defaultValue, 0, 1, false);
+export const createStepsValue = (defaultValue = StepType.QUARTER) =>
+  createOptionsValue(MatrixItemValueId.STEPS, defaultValue, [
     StepType.QUARTER,
     StepType.EIGHTH_D,
     StepType.QUARTER_T,

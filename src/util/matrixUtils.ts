@@ -99,6 +99,13 @@ export function createMatrixData(numberOfRows = 4, numberOfColumns = 4): IMatrix
   let index = 0;
   for (let y = 0; y < numberOfRows; y += 1) {
     for (let x = 0; x < numberOfColumns; x += 1) {
+      // let defaultDiv = 0;
+      // if (x === 0 && y === 0) {
+      //   defaultDiv = 45;
+      // }
+      // if (x === 1 && y === 0) {
+      //   defaultDiv = 5;
+      // }
       const item: IMatrixItem = {
         index,
         position: { x, y },
