@@ -10,6 +10,7 @@ import StepType from '../data/enum/StepType';
 import { round } from './miscUtils';
 import {
   createDivisionValue,
+  createNumberValueMetaData,
   createPulseWidthValue,
   createStepsValue,
 } from './matrixItemValueUtils';
@@ -174,48 +175,4 @@ export function matrixItemValueIsEnabled(id: MatrixItemValueId) {
     MatrixItemValueId.DIVISION,
     MatrixItemValueId.STEPS,
   ].includes(id);
-}
-
-interface IRandomizeData {
-  // valueType: IMatrixItemValueTypeNew;
-  // dialData: IDialData;
-}
-
-export function createRandomizeData(): IRandomizeData[] {
-  return [];
-  // return valueTypes.filter(type => dialDataByType[type] !== undefined).map(type => ({
-  //   valueType: type,
-  //   dialData: dialDataByType[type],
-  // }));
-}
-
-export function randomizeMatrixItems(
-  matrixItems: IMatrixItem[],
-  randomizeData: IRandomizeData[],
-  activeValueTypes: string[],
-  store: IStore,
-) {
-  matrixItems
-    // loop through each matrix-item involved
-    .forEach(matrixItem => {
-      // for each item, loop through each valueType involved
-      randomizeData
-        // .filter(randomizeEntry => activeValueTypes.includes(randomizeEntry.valueType))
-        .forEach(randomizeEntry => {
-          // set a value for this item, and for this valueType
-          // if (
-          //   randomizeEntry.dialData.min !== undefined &&
-          //   randomizeEntry.dialData.max !== undefined
-          // ) {
-          //   store.commit(UPDATE_ITEM_VALUE, {
-          //     itemIndex: matrixItem.index,
-          //     valueType: randomizeEntry.valueType,
-          //     value:
-          //       randomizeEntry.dialData.integer !== undefined
-          //         ? getRandomInt(randomizeEntry.dialData.min, randomizeEntry.dialData.max)
-          //         : getRandomFloat(randomizeEntry.dialData.min, randomizeEntry.dialData.max),
-          //   });
-          // }
-        });
-    });
 }

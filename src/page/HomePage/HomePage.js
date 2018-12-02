@@ -17,8 +17,9 @@ import BeatLabelTypes from '../../data/enum/BeatLabelTypes';
 - other browsers
 - bpm adjustable (layout)
 - loopable region
-- naamgeving
+- use only 1 instance of valueItemData
 - incorrect sound triggers (div 45 & 5 on first 2 dials, immediately in the first few beats)
+- maybe cache pulsewaves for matrixitems (for a given timewindow?) they are now calculated more than once (because they exist in both row/column)
  */
 
 // @vue/component

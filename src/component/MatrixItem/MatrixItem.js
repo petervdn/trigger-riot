@@ -2,7 +2,7 @@ import { mapState, mapMutations } from 'vuex';
 import VueTypes from 'vue-types';
 import Dial from '../Dial/Dial';
 import { UPDATE_ITEM_VALUE } from '../../store/module/matrix/matrix';
-import { getMatrixItemValueDataById } from '../../util/matrixItemValueUtils';
+import { getMatrixItemValueById } from '../../util/matrixItemValueUtils';
 
 // @vue/component
 export default {
@@ -15,14 +15,11 @@ export default {
   },
   computed: {
     value() {
-      if (this.valueData) {
-        return this.valueData.value;
-      }
-
-      return 0;
+      console.log(this.valueData);
+      return this.valueData ? this.valueData.value : 0;
     },
     valueData() {
-      return getMatrixItemValueDataById(this.matrixItem, this.activeMatrixItemValueId);
+      return getMatrixItemValueById(this.matrixItem, this.activeMatrixItemValueId);
     },
     ...mapState({
       activeMatrixItemValueId: state => state.matrix.activeMatrixItemValueId,
@@ -34,7 +31,7 @@ export default {
     onValueChange(value) {
       this.updateItemValue({
         value,
-        itemIndex: this.matrixItem.index,
+        matrixItem: this.matrixItem,
         id: this.activeMatrixItemValueId,
       });
     },

@@ -1,8 +1,7 @@
 import { mapState, mapMutations } from 'vuex';
 import { UPDATE_ITEM_VALUE } from '../../store/module/matrix/matrix';
-
-import { createRandomizeData, randomizeMatrixItems } from '../../util/matrixUtils';
 import { MatrixItemValueId } from '../../data/enum/MatrixItemValue';
+import { createRandomizeData, randomizeMatrixItems } from '../../util/matrixItemValueUtils';
 
 const ApplyToMode = {
   ALL: 'all',

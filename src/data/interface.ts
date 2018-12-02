@@ -32,9 +32,9 @@ export interface ITimeSlot {
 export interface IMatrixItem {
   index: number;
   position: IPosition;
-  division: IMatrixItemNumberValue;
-  pulseWidth: IMatrixItemNumberValue;
-  steps: IMatrixItemOptionsValue;
+  division: IMatrixItemValue<number>;
+  pulseWidth: IMatrixItemValue<number>;
+  steps: IMatrixItemValue<string>;
 }
 
 export interface IMatrixData {
@@ -55,21 +55,21 @@ export enum IMatrixItemValueType {
   OPTIONS = 'options',
 }
 
-export interface IMatrixItemValue {
+export interface IMatrixItemValue<T> {
+  value: T;
+  metaData: IMatrixItemNumberValueMetaData | IMatrixItemOptionsValueMetaData; // todo
+}
+export interface IMatrixItemValueMetaData {
   id: MatrixItemValueId;
-  label?: string;
   type: IMatrixItemValueType;
-  value: any;
 }
 
-export interface IMatrixItemNumberValue extends IMatrixItemValue {
-  value: number;
+export interface IMatrixItemNumberValueMetaData extends IMatrixItemValueMetaData {
   min: number;
   max: number;
   isInteger: boolean;
 }
 
-export interface IMatrixItemOptionsValue extends IMatrixItemValue {
-  value: string;
+export interface IMatrixItemOptionsValueMetaData extends IMatrixItemValueMetaData {
   options: string[];
 }

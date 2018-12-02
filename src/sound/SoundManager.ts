@@ -86,7 +86,7 @@ export default class SoundManager extends EventDispatcher {
       if (!group.sample) continue;
 
       // only collect items which have a division > 0
-      const itemsWithDivisionSet: IMatrixItem[] = [];
+      const itemsWithDivisionSet: IMatrixItem[] = []; // todo also include pulseWidth > 0
       for (let itemIndex = 0; itemIndex < group.items.length; itemIndex += 1) {
         if (group.items[itemIndex].division.value > 0) {
           itemsWithDivisionSet.push(group.items[itemIndex]);
