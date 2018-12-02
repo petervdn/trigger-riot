@@ -1,30 +1,27 @@
 // @vue/component
 import { mapState, mapMutations } from 'vuex';
-import { SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE } from '../../store/module/matrix/matrix';
-import { MatrixItemValueType } from '../../data/enum/MatrixItemValue';
+import { SET_ACTIVE_MATRIX_ITEM_VALUE_ID } from '../../store/module/matrix/matrix';
+import { MatrixItemValueId } from '../../data/enum/MatrixItemValue';
+import { matrixItemValueIsEnabled } from '../../util/matrixUtils';
 
 export default {
   name: 'ModeSelector',
   data() {
     return {
-      types: Object.values(MatrixItemValueType),
+      ids: Object.values(MatrixItemValueId),
     };
   },
   computed: {
     ...mapState({
-      activeMatrixItemValueType: state => state.matrix.activeMatrixItemValueType,
+      activeMatrixItemValueId: state => state.matrix.activeMatrixItemValueId,
     }),
   },
   methods: {
-    typeIsEnabled(type) {
-      return [
-        MatrixItemValueType.PULSE_WIDTH, // todo this is already defined elsewhere
-        MatrixItemValueType.DIVISION,
-        MatrixItemValueType.STEPS,
-      ].includes(type);
+    valueIdIsEnabled(id) {
+      return matrixItemValueIsEnabled(id);
     },
     ...mapMutations({
-      setActiveMatrixItemValueType: SET_ACTIVE_MATRIX_ITEM_VALUE_TYPE,
+      setActiveMatrixItemValueId: SET_ACTIVE_MATRIX_ITEM_VALUE_ID,
     }),
   },
 };

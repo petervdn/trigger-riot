@@ -1,4 +1,5 @@
 import { ISample } from 'sample-manager';
+import { MatrixItemValueId } from './enum/MatrixItemValue';
 
 export interface IStore {
   commit: (mutation: string, payload: any) => void;
@@ -31,9 +32,9 @@ export interface ITimeSlot {
 export interface IMatrixItem {
   index: number;
   position: IPosition;
-  division: number;
-  pulseWidth: number;
-  steps: string;
+  division: IMatrixItemNumberValue;
+  pulseWidth: IMatrixItemNumberValue;
+  steps: IMatrixItemOptionsValue;
 }
 
 export interface IMatrixData {
@@ -42,14 +43,33 @@ export interface IMatrixData {
   items: IMatrixItem[];
 }
 
-// export enum MatrixGroupType {
-//   ROW = 'row',
-//   COLUM = 'column',
-// }
-
 export interface IMatrixItemGroup {
-  // a row or colum
+  // can be any collection of matrixItems, but is used for a row or column
   sample?: ISample;
   id: string;
   items: IMatrixItem[];
+}
+
+export enum IMatrixItemValueType {
+  NUMBER = 'number',
+  OPTIONS = 'options',
+}
+
+export interface IMatrixItemValue {
+  id: MatrixItemValueId;
+  label?: string;
+  type: IMatrixItemValueType;
+  value: any;
+}
+
+export interface IMatrixItemNumberValue extends IMatrixItemValue {
+  value: number;
+  min: number;
+  max: number;
+  isInteger: boolean;
+}
+
+export interface IMatrixItemOptionsValue extends IMatrixItemValue {
+  value: string;
+  options: string[];
 }

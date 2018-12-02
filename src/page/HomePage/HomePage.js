@@ -18,6 +18,7 @@ import BeatLabelTypes from '../../data/enum/BeatLabelTypes';
 - bpm adjustable (layout)
 - loopable region
 - naamgeving
+- incorrect sound triggers (div 45 & 5 on first 2 dials, immediately in the first few beats)
  */
 
 // @vue/component

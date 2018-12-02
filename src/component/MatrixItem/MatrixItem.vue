@@ -6,13 +6,13 @@
 <template>
   <Dial
     :size="80"
-    :min="dialData.min"
-    :max="dialData.max"
-    :integer="dialData.integer"
-    :options="dialData.options"
-    :pixels-for-full-range="dialData.pixelsForFullRange"
-    :value="value"
-    :formatter="dialData.formatter"
+    :min="valueData.min"
+    :max="valueData.max"
+    :integer="valueData.isInteger"
+    :options="valueData.options"
+    :pixels-for-full-range="200"
+    :value="valueData.value"
+    :formatter="null"
     style="margin: 0 auto"
     @change="onValueChange"
   />

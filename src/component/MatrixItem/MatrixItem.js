@@ -2,7 +2,7 @@ import { mapState, mapMutations } from 'vuex';
 import VueTypes from 'vue-types';
 import Dial from '../Dial/Dial';
 import { UPDATE_ITEM_VALUE } from '../../store/module/matrix/matrix';
-import { matrixItemValues, MatrixItemValueType } from '../../data/enum/MatrixItemValue';
+import { getMatrixItemValueDataById } from '../../util/matrixItemValueUtils';
 
 // @vue/component
 export default {
@@ -15,28 +15,17 @@ export default {
   },
   computed: {
     value() {
-      switch (this.activeMatrixItemValueType) {
-        case MatrixItemValueType.DIVISION: {
-          return this.matrixItem.division;
-        }
-        case MatrixItemValueType.PULSE_WIDTH: {
-          return this.matrixItem.pulseWidth;
-        }
-        case MatrixItemValueType.STEPS: {
-          return this.matrixItem.steps;
-        }
-        default: {
-          return 0;
-        }
+      if (this.valueData) {
+        return this.valueData.value;
       }
+
+      return 0;
     },
-    dialData() {
-      // todo rename
-      // return dialDataByType[this.activeMatrixItemValueType];
-      return matrixItemValues.find(value => value.type === this.activeMatrixItemValueType); // todo maybe set full object instead of only type?
+    valueData() {
+      return getMatrixItemValueDataById(this.matrixItem, this.activeMatrixItemValueId);
     },
     ...mapState({
-      activeMatrixItemValueType: state => state.matrix.activeMatrixItemValueType,
+      activeMatrixItemValueId: state => state.matrix.activeMatrixItemValueId,
       activeMatrixItems: state => state.matrix.activeItems,
     }),
   },
@@ -46,7 +35,7 @@ export default {
       this.updateItemValue({
         value,
         itemIndex: this.matrixItem.index,
-        valueType: this.activeMatrixItemValueType,
+        id: this.activeMatrixItemValueId,
       });
     },
     ...mapMutations({

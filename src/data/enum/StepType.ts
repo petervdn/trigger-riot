@@ -1,4 +1,5 @@
 export default {
+  // todo write all keys as full name,
   QUARTER: '4th',
   EIGHTH_D: '8d',
   QUARTER_T: '4t',

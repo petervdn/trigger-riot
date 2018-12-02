@@ -1,9 +1,19 @@
-import { IMatrixData, IMatrixItem, IMatrixItemGroup, IStore, ITimeSlot } from '../data/interface';
-import StepTypes from '../data/enum/StepTypes';
+import {
+  IMatrixData,
+  IMatrixItem,
+  IMatrixItemGroup,
+  IMatrixItemValue,
+  IStore,
+  ITimeSlot,
+} from '../data/interface';
+import StepType from '../data/enum/StepType';
 import { round } from './miscUtils';
-import { getRandomFloat, getRandomInt } from './numberUtils';
-import { UPDATE_ITEM_VALUE } from '../store/module/matrix/matrix';
-import { MatrixItemValueType } from '../data/enum/MatrixItemValue';
+import {
+  createDivisionValue,
+  createPulseWidthValue,
+  createStepsValue,
+} from './matrixItemValueUtils';
+import { MatrixItemValueId } from '../data/enum/MatrixItemValue';
 
 export function getTimeSlotsInRangeForMatrixItems(
   matrixItems: IMatrixItem[],
@@ -25,18 +35,18 @@ export function getTimeSlotsInRangeForMatrixItems(
 
 const getClockMultiplierByStepType = (stepType: string) => {
   const multipliers = {
-    [StepTypes.QUARTER]: 1,
-    [StepTypes.EIGHTH_D]: 3 / 4,
-    [StepTypes.QUARTER_T]: 2 / 3,
-    [StepTypes.EIGHTH]: 1 / 2,
-    [StepTypes.SIXTEENTH_D]: 3 / 8,
-    [StepTypes.EIGHTH_T]: 1 / 3,
-    [StepTypes.SIXTEENTH]: 1 / 4,
-    [StepTypes.THIRTYSECOND_D]: 3 / 16,
-    [StepTypes.SIXTEENTH_T]: 1 / 6,
-    [StepTypes.THIRTYSECOND]: 1 / 8,
-    [StepTypes.THIRTYSECOND_T]: 1 / 12,
-    [StepTypes.SIXTYFOURTH]: 1 / 16,
+    [StepType.QUARTER]: 1,
+    [StepType.EIGHTH_D]: 3 / 4,
+    [StepType.QUARTER_T]: 2 / 3,
+    [StepType.EIGHTH]: 1 / 2,
+    [StepType.SIXTEENTH_D]: 3 / 8,
+    [StepType.EIGHTH_T]: 1 / 3,
+    [StepType.SIXTEENTH]: 1 / 4,
+    [StepType.THIRTYSECOND_D]: 3 / 16,
+    [StepType.SIXTEENTH_T]: 1 / 6,
+    [StepType.THIRTYSECOND]: 1 / 8,
+    [StepType.THIRTYSECOND_T]: 1 / 12,
+    [StepType.SIXTYFOURTH]: 1 / 16,
   };
 
   return multipliers[stepType] / 4;
@@ -47,12 +57,12 @@ export function getSlotsInRangeForMatrixItem(
   bpm: number,
   timeWindow: ITimeSlot,
 ): ITimeSlot[] {
-  if (matrixItem.division === 0) {
+  if (matrixItem.division.value === 0) {
     return [];
   }
   // const secondsPerBeat = (60 / bpm) * clockMultiplierByStepType[matrixItem.steps];
-  const secondsPerBeat = (60 / bpm) * getClockMultiplierByStepType(matrixItem.steps);
-  const itemRepeatTime = matrixItem.division * secondsPerBeat;
+  const secondsPerBeat = (60 / bpm) * getClockMultiplierByStepType(matrixItem.steps.value);
+  const itemRepeatTime = matrixItem.division.value * secondsPerBeat;
 
   // get last one that starts before starttme
   let entryStart = -1;
@@ -63,7 +73,7 @@ export function getSlotsInRangeForMatrixItem(
   let iteration = 0;
   while (entryStart < timeWindow.end) {
     entryStart = lastEntryStartBeforeWindowStart + iteration * itemRepeatTime;
-    let entryEnd = entryStart + matrixItem.pulseWidth * itemRepeatTime;
+    let entryEnd = entryStart + matrixItem.pulseWidth.value * itemRepeatTime;
     entryStart = round(entryStart, 10);
     entryEnd = round(entryEnd, 10);
 
@@ -91,10 +101,10 @@ export function createMatrixData(numberOfRows = 4, numberOfColumns = 4): IMatrix
     for (let x = 0; x < numberOfColumns; x += 1) {
       const item: IMatrixItem = {
         index,
-        division: 0,
         position: { x, y },
-        pulseWidth: 0.25,
-        steps: StepTypes.QUARTER,
+        division: createDivisionValue(),
+        pulseWidth: createPulseWidthValue(),
+        steps: createStepsValue(),
       };
       items.push(item);
       index += 1;
@@ -151,17 +161,16 @@ export function flattenTimeSlots(timeSlots: ITimeSlot[]): ITimeSlot[] {
 //   max: number;
 // }
 
-export function matrixItemValueTypeIsEnabled(type: MatrixItemValueType) {
-  // todo rename (only value?)
+export function matrixItemValueIsEnabled(id: MatrixItemValueId) {
   return [
-    MatrixItemValueType.PULSE_WIDTH,
-    MatrixItemValueType.DIVISION,
-    MatrixItemValueType.STEPS,
-  ].includes(type);
+    MatrixItemValueId.PULSE_WIDTH,
+    MatrixItemValueId.DIVISION,
+    MatrixItemValueId.STEPS,
+  ].includes(id);
 }
 
 interface IRandomizeData {
-  valueType: MatrixItemValueType;
+  // valueType: IMatrixItemValueTypeNew;
   // dialData: IDialData;
 }
 
@@ -184,7 +193,7 @@ export function randomizeMatrixItems(
     .forEach(matrixItem => {
       // for each item, loop through each valueType involved
       randomizeData
-        .filter(randomizeEntry => activeValueTypes.includes(randomizeEntry.valueType))
+        // .filter(randomizeEntry => activeValueTypes.includes(randomizeEntry.valueType))
         .forEach(randomizeEntry => {
           // set a value for this item, and for this valueType
           // if (
