@@ -18,7 +18,6 @@ export function getTimeSlotsInRangeForMatrixItems(
   }
 
   // always flatten, even if there was only 1 matrixItem (will make a correct wave when pulseWidth = 1)
-  // todo fix pulsewidth = 0
   return flattenTimeSlots(slots).map(entry => ({
     start: entry.start,
     end: entry.end,
@@ -49,7 +48,7 @@ export function getSlotsInRangeForMatrixItem(
   bpm: number,
   timeWindow: ITimeSlot,
 ): ITimeSlot[] {
-  if (matrixItem.division.value === 0) {
+  if (matrixItem.division.value === 0 || matrixItem.pulseWidth.value === 0) {
     return [];
   }
   // const secondsPerBeat = (60 / bpm) * clockMultiplierByStepType[matrixItem.steps];
