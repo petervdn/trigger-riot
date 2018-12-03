@@ -59,7 +59,7 @@ export default class SoundManager extends EventDispatcher {
     // force first schedule with time = 0, otherwise the first samples (on 0.0) will not fire
     // (playtime might be something like 0.000005 on first schedule)
     this.schedule(0);
-
+    // return;
     this.scheduleIntervalId = setInterval(() => {
       this.schedule(this.currentPlayTime);
     }, settings.SCHEDULE_INTERVAL * 1000);

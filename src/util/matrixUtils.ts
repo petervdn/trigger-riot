@@ -1,20 +1,11 @@
-import {
-  IMatrixData,
-  IMatrixItem,
-  IMatrixItemGroup,
-  IMatrixItemValue,
-  IStore,
-  ITimeSlot,
-} from '../data/interface';
+import { IMatrixData, IMatrixItem, IMatrixItemGroup, ITimeSlot } from '../data/interface';
 import StepType from '../data/enum/StepType';
 import { round } from './miscUtils';
 import {
   createDivisionValue,
-  createNumberValueMetaData,
   createPulseWidthValue,
   createStepsValue,
 } from './matrixItemValueUtils';
-import { MatrixItemValueId } from '../data/enum/MatrixItemValue';
 
 export function getTimeSlotsInRangeForMatrixItems(
   matrixItems: IMatrixItem[],
@@ -34,7 +25,7 @@ export function getTimeSlotsInRangeForMatrixItems(
   }));
 }
 
-const getClockMultiplierByStepType = (stepType: string) => {
+const getClockMultiplierByStepType = (stepType: string): number => {
   const multipliers = {
     [StepType.QUARTER]: 1,
     [StepType.EIGHTH_D]: 3 / 4,
@@ -100,13 +91,6 @@ export function createMatrixData(numberOfRows = 4, numberOfColumns = 4): IMatrix
   let index = 0;
   for (let y = 0; y < numberOfRows; y += 1) {
     for (let x = 0; x < numberOfColumns; x += 1) {
-      // let defaultDiv = 0;
-      // if (x === 0 && y === 0) {
-      //   defaultDiv = 45;
-      // }
-      // if (x === 1 && y === 0) {
-      //   defaultDiv = 5;
-      // }
       const item: IMatrixItem = {
         index,
         position: { x, y },
@@ -161,18 +145,4 @@ export function flattenTimeSlots(timeSlots: ITimeSlot[]): ITimeSlot[] {
   }
 
   return results;
-}
-
-// interface IRandomizeData {
-//   matrixItem: IMatrixItem;
-//   min: number;
-//   max: number;
-// }
-
-export function matrixItemValueIsEnabled(id: MatrixItemValueId) {
-  return [
-    MatrixItemValueId.PULSE_WIDTH,
-    MatrixItemValueId.DIVISION,
-    MatrixItemValueId.STEPS,
-  ].includes(id);
 }

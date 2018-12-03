@@ -8,24 +8,24 @@
     <ul :class="$style.valueRanges">
       <li
         v-for="data in randomizeData"
-        :key="data.valueType"
-        :class="{ [$style.active]: activeValueTypes.includes(data.valueType) }"
+        :key="data.valueId"
+        :class="{ [$style.active]: activeValueTypes.includes(data.valueId) }"
       >
         <a
           href="#"
-          @click="onValueTypeItemClick(data.type)"
+          @click="onValueTypeItemClick(data.valueMetaData.type)"
         >
-          {{ data.valueType }}
+          {{ data.valueId }}
         </a>
         <input
           :class="$style.min"
-          :value="data.dialData.min"
+          :value="data.min"
           type="text"
         >
         <span>-</span>
         <input
           :class="$style.max"
-          :value="data.dialData.max"
+          :value="data.max"
           type="text"
         >
       </li>

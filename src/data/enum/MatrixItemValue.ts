@@ -1,9 +1,13 @@
-export enum MatrixItemValueId {
-  DIVISION = 'division',
-  STEPS = 'steps',
-  PROBABILITY = 'probability',
-  SPEED = 'speed',
-  CLOCK_SHIFT = 'clock-shift',
-  TIME_SHIFT = 'time-shift',
-  PULSE_WIDTH = 'pulse-width',
-}
+const matrixItemValueIds = {
+  division: null,
+  steps: null,
+  probability: null,
+  speed: null,
+  'clock-shift': null,
+  'time-shift': null,
+  'pulse-width': null,
+};
+
+export type MatrixItemValueId = keyof (typeof matrixItemValueIds);
+
+export const matrixItemValueIdsList = Object.keys(matrixItemValueIds) as MatrixItemValueId[];

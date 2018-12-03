@@ -1,6 +1,5 @@
 import { mapState, mapMutations } from 'vuex';
 import { UPDATE_ITEM_VALUE } from '../../store/module/matrix/matrix';
-import { MatrixItemValueId } from '../../data/enum/MatrixItemValue';
 import { createRandomizeData, randomizeMatrixItems } from '../../util/matrixItemValueUtils';
 
 const ApplyToMode = {
@@ -14,9 +13,9 @@ export default {
   data() {
     return {
       ApplyToMode,
-      valueTypes: [], // matrixItemValues,
+      // valueTypes: [], // matrixItemValues,
       applyToMatrixItems: ApplyToMode.SELECTION,
-      activeValueTypes: [MatrixItemValueId.DIVISION, MatrixItemValueId.PULSE_WIDTH], // todo rename activeValueTypes
+      activeValueTypes: ['division', 'pulse-width'], // todo rename activeValueTypes
       randomizeData: createRandomizeData(),
     };
   },

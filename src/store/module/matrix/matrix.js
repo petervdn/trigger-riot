@@ -1,5 +1,4 @@
 import { createMatrixData } from '../../../util/matrixUtils';
-import { MatrixItemValueId } from '../../../data/enum/MatrixItemValue';
 import { getMatrixItemValueById } from '../../../util/matrixItemValueUtils';
 
 const namespace = 'matrix';
@@ -12,7 +11,7 @@ export const INIT = `${namespace}/init`;
 
 export default {
   state: {
-    activeMatrixItemValueId: MatrixItemValueId.DIVISION,
+    activeMatrixItemValueId: 'division',
     matrix: null,
     activeItems: [], // todo rename to selected?
   },

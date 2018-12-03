@@ -1,38 +1,64 @@
-import { MatrixItemValueId } from '../data/enum/MatrixItemValue';
+import { MatrixItemValueId, matrixItemValueIdsList } from '../data/enum/MatrixItemValue';
 import StepType from '../data/enum/StepType';
 import {
   IMatrixItem,
+  IMatrixItemNumberValue,
   IMatrixItemNumberValueMetaData,
+  IMatrixItemOptionsValue,
   IMatrixItemOptionsValueMetaData,
   IMatrixItemValue,
   IMatrixItemValueType,
   IStore,
 } from '../data/interface';
 
-export const createDivisionValue = (defaultValue = 0): IMatrixItemValue<number> => ({
+export function createMatrixItemValueMetaDataById(id: 'steps'): IMatrixItemOptionsValueMetaData;
+export function createMatrixItemValueMetaDataById(
+  id: MatrixItemValueId,
+): IMatrixItemNumberValueMetaData;
+export function createMatrixItemValueMetaDataById(
+  id: MatrixItemValueId,
+): IMatrixItemNumberValueMetaData | IMatrixItemOptionsValueMetaData {
+  // todo cache these meta-data objects for each type
+  switch (id) {
+    case 'division': {
+      return createNumberValueMetaData(id, 0, 255, true);
+    }
+    case 'pulse-width': {
+      return createNumberValueMetaData(id, 0, 1, false);
+    }
+    case 'steps': {
+      return createOptionsValueMetaData(id, [
+        StepType.QUARTER,
+        StepType.EIGHTH_D,
+        StepType.QUARTER_T,
+        StepType.EIGHTH,
+        StepType.SIXTEENTH_D,
+        StepType.EIGHTH_T,
+        StepType.SIXTEENTH,
+        StepType.THIRTYSECOND_D,
+        StepType.SIXTEENTH_T,
+        StepType.THIRTYSECOND_T,
+        StepType.SIXTYFOURTH,
+      ]);
+    }
+    default: {
+      throw new Error(`Cannot create MatrixItemValueMetaData for id ${id}`);
+    }
+  }
+}
+
+export const createDivisionValue = (defaultValue = 0): IMatrixItemNumberValue => ({
   value: defaultValue,
-  metaData: createNumberValueMetaData(MatrixItemValueId.DIVISION, 0, 255, true),
+  metaData: createMatrixItemValueMetaDataById('division'),
 });
 
-export const createPulseWidthValue = (defaultValue = 0.25): IMatrixItemValue<number> => ({
+export const createPulseWidthValue = (defaultValue = 0.25): IMatrixItemNumberValue => ({
   value: defaultValue,
-  metaData: createNumberValueMetaData(MatrixItemValueId.PULSE_WIDTH, 0, 1, false),
+  metaData: createMatrixItemValueMetaDataById('pulse-width'),
 });
-export const createStepsValue = (defaultValue = StepType.QUARTER): IMatrixItemValue<string> => ({
+export const createStepsValue = (defaultValue = StepType.QUARTER): IMatrixItemOptionsValue => ({
   value: defaultValue,
-  metaData: createOptionsValueMetaData(MatrixItemValueId.STEPS, [
-    StepType.QUARTER,
-    StepType.EIGHTH_D,
-    StepType.QUARTER_T,
-    StepType.EIGHTH,
-    StepType.SIXTEENTH_D,
-    StepType.EIGHTH_T,
-    StepType.SIXTEENTH,
-    StepType.THIRTYSECOND_D,
-    StepType.SIXTEENTH_T,
-    StepType.THIRTYSECOND_T,
-    StepType.SIXTYFOURTH,
-  ]),
+  metaData: createMatrixItemValueMetaDataById('steps'),
 });
 
 export const createNumberValueMetaData = (
@@ -41,7 +67,7 @@ export const createNumberValueMetaData = (
   max: number,
   isInteger: boolean,
 ): IMatrixItemNumberValueMetaData => {
-  // todo validate
+  // todo validate?
   return {
     id,
     max,
@@ -55,7 +81,6 @@ export const createOptionsValueMetaData = (
   id: MatrixItemValueId,
   options: string[],
 ): IMatrixItemOptionsValueMetaData => {
-  // todo validate
   return {
     id,
     options,
@@ -66,35 +91,40 @@ export const createOptionsValueMetaData = (
 export const getMatrixItemValueById = (
   matrixItem: IMatrixItem,
   id: MatrixItemValueId,
-): IMatrixItemValue<string | number> | null => {
+): IMatrixItemValue => {
   switch (id) {
-    case MatrixItemValueId.DIVISION: {
+    case 'division': {
       return matrixItem.division;
     }
-    case MatrixItemValueId.PULSE_WIDTH: {
+    case 'pulse-width': {
       return matrixItem.pulseWidth;
     }
-    case MatrixItemValueId.STEPS: {
+    case 'steps': {
       return matrixItem.steps;
     }
     default: {
-      return null;
+      throw new Error(`Cannot find MatrixItemValue for id ${id}`);
     }
   }
 };
 
 interface IRandomizeData {
-  // todo move
-  // valueType: IMatrixItemValueTypeNew;
-  // dialData: IDialData;
+  valueMetaData: IMatrixItemNumberValueMetaData;
+  valueId: MatrixItemValueId;
+  min: number;
+  max: number;
 }
 
 export function createRandomizeData(): IRandomizeData[] {
-  return [];
-  // return valueTypes.filter(type => dialDataByType[type] !== undefined).map(type => ({
-  //   valueType: type,
-  //   dialData: dialDataByType[type],
-  // }));
+  return matrixItemValueIdsList.filter(id => matrixItemValueIdIsEnabled(id)).map(id => {
+    const valueMetaData = createMatrixItemValueMetaDataById(id);
+    return {
+      valueMetaData,
+      min: valueMetaData.min,
+      max: valueMetaData.max,
+      valueId: id,
+    };
+  });
 }
 
 export function randomizeMatrixItems(
@@ -126,4 +156,8 @@ export function randomizeMatrixItems(
           // }
         });
     });
+}
+
+export function matrixItemValueIdIsEnabled(id: MatrixItemValueId) {
+  return ['pulse-width', 'division', 'steps'].includes(id); // todo
 }
