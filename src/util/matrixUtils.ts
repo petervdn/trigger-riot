@@ -49,6 +49,7 @@ export function getSlotsInRangeForMatrixItem(
   timeWindow: ITimeSlot,
 ): ITimeSlot[] {
   if (matrixItem.division.value === 0 || matrixItem.pulseWidth.value === 0) {
+    // in these cases: there will be no wave at all
     return [];
   }
   // const secondsPerBeat = (60 / bpm) * clockMultiplierByStepType[matrixItem.steps];

@@ -29,12 +29,12 @@ export default {
     [SET_ACTIVE_MATRIX_ITEM_VALUE_ID](state, id) {
       state.activeMatrixItemValueId = id;
     },
-    [UPDATE_ITEM_VALUE](state, { matrixItem, id, value }) {
-      const matrixItemValue = getMatrixItemValueById(matrixItem, id);
+    [UPDATE_ITEM_VALUE](state, { matrixItem, valueId, value }) {
+      const matrixItemValue = getMatrixItemValueById(matrixItem, valueId);
       if (matrixItemValue) {
         matrixItemValue.value = value;
       } else {
-        throw new Error(`Cannot find matrixItemValue for id: ${id}`);
+        throw new Error(`Cannot find matrixItemValue for id: ${valueId}`);
       }
     },
   },

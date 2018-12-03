@@ -10,6 +10,8 @@ import {
   IMatrixItemValueType,
   IStore,
 } from '../data/interface';
+import { UPDATE_ITEM_VALUE } from '../store/module/matrix/matrix';
+import { getRandomFloat, getRandomInt } from './numberUtils';
 
 export function createMatrixItemValueMetaDataById(id: 'steps'): IMatrixItemOptionsValueMetaData;
 export function createMatrixItemValueMetaDataById(
@@ -140,24 +142,21 @@ export function randomizeMatrixItems(
       randomizeData
         // .filter(randomizeEntry => activeValueTypes.includes(randomizeEntry.valueType))
         .forEach(randomizeEntry => {
-          // set a value for this item, and for this valueType
-          // if (
-          //   randomizeEntry.dialData.min !== undefined &&
-          //   randomizeEntry.dialData.max !== undefined
-          // ) {
-          //   store.commit(UPDATE_ITEM_VALUE, {
-          //     itemIndex: matrixItem.index,
-          //     valueType: randomizeEntry.valueType,
-          //     value:
-          //       randomizeEntry.dialData.integer !== undefined
-          //         ? getRandomInt(randomizeEntry.dialData.min, randomizeEntry.dialData.max)
-          //         : getRandomFloat(randomizeEntry.dialData.min, randomizeEntry.dialData.max),
-          //   });
-          // }
+          if (randomizeEntry.valueMetaData.type !== IMatrixItemValueType.NUMBER) {
+            return; // todo for now, just randomize numbers
+          }
+          store.commit(UPDATE_ITEM_VALUE, {
+            matrixItem,
+            valueId: randomizeEntry.valueId,
+            value: randomizeEntry.valueMetaData.isInteger
+              ? getRandomInt(randomizeEntry.min, randomizeEntry.max)
+              : getRandomFloat(randomizeEntry.min, randomizeEntry.max),
+          });
         });
     });
 }
 
 export function matrixItemValueIdIsEnabled(id: MatrixItemValueId) {
-  return ['pulse-width', 'division', 'steps'].includes(id); // todo
+  const enabled: MatrixItemValueId[] = ['pulse-width', 'division', 'steps'];
+  return enabled.includes(id);
 }

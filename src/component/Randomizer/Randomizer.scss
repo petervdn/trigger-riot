@@ -1,43 +1,9 @@
 /* stylelint-disable-next-line block-no-empty */
 :local {
-  ul.valueRanges {
+  .randomizeItems {
     display: grid;
-    grid-template-columns: 50% 50%;
-    // grid-column-gap: 10px;
-    li.disabled {
-      color: rgba(255, 255, 255, 0.3);
-    }
-    li.active {
-      background-color: rgba(255, 255, 255, 0.4);
-    }
-    li {
-      display: flex;
-      margin: 4px 0;
-      padding: 3px 6px;
-      color: black;
-      //border: 1px solid green;
-
-      a {
-        flex-grow: 1;
-        color: white;
-        text-decoration: none;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-
-      input {
-        width: 30px;
-        flex-grow: 0;
-        background-color: transparent;
-        color: white;
-        border: 0;
-
-        &.min {
-          text-align: right;
-        }
-      }
-    }
+    grid-template-columns: calc(50% - 2px) calc(50% - 2px);
+    grid-column-gap: 4px;
+    margin: 10px 0;
   }
 }

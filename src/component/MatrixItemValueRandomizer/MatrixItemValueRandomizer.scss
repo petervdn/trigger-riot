@@ -1,0 +1,43 @@
+/* stylelint-disable-next-line block-no-empty */
+:local {
+  .disabled {
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .active {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+  .item {
+    display: flex;
+    margin: 2px 0;
+    padding: 3px 6px;
+    color: black;
+
+    a,
+    span,
+    input {
+      color: white;
+    }
+
+    a {
+      flex-grow: 1;
+
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    input {
+      width: 30px;
+      flex-grow: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      border: 0;
+      padding: 0 4px;
+
+      &.min {
+        text-align: right;
+      }
+    }
+  }
+}

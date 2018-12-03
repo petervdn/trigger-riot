@@ -5,31 +5,15 @@
 
 <template>
   <div>
-    <ul :class="$style.valueRanges">
-      <li
+    <div :class="$style.randomizeItems">
+      <MatrixItemValueRandomizer
         v-for="data in randomizeData"
+        :is-active="valueIdsToRandomize.includes(data.valueId)"
+        :data="data"
         :key="data.valueId"
-        :class="{ [$style.active]: activeValueTypes.includes(data.valueId) }"
-      >
-        <a
-          href="#"
-          @click="onValueTypeItemClick(data.valueMetaData.type)"
-        >
-          {{ data.valueId }}
-        </a>
-        <input
-          :class="$style.min"
-          :value="data.min"
-          type="text"
-        >
-        <span>-</span>
-        <input
-          :class="$style.max"
-          :value="data.max"
-          type="text"
-        >
-      </li>
-    </ul>
+        @toggleActive="onToggleActiveValueId"
+      />
+    </div>
 
     <div>
       apply to

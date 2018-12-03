@@ -32,7 +32,7 @@ export default {
       this.updateItemValue({
         value,
         matrixItem: this.matrixItem,
-        id: this.activeMatrixItemValueId,
+        valueId: this.activeMatrixItemValueId,
       });
     },
     ...mapMutations({
