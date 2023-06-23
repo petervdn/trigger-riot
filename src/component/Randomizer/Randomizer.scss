@@ -1,9 +1,0 @@
-/* stylelint-disable-next-line block-no-empty */
-:local {
-  .randomizeItems {
-    display: grid;
-    grid-template-columns: calc(50% - 2px) calc(50% - 2px);
-    grid-column-gap: 4px;
-    margin: 10px 0;
-  }
-}
