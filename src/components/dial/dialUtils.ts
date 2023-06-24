@@ -24,11 +24,11 @@ type DrawDialProps = {
   bgColor?: string;
 };
 export function drawDial({
-  bgColor = "black",
+  bgColor = "#555",
   color = "deepskyblue",
   context,
   valueFactor,
-  lineInnerMargin = 5,
+  lineInnerMargin = 30,
   arcWidth = 5,
   rotation = 0.25,
   range = 0.7,
@@ -60,7 +60,7 @@ export function drawDial({
     arcWidth
   );
 
-  drawLine(context, valueRadians, center, lineInnerMargin, halfSize, color);
+  drawLine(context, valueRadians, center, lineInnerMargin, halfSize, "#ccc");
 }
 
 export function drawLine(
@@ -70,7 +70,7 @@ export function drawLine(
   inner: number,
   outer: number,
   color: string,
-  width: number = 2
+  width: number = 4
 ): void {
   const inner2 = window.devicePixelRatio * inner;
   context.strokeStyle = color;

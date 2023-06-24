@@ -44,7 +44,6 @@ export function Dial({
 
   const bind = useDrag((state) => {
     if (state.first) {
-      console.log("first", state.offset[1], state.lastOffset[1]);
       startDragDataRef.current = { value, y: state.xy[1] };
     }
     const offset = state.xy[1] - startDragDataRef.current!.y;
@@ -58,9 +57,11 @@ export function Dial({
     if (!canvasRef.current) {
       return;
     }
-    const valueFactor = (value - min) / (max - min);
-    const context = canvasRef.current.getContext("2d")!;
-    drawDial({ context, valueFactor });
+
+    drawDial({
+      context: canvasRef.current.getContext("2d")!,
+      valueFactor: (value - min) / (max - min),
+    });
   }, [value]);
 
   return (
