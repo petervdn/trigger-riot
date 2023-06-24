@@ -10,7 +10,7 @@ export default function SplitLayout({
       <div style={{ backgroundColor: "#F6F6F6" }} className="grow p-8">
         <MainView />
       </div>
-      <div style={{ backgroundColor: "green" }} className="w-[400px] grow-0">
+      <div style={{ backgroundColor: "#ddd" }} className="w-[400px] grow-0">
         <h2>sidebar</h2>
         {children}
       </div>

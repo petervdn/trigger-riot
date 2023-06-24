@@ -48,7 +48,7 @@ const createMatrix = ({
       value: {
         min: 1,
         max: 16,
-        value: 1 + Math.round(Math.random() * 16),
+        value: 1 + Math.round(Math.random() * 15),
         isInteger: true,
       },
     },

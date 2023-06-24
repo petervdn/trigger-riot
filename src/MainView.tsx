@@ -25,9 +25,22 @@ export function MainView() {
           </button>
         ))}
       </div>
-      <div className="flex  space-x-2">
-        {matrix.items.map((item, index) => {
-          return <MatrixItem matrixItem={item} index={index} key={index} />;
+      <div>
+        {Array.from({ length: matrix.rows }).map((_, index) => {
+          const startIndex = index * matrix.columns;
+          const endIndex = startIndex + matrix.columns;
+          const rowItems = matrix.items.slice(startIndex, endIndex);
+          return (
+            <div
+              key={index}
+              className="flex space-x-2"
+              style={{ marginBottom: 10 }}
+            >
+              {rowItems.map((item, index) => {
+                return <MatrixItem matrixItem={item} key={index} />;
+              })}
+            </div>
+          );
         })}
       </div>
     </div>

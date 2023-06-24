@@ -3,12 +3,11 @@ import { MatrixItem, useMatrixStore } from "@/src/data/store";
 
 type Props = {
   matrixItem: MatrixItem;
-  index: number;
 };
 const DIAL_SIZE = 150;
 const DIAL_BUTTON_SIZE = 120;
 
-export function MatrixItem({ matrixItem, index }: Props) {
+export function MatrixItem({ matrixItem }: Props) {
   const { matrix, setValue, setEditMode, editMode } = useMatrixStore();
 
   const matrixItemValue = matrixItem[editMode];
@@ -19,7 +18,7 @@ export function MatrixItem({ matrixItem, index }: Props) {
         min={matrixItemValue.value.min}
         max={matrixItemValue.value.max}
         value={matrixItemValue.value.value}
-        onChange={(value) => setValue(editMode, index, value)}
+        onChange={(value) => setValue(editMode, matrixItem.index, value)}
         size={DIAL_SIZE}
         buttonSize={DIAL_BUTTON_SIZE}
         integer={matrixItemValue.value.isInteger}
