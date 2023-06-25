@@ -1,8 +1,12 @@
+import { RowOrColumn } from "@/src/types/misc.types";
+import { Position } from "../types/misc.types";
+
 export type MatrixItem = {
   index: number;
   division: NumberValue;
   pulseWidth: NumberValue;
   steps: StringValue;
+  position: Position;
 };
 
 export const editableMatrixItemProperties: Array<
@@ -12,7 +16,7 @@ export const editableMatrixItemProperties: Array<
 export type MatrixItemEditableProperty =
   (typeof editableMatrixItemProperties)[number];
 
-export type MatrixItemValue = NumberValue | StringValue;
+// export type MatrixItemValue = NumberValue | StringValue;
 
 type NumberValue = {
   type: "number";
@@ -28,7 +32,12 @@ type StringValue = {
 };
 
 export type Matrix = {
-  rows: number;
-  columns: number;
+  numberOfRows: number;
+  numberOfColumns: number;
   items: Array<MatrixItem>;
+};
+
+export type MatrixItemsGroupIdentifier = {
+  index: number;
+  type: RowOrColumn;
 };

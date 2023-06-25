@@ -1,35 +1,46 @@
-import { Matrix, MatrixItem } from "@/src/types/matrix.types";
+import {
+  Matrix,
+  MatrixItem,
+  MatrixItemsGroupIdentifier,
+} from "@/src/types/matrix.types";
 
 export const createMatrix = ({
-  rows,
-  columns,
+  numberOfRows,
+  numberOfColumns,
 }: {
-  rows: number;
-  columns: number;
+  numberOfRows: number;
+  numberOfColumns: number;
 }): Matrix => {
-  const items = Array.from({ length: rows * columns }, (_, index) => ({
-    index,
-    division: {
-      type: "number" as const,
-      min: 1,
-      max: 8,
-      value: 1 + Math.round(Math.random() * 7),
-      isInteger: true,
-    },
-    pulseWidth: {
-      type: "number" as const,
-      min: 0,
-      max: 1,
-      value: Math.random(),
-      isInteger: false,
-    },
-    steps: {
-      type: "string" as const,
-      value: StepType.SIXTEENTH,
-    },
-  }));
+  const items = Array.from(
+    { length: numberOfRows * numberOfColumns },
+    (_, index) => ({
+      index,
+      position: {
+        x: index % numberOfColumns,
+        y: Math.floor(index / numberOfColumns),
+      },
+      division: {
+        type: "number" as const,
+        min: 1,
+        max: 8,
+        value: 1 + Math.round(Math.random() * 7),
+        isInteger: true,
+      },
+      pulseWidth: {
+        type: "number" as const,
+        min: 0,
+        max: 1,
+        value: Math.random(),
+        isInteger: false,
+      },
+      steps: {
+        type: "string" as const,
+        value: StepType.SIXTEENTH,
+      },
+    })
+  );
 
-  return { rows, columns, items };
+  return { numberOfRows, numberOfColumns, items };
 };
 
 // import {
@@ -39,7 +50,7 @@ export const createMatrix = ({
 // } from "./matrixItemValueUtils";
 import { StepType } from "@/src/data/consts";
 import { round } from "@/src/utils/numberUtils";
-import { TimeWindow } from "@/src/types/misc.types";
+import { RowOrColumn, TimeWindow } from "@/src/types/misc.types";
 
 export function getTimeSlotsInRangeForMatrixItems(
   matrixItems: Array<MatrixItem>,
@@ -186,4 +197,24 @@ export function flattenTimeSlots(
   }
 
   return results;
+}
+
+export function getMatrixItemsForGroup({
+  items,
+  groupIdentifier,
+  numberOfColumns,
+}: {
+  items: Array<MatrixItem>;
+  groupIdentifier: MatrixItemsGroupIdentifier;
+  numberOfColumns: number;
+}) {
+  return items.filter((item, index) => {
+    if (groupIdentifier.type === "row") {
+      const startIndex = numberOfColumns * groupIdentifier.index;
+      const endIndex = startIndex + numberOfColumns;
+      return index >= startIndex && index < endIndex;
+    } else {
+      return index % numberOfColumns === groupIdentifier.index;
+    }
+  });
 }

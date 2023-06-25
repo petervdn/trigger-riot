@@ -7,3 +7,5 @@ export type TimeWindow = {
   start: number;
   end: number;
 };
+
+export type RowOrColumn = "row" | "column";

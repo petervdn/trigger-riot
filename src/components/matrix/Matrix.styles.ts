@@ -1,12 +1,8 @@
 import styled from "styled-components";
+import { boolean } from "zod";
 
 export const StyledMatrixRow = styled.div`
   display: flex;
-
-  > * {
-    margin-right: 30px;
-    margin-bottom: 20px;
-  }
 `;
 
 export const StyledMatrixWrapper = styled.div`
