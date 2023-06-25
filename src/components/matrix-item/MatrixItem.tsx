@@ -16,13 +16,13 @@ export function MatrixItem({ matrixItem }: Props) {
   if (matrixItemValue.type === "number") {
     return (
       <Dial
-        min={matrixItemValue.value.min}
-        max={matrixItemValue.value.max}
-        value={matrixItemValue.value.value}
+        min={matrixItemValue.min}
+        max={matrixItemValue.max}
+        value={matrixItemValue.value}
         onChange={(value) => setValue(editMode, matrixItem.index, value)}
         size={DIAL_SIZE}
         buttonSize={DIAL_BUTTON_SIZE}
-        integer={matrixItemValue.value.isInteger}
+        integer={matrixItemValue.isInteger}
       />
     );
   }

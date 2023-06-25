@@ -21,7 +21,7 @@ export const useMatrixStore = create<MatrixStoreState>((set) => {
       set(({ matrix }) => {
         return {
           matrix: produce(matrix, (draft) => {
-            draft.items[index][type].value.value = value;
+            draft.items[index][type].value = value;
           }),
         };
       }),

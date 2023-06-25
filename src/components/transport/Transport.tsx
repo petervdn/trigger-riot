@@ -14,7 +14,10 @@ export function Transport() {
   return (
     <>
       <h2>{playTime.toFixed(1)}</h2>
-      <h3>{bpm}</h3>
+      <h3>
+        {bpm}
+        <small>bpm</small>
+      </h3>
       <div>
         <button
           onClick={() => {

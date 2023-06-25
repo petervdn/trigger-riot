@@ -31,7 +31,6 @@ export function Dial({
   pixelsForFullRange = 100,
   onChange,
   buttonSize,
-
   integer = false,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
