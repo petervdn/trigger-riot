@@ -1,5 +1,5 @@
 import { MatrixItem } from "@/src/components/matrix-item/MatrixItem";
-import { useMatrixStore } from "@/src/data/store";
+import { useMatrixStore } from "@/src/data/matrixStore";
 import {
   StyledMatrixRow,
   StyledMatrixWrapper,

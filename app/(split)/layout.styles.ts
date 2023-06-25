@@ -4,8 +4,8 @@ export const StyledSplitWrapper = styled.div`
   display: flex;
 `;
 
-export const StyledSideBarWrapper = styled.div`
-  width: 300px;
+export const StyledSideBarWrapper = styled.div<{ width: number }>`
+  width: ${(p) => p.width}px;
   flex-grow: 0;
 `;
 

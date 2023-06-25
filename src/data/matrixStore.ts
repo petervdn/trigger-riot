@@ -1,16 +1,16 @@
 import { create } from "zustand";
 import { produce } from "immer";
 import { createMatrix } from "@/src/utils/matrixUtils";
-import {
-  Matrix,
-  MatrixItemEditableProperty,
-  SettingType,
-} from "@/src/types/matrix.types";
+import { Matrix, MatrixItemEditableProperty } from "@/src/types/matrix.types";
 
 type MatrixStoreState = {
   matrix: Matrix;
-  setValue: (type: SettingType, index: number, value: number) => void;
-  editMode: SettingType;
+  setValue: (
+    type: MatrixItemEditableProperty,
+    index: number,
+    value: number
+  ) => void;
+  editMode: MatrixItemEditableProperty;
   setEditMode: (mode: MatrixItemEditableProperty) => void;
 };
 

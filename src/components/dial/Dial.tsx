@@ -76,6 +76,7 @@ export function Dial({
             position: "absolute",
             width: size,
             height: size,
+            touchAction: "none",
           }}
         />
       </StyledRelativePositioner>
