@@ -1,7 +1,9 @@
 import { create } from "zustand";
 import { produce } from "immer";
 import { createMatrix } from "@/src/utils/matrixUtils";
-import { Matrix, SettingType } from "@/src/types/matrix.types";
+import { Matrix, MatrixItem, SettingType } from "@/src/types/matrix.types";
+
+// type EditMode = Pick<MatrixItem, ''>
 
 export type StoreState = {
   matrix: Matrix;

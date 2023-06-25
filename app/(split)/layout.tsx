@@ -1,19 +1,20 @@
-import { MainView } from "@/src/MainView";
+"use client";
 
-export default function SplitLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import { MainView } from "@/src/components/main-view/MainView";
+import {
+  StyledMainWrapper,
+  StyledSideBarWrapper,
+  StyledSplitWrapper,
+} from "@/app/(split)/layout.styles";
+import { PropsWithChildren } from "react";
+
+export default function SplitLayout({ children }: PropsWithChildren) {
   return (
-    <div className="columns-2 flex">
-      <div style={{ backgroundColor: "#F6F6F6" }} className="grow p-8">
+    <StyledSplitWrapper>
+      <StyledMainWrapper>
         <MainView />
-      </div>
-      <div style={{ backgroundColor: "#ddd" }} className="w-[400px] grow-0">
-        <h2>sidebar</h2>
-        {children}
-      </div>
-    </div>
+      </StyledMainWrapper>
+      <StyledSideBarWrapper>{children}</StyledSideBarWrapper>
+    </StyledSplitWrapper>
   );
 }

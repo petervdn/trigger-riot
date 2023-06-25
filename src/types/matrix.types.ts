@@ -1,6 +1,5 @@
 export type MatrixItem = {
   index: number;
-  // position: Position;
   division: MatrixItemValue;
   pulseWidth: MatrixItemValue;
   // steps: IMatrixItemOptionsValue;

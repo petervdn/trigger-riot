@@ -9,7 +9,7 @@ import {
 } from "react";
 import { drawDial } from "@/src/components/dial/dialUtils";
 import { useDrag } from "@use-gesture/react";
-import { clampValue } from "@/src/numberUtils";
+import { clampValue } from "@/src/utils/numberUtils";
 import { DialCircle } from "@/src/components/dial/DialCircle";
 
 type Props = {

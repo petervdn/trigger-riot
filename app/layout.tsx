@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { Header } from "@/src/Header";
+import { Header } from "@/src/components/header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
