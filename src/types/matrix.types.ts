@@ -2,15 +2,19 @@ export type MatrixItem = {
   index: number;
   division: MatrixItemValue;
   pulseWidth: MatrixItemValue;
-  // steps: IMatrixItemOptionsValue;
 };
+
+export const editableMatrixItemProperties: Array<
+  keyof Pick<MatrixItem, "division" | "pulseWidth">
+> = ["division", "pulseWidth"];
+
+export type MatrixItemEditableProperty =
+  (typeof editableMatrixItemProperties)[number];
 
 export type MatrixItemValue = {
   type: "number";
   value: NumberValue;
 };
-
-export type SettingType = "pulseWidth" | "division";
 
 type NumberValue = {
   value: number;
