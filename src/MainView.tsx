@@ -17,7 +17,7 @@ export function MainView() {
       <div className="flex">
         {editModes.map((mode) => (
           <button
-            className="bg-blue-500"
+            // className="bg-blue-500"
             key={mode}
             onClick={() => setEditMode(mode)}
           >

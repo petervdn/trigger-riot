@@ -1,70 +1,7 @@
 import { create } from "zustand";
 import { produce } from "immer";
-
-type Position = {
-  x: number;
-  y: number;
-};
-
-export type MatrixItem = {
-  index: number;
-  // position: Position;
-  division: MatrixItemValue;
-  pulseWidth: MatrixItemValue;
-  // steps: IMatrixItemOptionsValue;
-};
-
-type MatrixItemValue = {
-  type: "number";
-  value: NumberValue;
-};
-
-export type SettingType = "pulseWidth" | "division";
-
-type NumberValue = {
-  value: number;
-  min: number;
-  max: number;
-  isInteger: boolean;
-};
-
-type Matrix = {
-  rows: number;
-  columns: number;
-  items: Array<MatrixItem>;
-};
-
-const createMatrix = ({
-  rows,
-  columns,
-}: {
-  rows: number;
-  columns: number;
-}): Matrix => {
-  const items = Array.from({ length: rows * columns }, (_, index) => ({
-    index,
-    division: {
-      type: "number" as const,
-      value: {
-        min: 1,
-        max: 16,
-        value: 1 + Math.round(Math.random() * 15),
-        isInteger: true,
-      },
-    },
-    pulseWidth: {
-      type: "number" as const,
-      value: {
-        min: 0,
-        max: 1,
-        value: Math.random(),
-        isInteger: false,
-      },
-    },
-  }));
-
-  return { rows, columns, items };
-};
+import { createMatrix } from "@/src/utils/matrixUtils";
+import { Matrix, SettingType } from "@/src/types/matrix.types";
 
 export type StoreState = {
   matrix: Matrix;

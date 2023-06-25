@@ -1,11 +1,12 @@
 import { Dial } from "@/src/components/dial/Dial";
-import { MatrixItem, useMatrixStore } from "@/src/data/store";
+import { useMatrixStore } from "@/src/data/store";
+import { MatrixItem } from "@/src/types/matrix.types";
 
 type Props = {
   matrixItem: MatrixItem;
 };
-const DIAL_SIZE = 150;
-const DIAL_BUTTON_SIZE = 120;
+const DIAL_SIZE = 130;
+const DIAL_BUTTON_SIZE = 100;
 
 export function MatrixItem({ matrixItem }: Props) {
   const { matrix, setValue, setEditMode, editMode } = useMatrixStore();
