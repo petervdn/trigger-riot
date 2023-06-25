@@ -1,12 +1,15 @@
 import { MatrixItem } from "@/src/components/matrix-item/MatrixItem";
 import { useMatrixStore } from "@/src/data/store";
-import { StyledMatrixRow } from "@/src/components/matrix/Matrix.styles";
+import {
+  StyledMatrixRow,
+  StyledMatrixWrapper,
+} from "@/src/components/matrix/Matrix.styles";
 
 export function Matrix() {
   const { matrix } = useMatrixStore();
 
   return (
-    <>
+    <StyledMatrixWrapper>
       {Array.from({ length: matrix.rows }).map((_, index) => {
         const startIndex = index * matrix.columns;
         const endIndex = startIndex + matrix.columns;
@@ -19,6 +22,6 @@ export function Matrix() {
           </StyledMatrixRow>
         );
       })}
-    </>
+    </StyledMatrixWrapper>
   );
 }

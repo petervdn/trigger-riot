@@ -1,7 +1,6 @@
 import { Dial } from "@/src/components/dial/Dial";
 import { useMatrixStore } from "@/src/data/store";
 import { MatrixItem } from "@/src/types/matrix.types";
-import styled from "styled-components";
 
 type Props = {
   matrixItem: MatrixItem;

@@ -2,7 +2,7 @@ type Props = {
   size: number;
 };
 
-export function DialCircle({ size }: Props) {
+export function DialKnob({ size }: Props) {
   const sizeDecrease = 10;
   return (
     <div

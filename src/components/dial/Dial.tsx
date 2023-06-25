@@ -1,16 +1,16 @@
 "use client";
 
-import {
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  MouseEvent,
-  useState,
-} from "react";
-import { drawDial } from "@/src/components/dial/dialUtils";
+import { useEffect, useRef } from "react";
+import { drawDial } from "@/src/utils/dialUtils";
 import { useDrag } from "@use-gesture/react";
 import { clampValue } from "@/src/utils/numberUtils";
-import { DialCircle } from "@/src/components/dial/DialCircle";
+import { DialKnob } from "@/src/components/dial-knob/DialKnob";
+import {
+  StyledDialWrapper,
+  StyledKnobLabel,
+  StyledKnobWrapper,
+  StyledRelativePositioner,
+} from "@/src/components/dial/Dial.styles";
 
 type Props = {
   min: number;
@@ -23,11 +23,6 @@ type Props = {
   buttonSize: number;
 };
 
-type DragData = {
-  value: number;
-  x: number;
-  y: number;
-};
 export function Dial({
   size,
   value,
@@ -64,25 +59,14 @@ export function Dial({
     });
   }, [value]);
 
+  const labelValue = value.toFixed(integer ? 0 : 2);
+
   return (
-    <div style={{ width: size, marginRight: 20 }}>
-      <div
-        style={{
-          width: size,
-          height: size,
-          // backgroundColor: "cadetblue",
-          position: "relative",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            left: size * 0.5 - buttonSize * 0.5,
-            top: size * 0.5 - buttonSize * 0.5,
-          }}
-        >
-          <DialCircle size={buttonSize} />
-        </div>
+    <StyledDialWrapper width={size}>
+      <StyledRelativePositioner size={size}>
+        <StyledKnobWrapper leftTopOffset={size * 0.5 - buttonSize * 0.5}>
+          <DialKnob size={buttonSize} />
+        </StyledKnobWrapper>
         <canvas
           {...bind()}
           width={size * window.devicePixelRatio}
@@ -92,13 +76,10 @@ export function Dial({
             position: "absolute",
             width: size,
             height: size,
-            // pointerEvents: "none",
           }}
         />
-      </div>
-      <p style={{ textAlign: "center", color: "#aaa" }}>
-        {value.toFixed(integer ? 0 : 2)}
-      </p>
-    </div>
+      </StyledRelativePositioner>
+      <StyledKnobLabel>{labelValue}</StyledKnobLabel>
+    </StyledDialWrapper>
   );
 }

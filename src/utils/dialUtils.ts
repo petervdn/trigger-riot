@@ -3,16 +3,6 @@ interface IPoint {
   y: number;
 }
 
-/*
-context: CanvasRenderingContext2D,
-  valueFactor: number, // [0, 1]
-  rotation: number = 0.25,
-  range: number = 0.7,
-  arcWidth: number = 10,
-  lineInnerMargin: number = 5,
-  color: string = "deepskyblue",
-  bgColor: string = "black"
- */
 type DrawDialProps = {
   context: CanvasRenderingContext2D;
   valueFactor: number;
