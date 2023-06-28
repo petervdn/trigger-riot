@@ -12,8 +12,14 @@ type Props = {
 export function WaveView({ height, width }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { bpm } = usePlayStore();
-  const { matrix } = useMatrixStore();
   const playTime = usePlayTime();
+  const { selectedItemPositions, matrix } = useMatrixStore();
+
+  const itemsToDraw = matrix.items.filter((item) => {
+    return selectedItemPositions.some(
+      ({ x, y }) => x === item.position.x && y === item.position.y
+    );
+  });
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -25,7 +31,7 @@ export function WaveView({ height, width }: Props) {
       timeWindow: { start: playTime, end: playTime + 4 },
       waveMargin: 40,
       showBeats: true,
-      matrixItems: [matrix.items[0]],
+      matrixItems: itemsToDraw,
       beatLabelType: BeatLabelType.BEAT_INDEX,
       beatLabelRepeat: 0,
     });

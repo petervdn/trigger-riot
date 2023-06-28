@@ -23,14 +23,14 @@ export const createMatrix = ({
         type: "number" as const,
         min: 1,
         max: 8,
-        value: 1 + Math.round(Math.random() * 7),
+        value: 1,
         isInteger: true,
       },
       pulseWidth: {
         type: "number" as const,
         min: 0,
         max: 1,
-        value: Math.random(),
+        value: 0.5,
         isInteger: false,
       },
       steps: {
