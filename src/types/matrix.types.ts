@@ -32,8 +32,6 @@ type StringValue = {
 };
 
 export type Matrix = {
-  numberOfRows: number;
-  numberOfColumns: number;
   items: Array<MatrixItem>;
 };
 

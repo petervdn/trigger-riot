@@ -6,7 +6,7 @@ import { editableMatrixItemProperties } from "@/src/types/matrix.types";
 import { WaveView } from "@/src/components/wave-view/WaveView";
 
 export function MainView() {
-  const { setEditMode } = useMatrixStore();
+  const setEditMode = useMatrixStore((state) => state.setEditMode);
 
   return (
     <>

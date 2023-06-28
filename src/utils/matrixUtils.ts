@@ -3,54 +3,52 @@ import {
   MatrixItem,
   MatrixItemsGroupIdentifier,
 } from "@/src/types/matrix.types";
+import { Position } from "@/src/types/misc.types";
+import { StepType } from "@/src/data/consts";
+import { round } from "@/src/utils/numberUtils";
+import { TimeWindow } from "@/src/types/misc.types";
 
-export const createMatrix = ({
+export const createMatrixItems = ({
   numberOfRows,
   numberOfColumns,
 }: {
   numberOfRows: number;
   numberOfColumns: number;
-}): Matrix => {
-  const items = Array.from(
-    { length: numberOfRows * numberOfColumns },
-    (_, index) => ({
-      index,
-      position: {
-        x: index % numberOfColumns,
-        y: Math.floor(index / numberOfColumns),
-      },
-      division: {
-        type: "number" as const,
-        min: 1,
-        max: 8,
-        value: 1,
-        isInteger: true,
-      },
-      pulseWidth: {
-        type: "number" as const,
-        min: 0,
-        max: 1,
-        value: 0.5,
-        isInteger: false,
-      },
-      steps: {
-        type: "string" as const,
-        value: StepType.SIXTEENTH,
-      },
-    })
-  );
-
-  return { numberOfRows, numberOfColumns, items };
+}): Array<MatrixItem> => {
+  return Array.from({ length: numberOfRows * numberOfColumns }, (_, index) => ({
+    index,
+    position: getPositionForIndex(index, numberOfColumns),
+    division: {
+      type: "number" as const,
+      min: 1,
+      max: 8,
+      value: 1,
+      isInteger: true,
+    },
+    pulseWidth: {
+      type: "number" as const,
+      min: 0,
+      max: 1,
+      value: 0.5,
+      isInteger: false,
+    },
+    steps: {
+      type: "string" as const,
+      value: StepType.SIXTEENTH,
+    },
+  }));
 };
 
-// import {
-//   createDivisionValue,
-//   createPulseWidthValue,
-//   createStepsValue,
-// } from "./matrixItemValueUtils";
-import { StepType } from "@/src/data/consts";
-import { round } from "@/src/utils/numberUtils";
-import { RowOrColumn, TimeWindow } from "@/src/types/misc.types";
+export function getPositionForIndex(index: number, numberOfColumns: number) {
+  return {
+    x: index % numberOfColumns,
+    y: Math.floor(index / numberOfColumns),
+  };
+}
+
+export function getIndexForPosition(position: Position, numberOfRows: number) {
+  return position.y * numberOfRows + position.x;
+}
 
 export function getTimeSlotsInRangeForMatrixItems(
   matrixItems: Array<MatrixItem>,

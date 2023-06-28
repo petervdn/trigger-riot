@@ -6,28 +6,36 @@ import {
 import { MatrixInputItem } from "@/src/components/matrix-input-item/MatrixInputItem";
 import { MatrixGroupControls } from "@/src/components/matrix-group-controls/MatrixGroupControls";
 import { MatrixRowItem } from "@/src/components/matrix-row/MatrixRowItem";
+import { shallow } from "zustand/shallow";
 
 export function Matrix() {
-  const { matrix } = useMatrixStore();
-
+  const { numberOfRows, numberOfColumns } = useMatrixStore(
+    (state) => ({
+      numberOfRows: state.numberOfRows,
+      numberOfColumns: state.numberOfColumns,
+    }),
+    shallow
+  );
+  console.log("matrix", numberOfRows, numberOfColumns);
   return (
     <StyledMatrixWrapper>
-      {Array.from({ length: matrix.numberOfRows }).map((_, rowIndex) => {
-        const startIndex = rowIndex * matrix.numberOfColumns;
-        const endIndex = startIndex + matrix.numberOfColumns;
-        const rowItems = matrix.items.slice(startIndex, endIndex);
+      {Array.from({ length: numberOfRows }).map((_, rowIndex) => {
         return (
           <StyledMatrixRow key={rowIndex}>
-            {rowItems.map((item, columnIndex) => {
-              return (
-                <MatrixRowItem
-                  key={columnIndex}
-                  position={{ x: columnIndex, y: rowIndex }}
-                >
-                  <MatrixInputItem matrixItem={item} />
-                </MatrixRowItem>
-              );
-            })}
+            {Array.from({ length: numberOfColumns }).map(
+              (item, columnIndex) => {
+                return (
+                  <MatrixRowItem
+                    key={columnIndex}
+                    position={{ x: columnIndex, y: rowIndex }}
+                  >
+                    <MatrixInputItem
+                      position={{ x: columnIndex, y: rowIndex }}
+                    />
+                  </MatrixRowItem>
+                );
+              }
+            )}
             <MatrixRowItem>
               <MatrixGroupControls
                 groupIdentifier={{ type: "row", index: rowIndex }}
@@ -37,7 +45,7 @@ export function Matrix() {
         );
       })}
       <StyledMatrixRow>
-        {Array.from({ length: matrix.numberOfColumns }).map((_, index) => (
+        {Array.from({ length: numberOfColumns }).map((_, index) => (
           <MatrixRowItem key={index}>
             <MatrixGroupControls groupIdentifier={{ type: "column", index }} />
           </MatrixRowItem>

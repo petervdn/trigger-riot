@@ -1,16 +1,20 @@
 import { create } from "zustand";
-import { produce } from "immer";
-import { createMatrix, getMatrixItemsForGroup } from "@/src/utils/matrixUtils";
 import {
-  Matrix,
+  createMatrixItems,
+  getIndexForPosition,
+} from "@/src/utils/matrixUtils";
+import {
   MatrixItem,
   MatrixItemEditableProperty,
-  MatrixItemsGroupIdentifier,
 } from "@/src/types/matrix.types";
-import { RowOrColumn, Position } from "@/src/types/misc.types";
+import { Position } from "@/src/types/misc.types";
+import { NUMBER_OF_COLUMNS, NUMBER_OF_ROWS } from "@/src/data/consts";
+import { produce } from "immer";
 
 type MatrixStoreState = {
-  matrix: Matrix;
+  numberOfRows: number;
+  numberOfColumns: number;
+  matrixItems: Array<MatrixItem>;
   setValue: (
     type: MatrixItemEditableProperty,
     index: number,
@@ -20,23 +24,36 @@ type MatrixStoreState = {
   setEditMode: (mode: MatrixItemEditableProperty) => void;
   setSelectedItemPositions: (positions: Array<Position>) => void;
   selectedItemPositions: Array<Position>;
+  getItemForPosition: (position: Position) => MatrixItem;
 };
 
 export const useMatrixStore = create<MatrixStoreState>((set, get) => {
   return {
-    matrix: createMatrix({ numberOfRows: 4, numberOfColumns: 4 }),
-    setValue: (type, index, value) =>
-      set(({ matrix }) => {
+    setValue: (type, index, value) => {
+      set(({ matrixItems }) => {
         return {
-          matrix: produce(matrix, (draft) => {
-            draft.items[index][type].value = value;
+          matrixItems: produce(matrixItems, (draft) => {
+            draft[index][type].value = value;
           }),
         };
-      }),
+      });
+    },
+    numberOfRows: NUMBER_OF_ROWS,
+    numberOfColumns: NUMBER_OF_COLUMNS,
     editMode: "division",
     setEditMode: (editMode) => set(() => ({ editMode })),
     setSelectedItemPositions: (positions) =>
       set(() => ({ selectedItemPositions: positions })),
     selectedItemPositions: [],
+    getItemForPosition: (position) => {
+      return get().matrixItems[
+        getIndexForPosition(position, get().numberOfRows)
+      ];
+    },
+
+    matrixItems: createMatrixItems({
+      numberOfRows: NUMBER_OF_ROWS,
+      numberOfColumns: NUMBER_OF_COLUMNS,
+    }),
   };
 });
