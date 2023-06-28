@@ -13,13 +13,18 @@ export function WaveView({ height, width }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { bpm } = usePlayStore();
   const playTime = usePlayTime();
-  // const { selectedItemPositions, matrix } = useMatrixStore();
+  const { selectedItemPositions, matrixItems } = useMatrixStore((state) => {
+    return {
+      selectedItemPositions: state.selectedItemPositions,
+      matrixItems: state.matrixItems,
+    };
+  });
 
-  // const itemsToDraw = matrix.items.filter((item) => {
-  //   return selectedItemPositions.some(
-  //     ({ x, y }) => x === item.position.x && y === item.position.y
-  //   );
-  // });
+  const itemsToDraw = matrixItems.filter((item) => {
+    return selectedItemPositions.some(
+      ({ x, y }) => x === item.position.x && y === item.position.y
+    );
+  });
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -31,11 +36,11 @@ export function WaveView({ height, width }: Props) {
       timeWindow: { start: playTime, end: playTime + 4 },
       waveMargin: 40,
       showBeats: true,
-      matrixItems: [],
+      matrixItems: itemsToDraw,
       beatLabelType: BeatLabelType.BEAT_INDEX,
       beatLabelRepeat: 0,
     });
-  }, [playTime]);
+  }, [playTime, itemsToDraw]); // todo: why does this rerender on item value change? + add exhaustive deps rule
 
   return (
     <>

@@ -16,7 +16,7 @@ export function Matrix() {
     }),
     shallow
   );
-  console.log("matrix", numberOfRows, numberOfColumns);
+
   return (
     <StyledMatrixWrapper>
       {Array.from({ length: numberOfRows }).map((_, rowIndex) => {

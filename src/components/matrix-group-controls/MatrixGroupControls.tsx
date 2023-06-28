@@ -1,18 +1,26 @@
-import { RowOrColumn } from "@/src/types/misc.types";
 import { MatrixItemsGroupIdentifier } from "@/src/types/matrix.types";
-import { useGroupedItems } from "@/src/utils/hooks/useGroupedItems";
 import { useMatrixStore } from "@/src/data/matrixStore";
+import { getPositionsForGroup } from "@/src/utils/matrixUtils";
 
 type Props = {
   groupIdentifier: MatrixItemsGroupIdentifier;
 };
 
 export function MatrixGroupControls({ groupIdentifier }: Props) {
-  const items = useGroupedItems(groupIdentifier);
-  const { setSelectedItemPositions, selectedItemPositions } = useMatrixStore();
+  const setSelectedItemPositions = useMatrixStore(
+    ({ setSelectedItemPositions }) => setSelectedItemPositions
+  );
+  const { numberOfRows, numberOfColumns } = useMatrixStore(
+    ({ numberOfColumns, numberOfRows }) => ({
+      numberOfColumns,
+      numberOfRows,
+    })
+  );
 
   const onSelectClick = () => {
-    setSelectedItemPositions(items.map(({ position }) => ({ ...position })));
+    setSelectedItemPositions(
+      getPositionsForGroup({ groupIdentifier, numberOfRows, numberOfColumns })
+    );
   };
 
   return (

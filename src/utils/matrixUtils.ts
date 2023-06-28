@@ -1,5 +1,4 @@
 import {
-  Matrix,
   MatrixItem,
   MatrixItemsGroupIdentifier,
 } from "@/src/types/matrix.types";
@@ -130,50 +129,6 @@ export function getSlotsInRangeForMatrixItem(
   return results;
 }
 
-// export function createMatrixData(
-//   numberOfRows = 4,
-//   numberOfColumns = 4
-// ): IMatrixData {
-//   const items: IMatrixItem[] = [];
-//
-//   let index = 0;
-//   for (let y = 0; y < numberOfRows; y += 1) {
-//     for (let x = 0; x < numberOfColumns; x += 1) {
-//       const item: IMatrixItem = {
-//         index,
-//         position: { x, y },
-//         division: createDivisionValue(),
-//         pulseWidth: createPulseWidthValue(),
-//         steps: createStepsValue(),
-//       };
-//       items.push(item);
-//       index += 1;
-//     }
-//   }
-//
-//   const columns: IMatrixItemGroup[] = [];
-//   for (let x = 0; x < numberOfColumns; x += 1) {
-//     columns.push({
-//       items: items.filter((item) => item.position.x === x),
-//       id: `column-${x + 1}`,
-//     });
-//   }
-//
-//   const rows: IMatrixItemGroup[] = [];
-//   for (let y = 0; y < numberOfRows; y += 1) {
-//     rows.push({
-//       items: items.filter((item) => item.position.y === y),
-//       id: `row-${y + 1}`,
-//     });
-//   }
-//
-//   return {
-//     items,
-//     rows,
-//     columns,
-//   };
-// }
-
 export function flattenTimeSlots(
   timeSlots: Array<TimeWindow>
 ): Array<TimeWindow> {
@@ -197,22 +152,24 @@ export function flattenTimeSlots(
   return results;
 }
 
-export function getMatrixItemsForGroup({
-  items,
+export function getPositionsForGroup({
   groupIdentifier,
+  numberOfRows,
   numberOfColumns,
 }: {
-  items: Array<MatrixItem>;
   groupIdentifier: MatrixItemsGroupIdentifier;
+  numberOfRows: number;
   numberOfColumns: number;
-}) {
-  return items.filter((item, index) => {
-    if (groupIdentifier.type === "row") {
-      const startIndex = numberOfColumns * groupIdentifier.index;
-      const endIndex = startIndex + numberOfColumns;
-      return index >= startIndex && index < endIndex;
-    } else {
-      return index % numberOfColumns === groupIdentifier.index;
-    }
-  });
+}): Array<Position> {
+  if (groupIdentifier.type === "row") {
+    return Array.from({ length: numberOfColumns }).map((_, index) => ({
+      x: index,
+      y: groupIdentifier.index,
+    }));
+  }
+
+  return Array.from({ length: numberOfRows }).map((_, index) => ({
+    x: groupIdentifier.index,
+    y: index,
+  }));
 }
