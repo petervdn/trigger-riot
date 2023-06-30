@@ -1,24 +1,29 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import { usePlayTime } from "@/src/utils/hooks/usePlayTime";
 import { drawWaveForItems } from "@/src/utils/waveViewUtils";
 import { usePlayStore } from "@/src/data/playStore";
 import { BeatLabelType } from "@/src/data/consts";
 import { useMatrixStore } from "@/src/data/matrixStore";
+import { shallow } from "zustand/shallow";
 
 type Props = {
   width: number;
   height: number;
 };
+
 export function WaveView({ height, width }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { bpm } = usePlayStore();
+  const bpm = usePlayStore((state) => state.bpm);
   const playTime = usePlayTime();
+
   const { selectedItemPositions, matrixItems } = useMatrixStore((state) => {
     return {
       selectedItemPositions: state.selectedItemPositions,
       matrixItems: state.matrixItems,
     };
-  });
+  }, shallow);
 
   const itemsToDraw = matrixItems.filter((item) => {
     return selectedItemPositions.some(
@@ -33,14 +38,14 @@ export function WaveView({ height, width }: Props) {
     drawWaveForItems({
       context: canvasRef.current.getContext("2d")!,
       bpm,
-      timeWindow: { start: playTime, end: playTime + 4 },
+      timeWindow: { start: playTime, end: playTime + 8 },
       waveMargin: 40,
       showBeats: true,
       matrixItems: itemsToDraw,
       beatLabelType: BeatLabelType.BEAT_INDEX,
       beatLabelRepeat: 0,
     });
-  }, [playTime, itemsToDraw]); // todo: why does this rerender on item value change? + add exhaustive deps rule
+  }, [playTime, itemsToDraw]);
 
   return (
     <>

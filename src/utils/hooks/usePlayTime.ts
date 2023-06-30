@@ -6,8 +6,11 @@ export function usePlayTime() {
   const [playTime, setPlayTime] = useState(0);
 
   useInterval(() => {
-    setPlayTime(soundManager.getCurrentTime());
-  }, 0);
+    console.log("interval", soundManager.getCurrentTime());
+    if (playTime !== soundManager.getCurrentTime()) {
+      setPlayTime(soundManager.getCurrentTime());
+    }
+  }, 500);
 
   return playTime;
 }
