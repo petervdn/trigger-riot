@@ -18,7 +18,7 @@ export type MatrixItemEditableProperty =
 
 // export type MatrixItemValue = NumberValue | StringValue;
 
-type NumberValue = {
+export type NumberValue = {
   type: "number";
   value: number;
   min: number;
@@ -29,10 +29,7 @@ type NumberValue = {
 type StringValue = {
   type: "string";
   value: string;
-};
-
-export type Matrix = {
-  items: Array<MatrixItem>;
+  options: Array<string>;
 };
 
 export type MatrixItemsGroupIdentifier = {

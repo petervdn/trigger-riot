@@ -7,6 +7,8 @@ import { StepType } from "@/src/data/consts";
 import { round } from "@/src/utils/numberUtils";
 import { TimeWindow } from "@/src/types/misc.types";
 
+const stepOptions = ["16th", "8th", "4th", "1/2"];
+
 export const createMatrixItems = ({
   numberOfRows,
   numberOfColumns,
@@ -33,6 +35,7 @@ export const createMatrixItems = ({
     },
     steps: {
       type: "string" as const,
+      options: stepOptions,
       value: StepType.SIXTEENTH,
     },
   }));

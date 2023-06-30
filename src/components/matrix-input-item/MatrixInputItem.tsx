@@ -2,6 +2,7 @@ import { Dial } from "@/src/components/dial/Dial";
 import { useMatrixStore } from "@/src/data/matrixStore";
 import { Position } from "@/src/types/misc.types";
 import { shallow } from "zustand/shallow";
+import { OptionsDial } from "@/src/components/options-dial/OptionsDial";
 
 type Props = {
   position: Position;
@@ -30,6 +31,19 @@ export function MatrixInputItem({ position }: Props) {
           size={DIAL_SIZE}
           buttonSize={DIAL_BUTTON_SIZE}
           integer={matrixItemValue.isInteger}
+        />
+      </div>
+    );
+  }
+  if (matrixItemValue.type === "string") {
+    return (
+      <div style={{ width: DIAL_SIZE }}>
+        <OptionsDial
+          options={matrixItemValue.options}
+          value={matrixItemValue.value}
+          onChange={(value) => setValue(editMode, matrixItem.index, value)}
+          size={DIAL_SIZE}
+          buttonSize={DIAL_BUTTON_SIZE}
         />
       </div>
     );
