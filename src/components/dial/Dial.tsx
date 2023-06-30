@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { drawDial } from "@/src/utils/dialUtils";
 import { useDrag } from "@use-gesture/react";
 import { clampValue } from "@/src/utils/numberUtils";
@@ -12,7 +12,7 @@ import {
   StyledRelativePositioner,
 } from "@/src/components/dial/Dial.styles";
 
-type Props = {
+export type DialProps = {
   min: number;
   max: number;
   onChange?: (value: number) => void;
@@ -21,7 +21,11 @@ type Props = {
   pixelsForFullRange?: number;
   integer?: boolean;
   buttonSize: number;
+  getLabel?: (value: number, isInteger: boolean) => string | number;
 };
+
+const defaultGetLabel = (value: number, integer: boolean) =>
+  value.toFixed(integer ? 0 : 2);
 
 export function Dial({
   size,
@@ -32,7 +36,8 @@ export function Dial({
   onChange,
   buttonSize,
   integer = false,
-}: Props) {
+  getLabel,
+}: DialProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const startDragDataRef = useRef<{ value: number; y: number }>();
 
@@ -58,7 +63,11 @@ export function Dial({
     });
   }, [value]);
 
-  const labelValue = value.toFixed(integer ? 0 : 2);
+  const labelValue = useMemo(
+    () =>
+      getLabel ? getLabel(value, integer) : defaultGetLabel(value, integer),
+    [value, integer]
+  );
 
   return (
     <StyledDialWrapper width={size}>
