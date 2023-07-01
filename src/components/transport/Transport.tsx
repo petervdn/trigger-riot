@@ -9,8 +9,6 @@ export function Transport() {
   const playTime = usePlayTime();
   const isPlaying = useIsPlaying();
 
-  useInterval(() => {}, 0);
-
   return (
     <>
       <h2>{playTime.toFixed(1)}</h2>

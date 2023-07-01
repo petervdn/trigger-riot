@@ -1,8 +1,5 @@
 import { useMatrixStore } from "@/src/data/matrixStore";
-import {
-  StyledMatrixRow,
-  StyledMatrixWrapper,
-} from "@/src/components/matrix/Matrix.styles";
+import { StyledMatrixRow } from "@/src/components/matrix/Matrix.styles";
 import { MatrixInputItem } from "@/src/components/matrix-input-item/MatrixInputItem";
 import { MatrixGroupControls } from "@/src/components/matrix-group-controls/MatrixGroupControls";
 import { MatrixRowItem } from "@/src/components/matrix-row/MatrixRowItem";
@@ -17,21 +14,24 @@ export function Matrix() {
     shallow
   );
 
+  const selectedItemPositions = useMatrixStore(
+    (state) => state.selectedItemPositions
+  );
+
   return (
-    <StyledMatrixWrapper>
+    <>
       {Array.from({ length: numberOfRows }).map((_, rowIndex) => {
         return (
           <StyledMatrixRow key={rowIndex}>
             {Array.from({ length: numberOfColumns }).map(
               (item, columnIndex) => {
+                const position = { x: columnIndex, y: rowIndex };
+                const isSelected = selectedItemPositions.some(
+                  ({ x, y }) => position && x === position.x && y === position.y
+                );
                 return (
-                  <MatrixRowItem
-                    key={columnIndex}
-                    position={{ x: columnIndex, y: rowIndex }}
-                  >
-                    <MatrixInputItem
-                      position={{ x: columnIndex, y: rowIndex }}
-                    />
+                  <MatrixRowItem key={columnIndex} isSelected={isSelected}>
+                    <MatrixInputItem position={position} />
                   </MatrixRowItem>
                 );
               }
@@ -51,6 +51,6 @@ export function Matrix() {
           </MatrixRowItem>
         ))}
       </StyledMatrixRow>
-    </StyledMatrixWrapper>
+    </>
   );
 }

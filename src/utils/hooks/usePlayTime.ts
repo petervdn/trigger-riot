@@ -9,7 +9,7 @@ export function usePlayTime() {
     if (playTime !== soundManager.getCurrentTime()) {
       setPlayTime(soundManager.getCurrentTime());
     }
-  }, 500);
+  }, 0);
 
   return playTime;
 }

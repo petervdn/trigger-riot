@@ -1,21 +1,21 @@
-import { Position } from "../../types/misc.types";
 import { PropsWithChildren } from "react";
 import { StyledMatrixRowItem } from "@/src/components/matrix-row/MatrixRowItem.styles";
-import { useMatrixStore } from "@/src/data/matrixStore";
+import { MATRIX_ITEM_MARGIN, MATRIX_ITEM_WIDTH } from "@/src/data/consts";
 
 type Props = {
-  position?: Position;
+  isSelected?: boolean;
 } & PropsWithChildren;
 
-export function MatrixRowItem({ position, children }: Props) {
-  const { selectedItemPositions } = useMatrixStore();
-
-  const isSelected = selectedItemPositions.some(
-    ({ x, y }) => position && x === position.x && y === position.y
-  );
-
+export function MatrixRowItem({ isSelected = false, children }: Props) {
   return (
-    <StyledMatrixRowItem isSelected={isSelected}>
+    <StyledMatrixRowItem
+      isSelected={isSelected}
+      style={{
+        width: MATRIX_ITEM_WIDTH,
+        marginRight: MATRIX_ITEM_MARGIN,
+        marginBottom: MATRIX_ITEM_MARGIN,
+      }}
+    >
       {children}
     </StyledMatrixRowItem>
   );
