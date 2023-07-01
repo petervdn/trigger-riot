@@ -14,10 +14,6 @@ export function Matrix() {
     shallow
   );
 
-  const selectedItemPositions = useMatrixStore(
-    (state) => state.selectedItemPositions
-  );
-
   return (
     <>
       {Array.from({ length: numberOfRows }).map((_, rowIndex) => {
@@ -26,17 +22,15 @@ export function Matrix() {
             {Array.from({ length: numberOfColumns }).map(
               (item, columnIndex) => {
                 const position = { x: columnIndex, y: rowIndex };
-                const isSelected = selectedItemPositions.some(
-                  ({ x, y }) => position && x === position.x && y === position.y
-                );
+
                 return (
-                  <MatrixRowItem key={columnIndex} isSelected={isSelected}>
+                  <MatrixRowItem key={columnIndex} position={position}>
                     <MatrixInputItem position={position} />
                   </MatrixRowItem>
                 );
               }
             )}
-            <MatrixRowItem>
+            <MatrixRowItem position={{ x: numberOfColumns, y: rowIndex }}>
               <MatrixGroupControls
                 groupIdentifier={{ type: "row", index: rowIndex }}
               />
@@ -45,9 +39,14 @@ export function Matrix() {
         );
       })}
       <StyledMatrixRow>
-        {Array.from({ length: numberOfColumns }).map((_, index) => (
-          <MatrixRowItem key={index}>
-            <MatrixGroupControls groupIdentifier={{ type: "column", index }} />
+        {Array.from({ length: numberOfColumns }).map((_, columnIndex) => (
+          <MatrixRowItem
+            key={columnIndex}
+            position={{ x: columnIndex, y: numberOfColumns }}
+          >
+            <MatrixGroupControls
+              groupIdentifier={{ type: "column", index: columnIndex }}
+            />
           </MatrixRowItem>
         ))}
       </StyledMatrixRow>

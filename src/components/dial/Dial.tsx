@@ -11,6 +11,7 @@ import {
   StyledKnobWrapper,
   StyledRelativePositioner,
 } from "@/src/components/dial/Dial.styles";
+import { MAIN_COLOR } from "@/src/data/consts";
 
 export type DialProps = {
   min: number;
@@ -60,6 +61,8 @@ export function Dial({
     drawDial({
       context: canvasRef.current.getContext("2d")!,
       valueFactor: (value - min) / (max - min),
+      color: MAIN_COLOR,
+      bgColor: "#555",
     });
   }, [value]);
 

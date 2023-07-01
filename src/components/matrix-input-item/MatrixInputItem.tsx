@@ -2,13 +2,11 @@ import { Dial } from "@/src/components/dial/Dial";
 import { useMatrixStore } from "@/src/data/matrixStore";
 import { Position } from "@/src/types/misc.types";
 import { shallow } from "zustand/shallow";
-import { OptionsDial } from "@/src/components/options-dial/OptionsDial";
+import { MATRIX_BUTTON_WIDTH } from "@/src/data/consts";
 
 type Props = {
   position: Position;
 };
-const DIAL_SIZE = 130;
-const DIAL_BUTTON_SIZE = 100;
 
 export function MatrixInputItem({ position }: Props) {
   const editMode = useMatrixStore((state) => state.editMode);
@@ -22,14 +20,14 @@ export function MatrixInputItem({ position }: Props) {
 
   if (matrixItemValue.type === "number") {
     return (
-      <div style={{ width: DIAL_SIZE }}>
+      <div style={{ width: "100%" }}>
         <Dial
           min={matrixItemValue.min}
           max={matrixItemValue.max}
           value={matrixItemValue.value}
           onChange={(value) => setValue(editMode, matrixItem.index, value)}
-          size={DIAL_SIZE}
-          buttonSize={DIAL_BUTTON_SIZE}
+          size={MATRIX_BUTTON_WIDTH}
+          buttonSize={MATRIX_BUTTON_WIDTH - 30}
           integer={matrixItemValue.isInteger}
           getLabel={matrixItemValue.getLabel}
         />

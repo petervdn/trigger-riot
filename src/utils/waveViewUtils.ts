@@ -1,4 +1,3 @@
-// import { getTimeSlotsInRangeForMatrixItems } from "./matrixUtils";
 import { TimeWindow } from "@/src/types/misc.types";
 import { BeatLabelType } from "@/src/data/consts";
 import { Position } from "../types/misc.types";
@@ -14,6 +13,7 @@ export function drawWaveForItems({
   beatLabelType,
   timeWindow,
   showBeats,
+  color,
 }: {
   context: CanvasRenderingContext2D;
   matrixItems: Array<MatrixItem>;
@@ -23,6 +23,7 @@ export function drawWaveForItems({
   showBeats: boolean;
   beatLabelType: string;
   beatLabelRepeat: number;
+  color: string;
 }) {
   // clear canvas
   context.fillStyle = "black";
@@ -48,6 +49,7 @@ export function drawWaveForItems({
     bpm,
     pixelsPerSecond,
     waveMargin,
+    color,
   });
 }
 
@@ -59,7 +61,7 @@ export function drawTimeSlots({
   waveMargin,
   matrixItems,
 
-  color = "deepskyblue",
+  color,
   lineWidth = 2,
 }: {
   context: CanvasRenderingContext2D;
@@ -69,7 +71,7 @@ export function drawTimeSlots({
   pixelsPerSecond: number;
   waveMargin: number;
   lineWidth?: number;
-  color?: string;
+  color: string;
 }): void {
   context.lineWidth = lineWidth;
   context.strokeStyle = color;

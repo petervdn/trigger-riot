@@ -1,6 +1,5 @@
 "use client";
 
-import { MainView } from "@/src/components/main-view/MainView";
 import {
   StyledMainWrapper,
   StyledSideBarWrapper,
@@ -9,12 +8,13 @@ import {
 import { PropsWithChildren } from "react";
 import { MATRIX_WIDTH, SIDEBAR_WIDTH } from "@/src/data/consts";
 import { Transport } from "@/src/components/transport/Transport";
+import { Matrix } from "@/src/components/matrix/Matrix";
 
 export default function SplitLayout({ children }: PropsWithChildren) {
   return (
     <StyledSplitWrapper>
       <StyledMainWrapper style={{ width: MATRIX_WIDTH }}>
-        <MainView />
+        <Matrix />
       </StyledMainWrapper>
       <StyledSideBarWrapper width={SIDEBAR_WIDTH}>
         <Transport />

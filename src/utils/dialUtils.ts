@@ -10,12 +10,12 @@ type DrawDialProps = {
   range?: number;
   arcWidth?: number;
   lineInnerMargin?: number;
-  color?: string;
-  bgColor?: string;
+  color: string;
+  bgColor: string;
 };
 export function drawDial({
-  bgColor = "#555",
-  color = "deepskyblue",
+  bgColor,
+  color,
   context,
   valueFactor,
   lineInnerMargin = 30,
