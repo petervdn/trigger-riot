@@ -38,7 +38,7 @@ export function WaveView({ height, width }: Props) {
     drawWaveForItems({
       context: canvasRef.current.getContext("2d")!,
       bpm,
-      timeWindow: { start: playTime, end: playTime + 8 },
+      timeWindow: { start: playTime, end: playTime + 2 },
       waveMargin: 40,
       showBeats: true,
       matrixItems: [matrixItems[0]],

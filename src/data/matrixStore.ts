@@ -18,7 +18,7 @@ type MatrixStoreState = {
   setValue: (
     type: MatrixItemEditableProperty,
     index: number,
-    value: number | string
+    value: number
   ) => void;
   editMode: MatrixItemEditableProperty;
   setEditMode: (mode: MatrixItemEditableProperty) => void;

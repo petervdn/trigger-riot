@@ -41,30 +41,44 @@ export function drawWaveForItems({
     });
   }
 
-  drawTimeSlots(
+  drawTimeSlots({
     context,
     matrixItems,
     timeWindow,
     bpm,
     pixelsPerSecond,
-    waveMargin
-  );
+    waveMargin,
+  });
 }
 
-export function drawTimeSlots(
-  context: CanvasRenderingContext2D,
-  matrixItems: Array<MatrixItem>,
-  timeWindow: TimeWindow,
-  bpm: number,
-  pixelsPerSecond: number,
-  waveMargin: number,
+export function drawTimeSlots({
+  timeWindow,
+  context,
+  bpm,
+  pixelsPerSecond,
+  waveMargin,
+  matrixItems,
+
+  color = "deepskyblue",
   lineWidth = 2,
-  color = "deepskyblue"
-): void {
+}: {
+  context: CanvasRenderingContext2D;
+  matrixItems: Array<MatrixItem>;
+  timeWindow: TimeWindow;
+  bpm: number;
+  pixelsPerSecond: number;
+  waveMargin: number;
+  lineWidth?: number;
+  color?: string;
+}): void {
   context.lineWidth = lineWidth;
   context.strokeStyle = color;
 
-  const slots = getTimeSlotsInRangeForMatrixItems(matrixItems, bpm, timeWindow);
+  const slots = getTimeSlotsInRangeForMatrixItems({
+    matrixItems,
+    bpm,
+    timeWindow,
+  });
 
   const drawData = getDrawDataForTimeSlots(
     context,

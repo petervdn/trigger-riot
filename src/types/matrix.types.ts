@@ -26,12 +26,12 @@ export type NumberValue = {
   isInteger: boolean;
   getLabel?: (value: number) => string | number;
 };
-
-type StringValue = {
-  type: "string";
-  value: string;
-  options: Array<string>;
-};
+//
+// type StringValue = {
+//   type: "string";
+//   value: string;
+//   options: Array<string>;
+// };
 
 export type MatrixItemsGroupIdentifier = {
   index: number;

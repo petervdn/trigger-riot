@@ -3,7 +3,6 @@ import {
   MatrixItemsGroupIdentifier,
 } from "@/src/types/matrix.types";
 import { Position } from "@/src/types/misc.types";
-import { StepType } from "@/src/data/consts";
 import { round } from "@/src/utils/numberUtils";
 import { TimeWindow } from "@/src/types/misc.types";
 
@@ -53,15 +52,23 @@ export function getIndexForPosition(position: Position, numberOfRows: number) {
   return position.y * numberOfRows + position.x;
 }
 
-export function getTimeSlotsInRangeForMatrixItems(
-  matrixItems: Array<MatrixItem>,
-  bpm: number,
-  timeWindow: TimeWindow
-): Array<TimeWindow> {
+export function getTimeSlotsInRangeForMatrixItems({
+  matrixItems,
+  timeWindow,
+  bpm,
+}: {
+  matrixItems: Array<MatrixItem>;
+  bpm: number;
+  timeWindow: TimeWindow;
+}): Array<TimeWindow> {
   const slots: Array<TimeWindow> = [];
   for (let i = 0; i < matrixItems.length; i += 1) {
     slots.push(
-      ...getSlotsInRangeForMatrixItem(matrixItems[i], bpm, timeWindow)
+      ...getSlotsInRangeForMatrixItem({
+        matrixItem: matrixItems[i],
+        bpm,
+        timeWindow,
+      })
     );
   }
 
@@ -72,7 +79,7 @@ export function getTimeSlotsInRangeForMatrixItems(
   }));
 }
 
-const getLabelForStepValue = (value: number): string | number => {
+function getLabelForStepValue(value: number): string | number {
   const labels: Record<number, string> = {
     [6]: "64th",
     [8]: "32t",
@@ -89,19 +96,27 @@ const getLabelForStepValue = (value: number): string | number => {
   };
 
   return labels[value] || value;
-};
+}
 
-export function getSlotsInRangeForMatrixItem(
-  matrixItem: MatrixItem,
-  bpm: number,
-  timeWindow: TimeWindow
-): Array<TimeWindow> {
+function getClockMultiplierValue({ steps }: MatrixItem) {
+  return steps.value / 96;
+}
+
+export function getSlotsInRangeForMatrixItem({
+  matrixItem,
+  timeWindow,
+  bpm,
+}: {
+  matrixItem: MatrixItem;
+  bpm: number;
+  timeWindow: TimeWindow;
+}): Array<TimeWindow> {
   if (matrixItem.division.value === 0 || matrixItem.pulseWidth.value === 0) {
     // in these cases: there will be no wave at all
     return [];
   }
 
-  const secondsPerBeat = 60 / bpm; //* getClockMultiplierByStepType(matrixItem.steps.value);
+  const secondsPerBeat = (60 / bpm) * getClockMultiplierValue(matrixItem);
   const itemRepeatTime = matrixItem.division.value * secondsPerBeat;
 
   // get last one that starts before start time
