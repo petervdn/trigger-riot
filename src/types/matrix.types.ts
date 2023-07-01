@@ -5,7 +5,7 @@ export type MatrixItem = {
   index: number;
   division: NumberValue;
   pulseWidth: NumberValue;
-  steps: StringValue;
+  steps: NumberValue;
   position: Position;
 };
 
@@ -24,6 +24,7 @@ export type NumberValue = {
   min: number;
   max: number;
   isInteger: boolean;
+  getLabel?: (value: number) => string | number;
 };
 
 type StringValue = {

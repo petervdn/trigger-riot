@@ -31,21 +31,22 @@ export function MatrixInputItem({ position }: Props) {
           size={DIAL_SIZE}
           buttonSize={DIAL_BUTTON_SIZE}
           integer={matrixItemValue.isInteger}
+          getLabel={matrixItemValue.getLabel}
         />
       </div>
     );
   }
-  if (matrixItemValue.type === "string") {
-    return (
-      <div style={{ width: DIAL_SIZE }}>
-        <OptionsDial
-          options={matrixItemValue.options}
-          value={matrixItemValue.value}
-          onChange={(value) => setValue(editMode, matrixItem.index, value)}
-          size={DIAL_SIZE}
-          buttonSize={DIAL_BUTTON_SIZE}
-        />
-      </div>
-    );
-  }
+  // if (matrixItemValue.type === "string") {
+  //   return (
+  //     <div style={{ width: DIAL_SIZE }}>
+  //       <OptionsDial
+  //         options={matrixItemValue.options}
+  //         value={matrixItemValue.value}
+  //         onChange={(value) => setValue(editMode, matrixItem.index, value)}
+  //         size={DIAL_SIZE}
+  //         buttonSize={DIAL_BUTTON_SIZE}
+  //       />
+  //     </div>
+  //   );
+  // }
 }

@@ -7,8 +7,6 @@ import { StepType } from "@/src/data/consts";
 import { round } from "@/src/utils/numberUtils";
 import { TimeWindow } from "@/src/types/misc.types";
 
-const stepOptions = ["16th", "8th", "4th", "1/2"];
-
 export const createMatrixItems = ({
   numberOfRows,
   numberOfColumns,
@@ -34,9 +32,12 @@ export const createMatrixItems = ({
       isInteger: false,
     },
     steps: {
-      type: "string" as const,
-      options: stepOptions,
-      value: StepType.SIXTEENTH,
+      type: "number" as const,
+      min: 2,
+      max: 96,
+      value: 24,
+      isInteger: true,
+      getLabel: getLabelForStepValue,
     },
   }));
 };
@@ -71,23 +72,23 @@ export function getTimeSlotsInRangeForMatrixItems(
   }));
 }
 
-const getClockMultiplierByStepType = (stepType: string): number => {
-  const multipliers = {
-    [StepType.QUARTER]: 1,
-    [StepType.EIGHTH_D]: 3 / 4,
-    [StepType.QUARTER_T]: 2 / 3,
-    [StepType.EIGHTH]: 1 / 2,
-    [StepType.SIXTEENTH_D]: 3 / 8,
-    [StepType.EIGHTH_T]: 1 / 3,
-    [StepType.SIXTEENTH]: 1 / 4,
-    [StepType.THIRTYSECOND_D]: 3 / 16,
-    [StepType.SIXTEENTH_T]: 1 / 6,
-    [StepType.THIRTYSECOND]: 1 / 8,
-    [StepType.THIRTYSECOND_T]: 1 / 12,
-    [StepType.SIXTYFOURTH]: 1 / 16,
+const getLabelForStepValue = (value: number): string | number => {
+  const labels: Record<number, string> = {
+    [6]: "64th",
+    [8]: "32t",
+    [12]: "32nd",
+    [16]: "16t",
+    [18]: "32d",
+    [24]: "16th",
+    [32]: "8t",
+    [36]: "16d",
+    [48]: "8th",
+    [64]: "4t",
+    [72]: "8d",
+    [96]: "4th",
   };
 
-  return multipliers[stepType] / 4;
+  return labels[value] || value;
 };
 
 export function getSlotsInRangeForMatrixItem(

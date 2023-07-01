@@ -41,7 +41,7 @@ export function WaveView({ height, width }: Props) {
       timeWindow: { start: playTime, end: playTime + 8 },
       waveMargin: 40,
       showBeats: true,
-      matrixItems: itemsToDraw,
+      matrixItems: [matrixItems[0]],
       beatLabelType: BeatLabelType.BEAT_INDEX,
       beatLabelRepeat: 0,
     });
