@@ -46,9 +46,9 @@ export function MatrixGroupControls({ groupIdentifier }: Props) {
       {width && (
         <WaveView
           width={width}
-          height={50}
+          height={40}
           matrixItems={matrixItemsForGroup}
-          lookaheadTime={1}
+          lookaheadTime={2}
         />
       )}
 

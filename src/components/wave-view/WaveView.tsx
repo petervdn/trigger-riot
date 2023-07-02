@@ -28,7 +28,7 @@ export function WaveView({ height, width, matrixItems, lookaheadTime }: Props) {
       context: canvasRef.current.getContext("2d")!,
       bpm,
       timeWindow: { start: playTime, end: playTime + lookaheadTime },
-      waveMargin: 40,
+      // waveMargin: 40,
       showBeats: true,
       matrixItems,
       beatLabelType: BeatLabelType.BEAT_INDEX,
