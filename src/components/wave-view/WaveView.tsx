@@ -6,6 +6,7 @@ import { drawWaveForItems } from "@/src/utils/waveViewUtils";
 import { usePlayStore } from "@/src/data/playStore";
 import { BeatLabelType, MAIN_COLOR } from "@/src/data/consts";
 import { MatrixItem } from "@/src/types/matrix.types";
+import { useSizedCanvas } from "@/src/utils/hooks/useSizedCanvas";
 
 type Props = {
   width: number;
@@ -15,22 +16,9 @@ type Props = {
 };
 
 export function WaveView({ height, width, matrixItems, lookaheadTime }: Props) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useSizedCanvas({ width, height });
   const bpm = usePlayStore((state) => state.bpm);
   const playTime = usePlayTime();
-
-  // const { selectedItemPositions, matrixItems } = useMatrixStore((state) => {
-  //   return {
-  //     selectedItemPositions: state.selectedItemPositions,
-  //     matrixItems: state.matrixItems,
-  //   };
-  // }, shallow);
-  //
-  // const itemsToDraw = matrixItems.filter((item) => {
-  //   return selectedItemPositions.some(
-  //     ({ x, y }) => x === item.position.x && y === item.position.y
-  //   );
-  // });
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -47,14 +35,7 @@ export function WaveView({ height, width, matrixItems, lookaheadTime }: Props) {
       beatLabelRepeat: 0,
       color: MAIN_COLOR,
     });
-  }, [playTime, matrixItems, lookaheadTime]);
+  }, [playTime, matrixItems, lookaheadTime, bpm]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      width={width * window.devicePixelRatio}
-      height={height * window.devicePixelRatio}
-      style={{ width, height }}
-    />
-  );
+  return <canvas ref={canvasRef} style={{ width, height }} />;
 }

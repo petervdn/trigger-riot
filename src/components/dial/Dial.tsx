@@ -12,6 +12,7 @@ import {
   StyledRelativePositioner,
 } from "@/src/components/dial/Dial.styles";
 import { MAIN_COLOR } from "@/src/data/consts";
+import { useSizedCanvas } from "@/src/utils/hooks/useSizedCanvas";
 
 export type DialProps = {
   min: number;
@@ -39,7 +40,7 @@ export function Dial({
   integer = false,
   getLabel,
 }: DialProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useSizedCanvas({ width: size, height: size });
   const startDragDataRef = useRef<{ value: number; y: number }>();
 
   const bind = useDrag((state) => {
@@ -64,12 +65,12 @@ export function Dial({
       color: MAIN_COLOR,
       bgColor: "#555",
     });
-  }, [value]);
+  }, [value, max, min]);
 
   const labelValue = useMemo(
     () =>
       getLabel ? getLabel(value, integer) : defaultGetLabel(value, integer),
-    [value, integer]
+    [value, integer, getLabel]
   );
 
   return (
@@ -80,8 +81,6 @@ export function Dial({
         </StyledKnobWrapper>
         <canvas
           {...bind()}
-          width={size * window.devicePixelRatio}
-          height={size * window.devicePixelRatio}
           ref={canvasRef}
           style={{
             position: "absolute",

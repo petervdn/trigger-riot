@@ -39,7 +39,7 @@ export function MatrixGroupControls({ groupIdentifier }: Props) {
         ({ x, y }) => x === item.position.x && y === item.position.y
       );
     });
-  }, [groupIdentifier, matrixItems]);
+  }, [groupIdentifier, matrixItems, numberOfColumns, numberOfRows]);
 
   return (
     <div ref={elementRef}>
