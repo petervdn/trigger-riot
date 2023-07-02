@@ -14,6 +14,7 @@ export function drawWaveForItems({
   timeWindow,
   showBeats,
   color,
+  backgroundColor = "black",
 }: {
   context: CanvasRenderingContext2D;
   matrixItems: Array<MatrixItem>;
@@ -24,8 +25,9 @@ export function drawWaveForItems({
   beatLabelType: string;
   beatLabelRepeat: number;
   color: string;
+  backgroundColor?: string;
 }) {
-  context.fillStyle = "black";
+  context.fillStyle = backgroundColor;
   context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
   const pixelsPerSecond =

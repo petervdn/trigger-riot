@@ -6,7 +6,7 @@ export const BeatLabelType = {
 export const NUMBER_OF_ROWS = 4;
 export const NUMBER_OF_COLUMNS = 4;
 
-export const CONTENT_WIDTH = 980;
+export const CONTENT_WIDTH = 1000;
 export const SIDEBAR_WIDTH = 250;
 export const MATRIX_ITEM_MARGIN = 10;
 export const MATRIX_WIDTH = CONTENT_WIDTH - SIDEBAR_WIDTH - MATRIX_ITEM_MARGIN;
