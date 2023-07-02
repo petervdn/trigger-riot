@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MAIN_COLOR } from "@/src/data/consts";
+import { BORDER_RADIUS, MAIN_COLOR } from "@/src/data/consts";
 
 export const StyledWrapper = styled.div`
   margin: 10px 0;
@@ -8,7 +8,7 @@ export const StyledWrapper = styled.div`
 export const StyledButton = styled.div<{ isActive?: boolean }>`
   background-color: ${(p) =>
     p.isActive ? MAIN_COLOR : "rgba(51, 51, 51, 0.0)"};
-  border-radius: 4px;
+  border-radius: ${() => BORDER_RADIUS}px;
   border-width: 0;
   color: ${(p) => (p.isActive ? "white" : "#333333")};
   cursor: pointer;

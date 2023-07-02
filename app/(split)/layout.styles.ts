@@ -2,15 +2,14 @@ import styled from "styled-components";
 
 export const StyledSplitWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
-export const StyledSideBarWrapper = styled.div<{ width: number }>`
-  width: ${(p) => p.width}px;
+export const StyledSideBarWrapper = styled.div`
   flex-grow: 0;
   background-color: #ddd;
-  padding: 10px;
 `;
 
 export const StyledMainWrapper = styled.div`
-  flex-grow: 1;
+  flex-grow: 0;
 `;

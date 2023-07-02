@@ -16,7 +16,7 @@ export default function SplitLayout({ children }: PropsWithChildren) {
       <StyledMainWrapper style={{ width: MATRIX_WIDTH }}>
         <Matrix />
       </StyledMainWrapper>
-      <StyledSideBarWrapper width={SIDEBAR_WIDTH}>
+      <StyledSideBarWrapper style={{ width: SIDEBAR_WIDTH }}>
         <Transport />
         {children}
       </StyledSideBarWrapper>
