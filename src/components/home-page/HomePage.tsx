@@ -1,15 +1,14 @@
 "use client";
 
+import { MATRIX_WIDTH, SIDEBAR_WIDTH } from "@/src/data/consts";
+import { Matrix } from "@/src/components/matrix/Matrix";
 import {
   StyledMainWrapper,
   StyledSideBarWrapper,
   StyledSplitWrapper,
-} from "@/app/(split)/layout.styles";
-import { PropsWithChildren } from "react";
-import { MATRIX_WIDTH, SIDEBAR_WIDTH } from "@/src/data/consts";
-import { Matrix } from "@/src/components/matrix/Matrix";
+} from "@/src/components/home-page/HomePage.styles";
 
-export default function SplitLayout({ children }: PropsWithChildren) {
+export function HomePage() {
   return (
     <StyledSplitWrapper>
       <StyledMainWrapper style={{ width: MATRIX_WIDTH }}>
@@ -24,7 +23,6 @@ export default function SplitLayout({ children }: PropsWithChildren) {
           consequat massa quis enim. Donec pede justo, fringilla vel, aliquet
           nec, vulputate eget, arcu. In enim justo, rhoncus ut,
         </p>
-        {children}
       </StyledSideBarWrapper>
     </StyledSplitWrapper>
   );

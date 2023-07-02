@@ -1,9 +1,5 @@
-import Image from "next/image";
+import { HomePage } from "@/src/components/home-page/HomePage";
 
 export default function Page() {
-  return (
-    <main className="flex">
-      <h2>test page</h2>
-    </main>
-  );
+  return <HomePage />;
 }
