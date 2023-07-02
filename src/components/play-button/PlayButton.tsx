@@ -1,6 +1,9 @@
 import { useSizedCanvas } from "@/src/utils/hooks/useSizedCanvas";
 import { useEffect } from "react";
-import { drawStartButton, drawStopButton } from "@/src/utils/buttons.utils";
+import {
+  drawStartButton,
+  drawStopButton,
+} from "@/src/components/play-button/PlayButton.utils";
 
 type Props = {
   size: number;

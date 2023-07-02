@@ -4,6 +4,7 @@ import { getPositionsForGroup } from "@/src/utils/matrixUtils";
 import { WaveView } from "@/src/components/wave-view/WaveView";
 import { useElementWidth } from "@/src/utils/hooks/useElementWidth";
 import { useMemo } from "react";
+import { SampleSelect } from "@/src/components/sample-select/SampleSelect";
 
 type Props = {
   groupIdentifier: MatrixItemsGroupIdentifier;
@@ -48,11 +49,12 @@ export function MatrixGroupControls({ groupIdentifier }: Props) {
           width={width}
           height={40}
           matrixItems={matrixItemsForGroup}
-          lookaheadTime={2}
+          lookaheadTime={1}
         />
       )}
 
       <button onClick={onSelectClick}>select</button>
+      <SampleSelect groupIdentifier={groupIdentifier} />
     </div>
   );
 }

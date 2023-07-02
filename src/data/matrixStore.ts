@@ -38,7 +38,7 @@ export const useMatrixStore = create<MatrixStoreState>((set, get) => {
         };
       });
     },
-    numberOfRows: NUMBER_OF_ROWS,
+    numberOfRows: NUMBER_OF_ROWS, // todo: remove rows/cols from store?
     numberOfColumns: NUMBER_OF_COLUMNS,
     editMode: "division",
     setEditMode: (editMode) => set(() => ({ editMode })),

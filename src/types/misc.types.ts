@@ -9,3 +9,8 @@ export type TimeWindow = {
 };
 
 export type RowOrColumn = "row" | "column";
+
+export type SelectOption = {
+  label: string;
+  value: string;
+};

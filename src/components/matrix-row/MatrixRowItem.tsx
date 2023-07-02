@@ -29,6 +29,7 @@ export function MatrixRowItem({ position, children }: Props) {
       style={{
         width: width - 2 * PADDING,
         padding: PADDING,
+        paddingBottom: 5,
       }}
     >
       {children}
