@@ -1,23 +1,15 @@
 import { useMatrixStore } from "@/src/data/matrixStore";
 import { Position } from "@/src/types/misc.types";
 import { shallow } from "zustand/shallow";
-import { useRef, useState } from "react";
-import { useResizeObserver } from "@mediamonks/react-hooks";
 import { Dial } from "@/src/components/dial/Dial";
+import { useElementWidth } from "@/src/utils/hooks/useElementWidth";
 
 type Props = {
   position: Position;
 };
 
 export function MatrixInputItem({ position }: Props) {
-  const [width, setWidth] = useState<number>();
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useResizeObserver(containerRef, () => {
-    if (containerRef.current) {
-      setWidth(containerRef.current.offsetWidth);
-    }
-  });
+  const { elementRef, width } = useElementWidth();
   const editMode = useMatrixStore((state) => state.editMode);
   const setValue = useMatrixStore((state) => state.setValue);
   const matrixItem = useMatrixStore(
@@ -29,7 +21,7 @@ export function MatrixInputItem({ position }: Props) {
 
   if (matrixItemValue.type === "number") {
     return (
-      <div ref={containerRef}>
+      <div ref={elementRef}>
         {width && (
           <Dial
             min={matrixItemValue.min}

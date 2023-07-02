@@ -4,6 +4,8 @@ import { MatrixInputItem } from "@/src/components/matrix-input-item/MatrixInputI
 import { MatrixGroupControls } from "@/src/components/matrix-group-controls/MatrixGroupControls";
 import { MatrixRowItem } from "@/src/components/matrix-row/MatrixRowItem";
 import { shallow } from "zustand/shallow";
+import { useEffect } from "react";
+import { getPositionsForGroup } from "@/src/utils/matrixUtils";
 
 export function Matrix() {
   const { numberOfRows, numberOfColumns } = useMatrixStore(
@@ -13,6 +15,19 @@ export function Matrix() {
     }),
     shallow
   );
+  const setSelectedItemPositions = useMatrixStore(
+    ({ setSelectedItemPositions }) => setSelectedItemPositions
+  );
+
+  useEffect(() => {
+    setSelectedItemPositions(
+      getPositionsForGroup({
+        groupIdentifier: { type: "row", index: 0 },
+        numberOfRows,
+        numberOfColumns,
+      })
+    );
+  });
 
   return (
     <>

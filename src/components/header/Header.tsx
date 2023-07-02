@@ -1,9 +1,9 @@
 "use client";
 
 import { StyledHeader } from "@/src/components/header/Header.styles";
-import { WaveView } from "@/src/components/wave-view/WaveView";
-import { CONTENT_WIDTH, MATRIX_WIDTH } from "@/src/data/consts";
+import { CONTENT_WIDTH } from "@/src/data/consts";
 import { EditModeSelect } from "@/src/components/edit-mode-select/EditModeSelect";
+import { MainWaveView } from "@/src/components/main-wave-view/MainWaveView";
 
 export function Header() {
   return (
@@ -11,7 +11,7 @@ export function Header() {
       <StyledHeader>
         <div style={{ width: CONTENT_WIDTH, margin: "0 auto" }}>
           <h1>Trigger riot</h1>
-          <WaveView width={MATRIX_WIDTH} height={80} />
+          <MainWaveView />
         </div>
       </StyledHeader>
       <div style={{ width: CONTENT_WIDTH, margin: "0 auto" }}>
