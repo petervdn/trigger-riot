@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { usePlayTime } from "@/src/utils/hooks/usePlayTime";
 import { drawWaveForItems } from "@/src/utils/waveViewUtils";
 import { usePlayStore } from "@/src/data/playStore";
-import { BeatLabelType, MAIN_COLOR } from "@/src/data/consts";
+import { BeatLabelType, PRIMARY_COLOR } from "@/src/data/consts";
 import { MatrixItem } from "@/src/types/matrix.types";
 import { useSizedCanvas } from "@/src/utils/hooks/useSizedCanvas";
 
@@ -33,7 +33,7 @@ export function WaveView({ height, width, matrixItems, lookaheadTime }: Props) {
       matrixItems,
       beatLabelType: BeatLabelType.BEAT_INDEX,
       beatLabelRepeat: 0,
-      color: MAIN_COLOR,
+      color: PRIMARY_COLOR,
     });
   }, [playTime, matrixItems, lookaheadTime, bpm]);
 

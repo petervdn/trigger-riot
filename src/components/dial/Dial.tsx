@@ -11,7 +11,7 @@ import {
   StyledKnobWrapper,
   StyledRelativePositioner,
 } from "@/src/components/dial/Dial.styles";
-import { MAIN_COLOR } from "@/src/data/consts";
+import { PRIMARY_COLOR } from "@/src/data/consts";
 import { useSizedCanvas } from "@/src/utils/hooks/useSizedCanvas";
 
 export type DialProps = {
@@ -62,7 +62,7 @@ export function Dial({
     drawDial({
       context: canvasRef.current.getContext("2d")!,
       valueFactor: (value - min) / (max - min),
-      color: MAIN_COLOR,
+      color: PRIMARY_COLOR,
       bgColor: "#555",
     });
   }, [value, max, min]);
