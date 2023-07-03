@@ -4,26 +4,24 @@ import { matrixItemsGroupIdentifierToString } from "@/src/data/sampleStore.utils
 import Select from "react-select";
 import { SelectOption } from "@/src/types/misc.types";
 import { useMemo } from "react";
+import { shallow } from "zustand/shallow";
 
 type Props = {
   groupIdentifier: MatrixItemsGroupIdentifier;
 };
 
 export function SampleSelect({ groupIdentifier }: Props) {
-  const samplesByGroup = useSampleStore((state) => state.samplesByGroup);
-  const allSamples = useSampleStore((state) => state.samples);
-  const setSampleForGroup = useSampleStore((state) => state.setSampleForGroup);
-  // const { sample, allSamples, setSampleForGroup } = useSampleStore(
-  //   (state) => ({
-  //     sample: state.samplesByGroup[idString],
-  //     allSamples: state.samples,
-  //     setSampleForGroup: state.setSampleForGroup,
-  //   }),
-  //   shallow
-  // );
   const groupStringId = useMemo(
     () => matrixItemsGroupIdentifierToString(groupIdentifier),
     [groupIdentifier]
+  );
+  const { samplesByGroup, allSamples, setSampleForGroup } = useSampleStore(
+    (state) => ({
+      samplesByGroup: state.samplesByGroup,
+      allSamples: state.samples,
+      setSampleForGroup: state.setSampleForGroup,
+    }),
+    shallow
   );
 
   const sample = useMemo(() => {
@@ -46,7 +44,6 @@ export function SampleSelect({ groupIdentifier }: Props) {
         : undefined
     );
   };
-  console.log(samplesByGroup);
 
   return (
     <>
@@ -55,7 +52,7 @@ export function SampleSelect({ groupIdentifier }: Props) {
         value={selectOptions.find(
           ({ value }) => value === (sample ? sample.filename : "")
         )}
-        instanceId={groupStringId}
+        instanceId={`sample-select-${groupStringId}`}
         onChange={onSampleChange}
       />
     </>
