@@ -48,9 +48,7 @@ export function Matrix() {
               }
             )}
             <MatrixRowItem position={{ x: numberOfColumns, y: rowIndex }}>
-              <MatrixGroupControls
-                groupIdentifier={{ type: "row", index: rowIndex }}
-              />
+              <MatrixGroupControls groupType="row" groupIndex={rowIndex} />
             </MatrixRowItem>
           </StyledMatrixRow>
         );
@@ -61,9 +59,7 @@ export function Matrix() {
             key={columnIndex}
             position={{ x: columnIndex, y: numberOfColumns }}
           >
-            <MatrixGroupControls
-              groupIdentifier={{ type: "column", index: columnIndex }}
-            />
+            <MatrixGroupControls groupType="column" groupIndex={columnIndex} />
           </MatrixRowItem>
         ))}
       </StyledMatrixRow>

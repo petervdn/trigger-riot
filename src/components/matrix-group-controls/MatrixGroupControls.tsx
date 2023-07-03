@@ -3,14 +3,19 @@ import { useMatrixStore } from "@/src/data/matrixStore";
 import { getPositionsForGroup } from "@/src/utils/matrixUtils";
 import { WaveView } from "@/src/components/wave-view/WaveView";
 import { useElementWidth } from "@/src/utils/hooks/useElementWidth";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { SampleSelect } from "@/src/components/sample-select/SampleSelect";
 
 type Props = {
-  groupIdentifier: MatrixItemsGroupIdentifier;
+  groupType: MatrixItemsGroupIdentifier["type"];
+  groupIndex: MatrixItemsGroupIdentifier["index"];
 };
 
-export function MatrixGroupControls({ groupIdentifier }: Props) {
+export function MatrixGroupControls({ groupType, groupIndex }: Props) {
+  const groupIdentifier: MatrixItemsGroupIdentifier = useMemo(() => {
+    return { type: groupType, index: groupIndex };
+  }, [groupType, groupIndex]);
+
   const { elementRef, width } = useElementWidth();
   const setSelectedItemPositions = useMatrixStore(
     ({ setSelectedItemPositions }) => setSelectedItemPositions
@@ -23,11 +28,16 @@ export function MatrixGroupControls({ groupIdentifier }: Props) {
     })
   );
 
-  const onSelectClick = () => {
+  const onSelectClick = useCallback(() => {
     setSelectedItemPositions(
       getPositionsForGroup({ groupIdentifier, numberOfRows, numberOfColumns })
     );
-  };
+  }, [
+    groupIdentifier,
+    numberOfColumns,
+    numberOfRows,
+    setSelectedItemPositions,
+  ]);
 
   const matrixItemsForGroup = useMemo(() => {
     const positions = getPositionsForGroup({

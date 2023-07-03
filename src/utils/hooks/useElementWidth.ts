@@ -6,7 +6,7 @@ export function useElementWidth() {
   const elementRef = useRef<HTMLDivElement>(null); // todo: why cant i use HTMLElement here
 
   useResizeObserver(elementRef, () => {
-    if (elementRef.current) {
+    if (elementRef.current && width !== elementRef.current.offsetWidth) {
       setWidth(elementRef.current.offsetWidth);
     }
   });

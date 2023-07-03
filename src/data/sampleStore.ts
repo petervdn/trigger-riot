@@ -2,7 +2,7 @@ import { MatrixItemsGroupIdentifier } from "@/src/types/matrix.types";
 import { matrixItemsGroupIdentifierToString } from "@/src/data/sampleStore.utils";
 import { create } from "zustand";
 
-type Sample = {
+export type Sample = {
   filename: string;
   name?: string;
   buffer?: AudioBuffer;
