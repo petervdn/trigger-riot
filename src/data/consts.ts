@@ -8,9 +8,9 @@ export const NUMBER_OF_COLUMNS = 4;
 
 export const CONTENT_WIDTH = 1024;
 export const SIDEBAR_WIDTH = 250;
-export const MATRIX_ITEM_MARGIN = 10;
+export const MATRIX_ITEM_MARGIN = 5;
 export const MATRIX_WIDTH = CONTENT_WIDTH - SIDEBAR_WIDTH - MATRIX_ITEM_MARGIN;
 export const BORDER_RADIUS = 4;
 
 export const PRIMARY_COLOR = "deepskyblue";
-export const SECUNDARY_COLOR = "crimson";
+export const SECONDARY_COLOR = "crimson";

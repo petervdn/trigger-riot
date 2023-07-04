@@ -1,5 +1,5 @@
 import { useSizedCanvas } from "@/src/utils/hooks/useSizedCanvas";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
   drawStartButton,
   drawStopButton,
@@ -12,7 +12,8 @@ type Props = {
 };
 
 export function PlayButton({ size, isPlaying, onClick }: Props) {
-  const canvasRef = useSizedCanvas({ width: size, height: size });
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useSizedCanvas({ width: size, height: size, canvasRef });
 
   useEffect(() => {
     if (!canvasRef.current) {

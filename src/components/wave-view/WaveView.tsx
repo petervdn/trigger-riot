@@ -16,7 +16,8 @@ type Props = {
 };
 
 export function WaveView({ height, width, matrixItems, lookaheadTime }: Props) {
-  const canvasRef = useSizedCanvas({ width, height });
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useSizedCanvas({ width, height, canvasRef });
   const bpm = usePlayStore((state) => state.bpm);
   const playTime = usePlayTime();
 

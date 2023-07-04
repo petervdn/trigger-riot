@@ -1,13 +1,12 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect } from "react";
 
 type Props = {
   width: number;
   height: number;
+  canvasRef: RefObject<HTMLCanvasElement | null>;
 };
 
-export function useSizedCanvas({ height, width }: Props) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
+export function useSizedCanvas({ canvasRef, height, width }: Props) {
   useEffect(() => {
     if (!canvasRef.current) {
       return;
@@ -17,7 +16,5 @@ export function useSizedCanvas({ height, width }: Props) {
     canvasRef.current.style.height = `${height}px`;
     canvasRef.current.width = width * window.devicePixelRatio;
     canvasRef.current.height = height * window.devicePixelRatio;
-  }, [width, height]);
-
-  return canvasRef;
+  }, [width, height, canvasRef]);
 }

@@ -40,7 +40,8 @@ export function Dial({
   integer = false,
   getLabel,
 }: DialProps) {
-  const canvasRef = useSizedCanvas({ width: size, height: size });
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useSizedCanvas({ width: size, height: size, canvasRef });
   const startDragDataRef = useRef<{ value: number; y: number }>();
 
   const bind = useDrag((state) => {

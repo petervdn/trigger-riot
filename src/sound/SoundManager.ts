@@ -29,6 +29,7 @@ export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
 
     this.dispatchEvent(new SoundManagerEvent(SoundManagerEvent.types.STOP));
   }
+
   public getCurrentTime() {
     return soundManager.context && typeof this.startTime === "number"
       ? soundManager.context.currentTime - this.startTime
