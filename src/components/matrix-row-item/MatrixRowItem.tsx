@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { StyledMatrixRowItem } from "@/src/components/matrix-row/MatrixRowItem.styles";
+import { StyledMatrixRowItem } from "@/src/components/matrix-row-item/MatrixRowItem.styles";
 import { MATRIX_ITEM_MARGIN, MATRIX_WIDTH } from "@/src/data/consts";
 import { useMatrixStore } from "@/src/data/matrixStore";
 import { Position } from "@/src/types/misc.types";

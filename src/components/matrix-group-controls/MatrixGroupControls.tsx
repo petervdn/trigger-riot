@@ -6,10 +6,11 @@ import { useElementWidth } from "@/src/utils/hooks/useElementWidth";
 import { useCallback, useMemo } from "react";
 import { SampleSelect } from "@/src/components/sample-select/SampleSelect";
 import { useNumberOfRowsAndColumns } from "@/src/utils/hooks/useNumberOfRowsAndColumns";
+import { RowOrColumn } from "@/src/types/misc.types";
 
 type Props = {
-  groupType: MatrixItemsGroupIdentifier["type"];
-  groupIndex: MatrixItemsGroupIdentifier["index"];
+  groupType: RowOrColumn;
+  groupIndex: number;
 };
 
 export function MatrixGroupControls({ groupType, groupIndex }: Props) {
