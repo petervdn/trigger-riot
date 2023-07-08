@@ -19,12 +19,10 @@ export function Matrix() {
       {rows.map((row, rowIndex) => {
         return (
           <StyledMatrixRow key={row.stringId}>
-            {columns.map((column, columnIndex) => {
-              const position = { x: columnIndex, y: rowIndex };
-
+            {row.items.map((item, itemIndex) => {
               return (
-                <MatrixRowItem key={columnIndex} position={position}>
-                  <MatrixInputItem position={position} />
+                <MatrixRowItem key={itemIndex} position={item.position}>
+                  <MatrixInputItem position={item.position} />
                 </MatrixRowItem>
               );
             })}

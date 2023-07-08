@@ -51,10 +51,12 @@ export const createMatrixStore = ({
     return {
       setValue: (type, index, value) => {
         set(({ matrixItems }) => {
+          matrixItems[index] = produce(matrixItems[index], (draft) => {
+            draft[type].value = value;
+          });
+
           return {
-            matrixItems: produce(matrixItems, (draft) => {
-              draft[index][type].value = value;
-            }),
+            matrixItems,
           };
         });
       },
@@ -80,3 +82,4 @@ export const useMatrixStore = createMatrixStore({
   numberOfRows: 4,
   numberOfColumns: 4,
 });
+console.log(useMatrixStore.getState());
