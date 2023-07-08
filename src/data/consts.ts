@@ -3,9 +3,6 @@ export const BeatLabelType = {
   SECONDS: "seconds",
 };
 
-export const NUMBER_OF_ROWS = 4;
-export const NUMBER_OF_COLUMNS = 4;
-
 export const CONTENT_WIDTH = 1024;
 export const SIDEBAR_WIDTH = 250;
 export const MATRIX_ITEM_MARGIN = 5;

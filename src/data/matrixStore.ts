@@ -1,19 +1,21 @@
 import { create } from "zustand";
-import {
-  createMatrixItems,
-  getIndexForPosition,
-} from "@/src/utils/matrixUtils";
+
 import {
   MatrixItem,
   MatrixItemEditableProperty,
+  MatrixItemGroup,
 } from "@/src/types/matrix.types";
 import { Position } from "@/src/types/misc.types";
-import { NUMBER_OF_COLUMNS, NUMBER_OF_ROWS } from "@/src/data/consts";
 import { produce } from "immer";
+import {
+  createMatrixItems,
+  createRowAndColumns,
+  getIndexForPosition,
+} from "@/src/utils/matrixStore.utils";
 
 type MatrixStoreState = {
-  numberOfRows: number;
-  numberOfColumns: number;
+  rows: Array<MatrixItemGroup>;
+  columns: Array<MatrixItemGroup>;
   matrixItems: Array<MatrixItem>;
   setValue: (
     type: MatrixItemEditableProperty,
@@ -27,33 +29,54 @@ type MatrixStoreState = {
   getItemForPosition: (position: Position) => MatrixItem;
 };
 
-export const useMatrixStore = create<MatrixStoreState>((set, get) => {
-  return {
-    setValue: (type, index, value) => {
-      set(({ matrixItems }) => {
-        return {
-          matrixItems: produce(matrixItems, (draft) => {
-            draft[index][type].value = value;
-          }),
-        };
-      });
-    },
-    numberOfRows: NUMBER_OF_ROWS, // todo: remove rows/cols from store?
-    numberOfColumns: NUMBER_OF_COLUMNS,
-    editMode: "division",
-    setEditMode: (editMode) => set(() => ({ editMode })),
-    setSelectedItemPositions: (positions) =>
-      set(() => ({ selectedItemPositions: positions })),
-    selectedItemPositions: [],
-    getItemForPosition: (position) => {
-      return get().matrixItems[
-        getIndexForPosition(position, get().numberOfRows)
-      ];
-    },
+export const createMatrixStore = ({
+  numberOfRows,
+  numberOfColumns,
+}: {
+  numberOfRows: number;
+  numberOfColumns: number;
+}) => {
+  return create<MatrixStoreState>((set, get) => {
+    const matrixItems = createMatrixItems({
+      numberOfRows,
+      numberOfColumns,
+    });
 
-    matrixItems: createMatrixItems({
-      numberOfRows: NUMBER_OF_ROWS,
-      numberOfColumns: NUMBER_OF_COLUMNS,
-    }),
-  };
+    const { rows, columns } = createRowAndColumns({
+      numberOfColumns,
+      matrixItems,
+      numberOfRows,
+    });
+
+    return {
+      setValue: (type, index, value) => {
+        set(({ matrixItems }) => {
+          return {
+            matrixItems: produce(matrixItems, (draft) => {
+              draft[index][type].value = value;
+            }),
+          };
+        });
+      },
+      rows,
+      columns,
+      editMode: "division",
+      setEditMode: (editMode) => set(() => ({ editMode })),
+      setSelectedItemPositions: (positions) =>
+        set(() => ({ selectedItemPositions: positions })),
+      selectedItemPositions: [],
+      getItemForPosition: (position) => {
+        return get().matrixItems[
+          getIndexForPosition(position, get().rows.length)
+        ];
+      },
+
+      matrixItems,
+    };
+  });
+};
+
+export const useMatrixStore = createMatrixStore({
+  numberOfRows: 4,
+  numberOfColumns: 4,
 });

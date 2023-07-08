@@ -5,18 +5,13 @@ import { StyledMatrixRow } from "@/src/components/matrix/Matrix.styles";
 import { MatrixInputItem } from "@/src/components/matrix-input-item/MatrixInputItem";
 import { MatrixGroupControls } from "@/src/components/matrix-group-controls/MatrixGroupControls";
 import { MatrixRowItem } from "@/src/components/matrix-row/MatrixRowItem";
-import { shallow } from "zustand/shallow";
 import { useEffect } from "react";
 import { getPositionsForGroup } from "@/src/utils/matrixUtils";
+import { useNumberOfRowsAndColumns } from "@/src/utils/hooks/useNumberOfRowsAndColumns";
 
 export function Matrix() {
-  const { numberOfRows, numberOfColumns } = useMatrixStore(
-    (state) => ({
-      numberOfRows: state.numberOfRows,
-      numberOfColumns: state.numberOfColumns,
-    }),
-    shallow
-  );
+  const { numberOfRows, numberOfColumns } = useNumberOfRowsAndColumns();
+
   const setSelectedItemPositions = useMatrixStore(
     ({ setSelectedItemPositions }) => setSelectedItemPositions
   );

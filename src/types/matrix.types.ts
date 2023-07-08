@@ -29,3 +29,11 @@ export type MatrixItemsGroupIdentifier = {
   index: number;
   type: RowOrColumn;
 };
+
+export type MatrixItemsGroupIdentifierString = `${RowOrColumn}-${number}`;
+
+export type MatrixItemGroup = {
+  identifier: MatrixItemsGroupIdentifier;
+  stringId: MatrixItemsGroupIdentifierString;
+  items: Array<MatrixItem>;
+};

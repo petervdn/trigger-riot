@@ -5,6 +5,7 @@ import { WaveView } from "@/src/components/wave-view/WaveView";
 import { useElementWidth } from "@/src/utils/hooks/useElementWidth";
 import { useCallback, useMemo } from "react";
 import { SampleSelect } from "@/src/components/sample-select/SampleSelect";
+import { useNumberOfRowsAndColumns } from "@/src/utils/hooks/useNumberOfRowsAndColumns";
 
 type Props = {
   groupType: MatrixItemsGroupIdentifier["type"];
@@ -21,12 +22,7 @@ export function MatrixGroupControls({ groupType, groupIndex }: Props) {
     ({ setSelectedItemPositions }) => setSelectedItemPositions
   );
   const matrixItems = useMatrixStore(({ matrixItems }) => matrixItems);
-  const { numberOfRows, numberOfColumns } = useMatrixStore(
-    ({ numberOfColumns, numberOfRows }) => ({
-      numberOfColumns,
-      numberOfRows,
-    })
-  );
+  const { numberOfRows, numberOfColumns } = useNumberOfRowsAndColumns();
 
   const onSelectClick = useCallback(() => {
     setSelectedItemPositions(

@@ -1,56 +1,12 @@
 import {
   MatrixItem,
+  MatrixItemGroup,
   MatrixItemsGroupIdentifier,
 } from "@/src/types/matrix.types";
-import { Position } from "@/src/types/misc.types";
+import { Position, RowOrColumn } from "@/src/types/misc.types";
 import { round } from "@/src/utils/numberUtils";
 import { TimeWindow } from "@/src/types/misc.types";
-
-export const createMatrixItems = ({
-  numberOfRows,
-  numberOfColumns,
-}: {
-  numberOfRows: number;
-  numberOfColumns: number;
-}): Array<MatrixItem> => {
-  return Array.from({ length: numberOfRows * numberOfColumns }, (_, index) => ({
-    index,
-    position: getPositionForIndex(index, numberOfColumns),
-    division: {
-      type: "number" as const,
-      min: 1,
-      max: 8,
-      value: 1,
-      isInteger: true,
-    },
-    pulseWidth: {
-      type: "number" as const,
-      min: 0,
-      max: 1,
-      value: 0.5,
-      isInteger: false,
-    },
-    steps: {
-      type: "number" as const,
-      min: 2,
-      max: 96,
-      value: 24,
-      isInteger: true,
-      getLabel: getLabelForStepValue,
-    },
-  }));
-};
-
-export function getPositionForIndex(index: number, numberOfColumns: number) {
-  return {
-    x: index % numberOfColumns,
-    y: Math.floor(index / numberOfColumns),
-  };
-}
-
-export function getIndexForPosition(position: Position, numberOfRows: number) {
-  return position.y * numberOfRows + position.x;
-}
+import { matrixItemsGroupIdentifierToString } from "@/src/data/sampleStore.utils";
 
 export function getTimeSlotsInRangeForMatrixItems({
   matrixItems,
@@ -77,25 +33,6 @@ export function getTimeSlotsInRangeForMatrixItems({
     start: entry.start,
     end: entry.end,
   }));
-}
-
-function getLabelForStepValue(value: number): string | number {
-  const labels: Record<number, string> = {
-    [6]: "64th",
-    [8]: "32t",
-    [12]: "32nd",
-    [16]: "16t",
-    [18]: "32d",
-    [24]: "16th",
-    [32]: "8t",
-    [36]: "16d",
-    [48]: "8th",
-    [64]: "4t",
-    [72]: "8d",
-    [96]: "4th",
-  };
-
-  return labels[value] || value;
 }
 
 function getClockMultiplierValue({ steps }: MatrixItem) {

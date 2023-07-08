@@ -3,6 +3,7 @@ import { StyledMatrixRowItem } from "@/src/components/matrix-row/MatrixRowItem.s
 import { MATRIX_ITEM_MARGIN, MATRIX_WIDTH } from "@/src/data/consts";
 import { useMatrixStore } from "@/src/data/matrixStore";
 import { Position } from "@/src/types/misc.types";
+import { positionIsInPositions } from "@/src/utils/matrixStore.utils";
 
 type Props = {
   position: Position;
@@ -14,10 +15,8 @@ export function MatrixRowItem({ position, children }: Props) {
   const selectedItemPositions = useMatrixStore(
     (state) => state.selectedItemPositions
   );
-  const numberOfColumns = useMatrixStore((state) => state.numberOfColumns);
-  const isSelected = selectedItemPositions.some(
-    ({ x, y }) => position && x === position.x && y === position.y
-  );
+  const numberOfColumns = useMatrixStore((state) => state.columns.length);
+  const isSelected = positionIsInPositions(position, selectedItemPositions);
 
   const width =
     (MATRIX_WIDTH - numberOfColumns * MATRIX_ITEM_MARGIN) /
