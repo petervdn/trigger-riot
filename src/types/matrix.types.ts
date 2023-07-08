@@ -16,8 +16,6 @@ export const editableMatrixItemProperties: Array<
 export type MatrixItemEditableProperty =
   (typeof editableMatrixItemProperties)[number];
 
-// export type MatrixItemValue = NumberValue | StringValue;
-
 export type NumberValue = {
   type: "number";
   value: number;
@@ -26,12 +24,6 @@ export type NumberValue = {
   isInteger: boolean;
   getLabel?: (value: number) => string | number;
 };
-//
-// type StringValue = {
-//   type: "string";
-//   value: string;
-//   options: Array<string>;
-// };
 
 export type MatrixItemsGroupIdentifier = {
   index: number;

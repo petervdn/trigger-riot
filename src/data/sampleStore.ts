@@ -1,5 +1,8 @@
 import { MatrixItemsGroupIdentifier } from "@/src/types/matrix.types";
-import { matrixItemsGroupIdentifierToString } from "@/src/data/sampleStore.utils";
+import {
+  MatrixItemsGroupIdentifierString,
+  matrixItemsGroupIdentifierToString,
+} from "@/src/data/sampleStore.utils";
 import { create } from "zustand";
 
 export type Sample = {
@@ -10,7 +13,7 @@ export type Sample = {
 
 type SampleStoreState = {
   samples: Array<Sample>;
-  samplesByGroup: Record<string, Sample | undefined>;
+  samplesByGroup: Record<MatrixItemsGroupIdentifierString, Sample | undefined>;
   getSampleForGroup: (id: MatrixItemsGroupIdentifier) => Sample | undefined;
   setSampleForGroup: (
     id: MatrixItemsGroupIdentifier,
