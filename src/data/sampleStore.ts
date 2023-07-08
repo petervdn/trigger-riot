@@ -1,8 +1,8 @@
-import { MatrixItemsGroupIdentifier } from "@/src/types/matrix.types";
 import {
+  MatrixItemsGroupIdentifier,
   MatrixItemsGroupIdentifierString,
-  matrixItemsGroupIdentifierToString,
-} from "@/src/data/sampleStore.utils";
+} from "@/src/types/matrix.types";
+import { matrixItemsGroupIdentifierToString } from "@/src/data/sampleStore.utils";
 import { create } from "zustand";
 
 export type Sample = {

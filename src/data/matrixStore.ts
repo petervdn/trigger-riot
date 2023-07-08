@@ -82,4 +82,3 @@ export const useMatrixStore = createMatrixStore({
   numberOfRows: 4,
   numberOfColumns: 4,
 });
-console.log(useMatrixStore.getState());
