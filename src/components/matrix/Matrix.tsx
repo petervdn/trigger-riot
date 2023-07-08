@@ -1,58 +1,44 @@
-"use client";
-
 import { useMatrixStore } from "@/src/data/matrixStore";
 import { StyledMatrixRow } from "@/src/components/matrix/Matrix.styles";
 import { MatrixInputItem } from "@/src/components/matrix-input-item/MatrixInputItem";
 import { MatrixGroupControls } from "@/src/components/matrix-group-controls/MatrixGroupControls";
 import { MatrixRowItem } from "@/src/components/matrix-row/MatrixRowItem";
-import { useEffect } from "react";
-import { getPositionsForGroup } from "@/src/utils/matrixUtils";
-import { useNumberOfRowsAndColumns } from "@/src/utils/hooks/useNumberOfRowsAndColumns";
+import { shallow } from "zustand/shallow";
 
 export function Matrix() {
-  const { numberOfRows, numberOfColumns } = useNumberOfRowsAndColumns();
-
-  const setSelectedItemPositions = useMatrixStore(
-    ({ setSelectedItemPositions }) => setSelectedItemPositions
+  const { rows, columns } = useMatrixStore(
+    ({ rows, columns }) => ({
+      rows,
+      columns,
+    }),
+    shallow
   );
-
-  useEffect(() => {
-    setSelectedItemPositions(
-      getPositionsForGroup({
-        groupIdentifier: { type: "row", index: 0 },
-        numberOfRows,
-        numberOfColumns,
-      })
-    );
-  });
 
   return (
     <>
-      {Array.from({ length: numberOfRows }).map((_, rowIndex) => {
+      {rows.map((row, rowIndex) => {
         return (
-          <StyledMatrixRow key={rowIndex}>
-            {Array.from({ length: numberOfColumns }).map(
-              (item, columnIndex) => {
-                const position = { x: columnIndex, y: rowIndex };
+          <StyledMatrixRow key={row.stringId}>
+            {columns.map((column, columnIndex) => {
+              const position = { x: columnIndex, y: rowIndex };
 
-                return (
-                  <MatrixRowItem key={columnIndex} position={position}>
-                    <MatrixInputItem position={position} />
-                  </MatrixRowItem>
-                );
-              }
-            )}
-            <MatrixRowItem position={{ x: numberOfColumns, y: rowIndex }}>
+              return (
+                <MatrixRowItem key={columnIndex} position={position}>
+                  <MatrixInputItem position={position} />
+                </MatrixRowItem>
+              );
+            })}
+            <MatrixRowItem position={{ x: columns.length, y: rowIndex }}>
               <MatrixGroupControls groupType="row" groupIndex={rowIndex} />
             </MatrixRowItem>
           </StyledMatrixRow>
         );
       })}
       <StyledMatrixRow>
-        {Array.from({ length: numberOfColumns }).map((_, columnIndex) => (
+        {columns.map((column, columnIndex) => (
           <MatrixRowItem
-            key={columnIndex}
-            position={{ x: columnIndex, y: numberOfColumns }}
+            key={column.stringId}
+            position={{ x: columnIndex, y: columns.length }}
           >
             <MatrixGroupControls groupType="column" groupIndex={columnIndex} />
           </MatrixRowItem>
