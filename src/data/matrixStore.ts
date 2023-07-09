@@ -7,10 +7,7 @@ import {
 } from "@/src/types/matrix.types";
 import { Position } from "@/src/types/misc.types";
 import { produce } from "immer";
-import {
-  createMatrixItems,
-  createRowAndColumns,
-} from "@/src/utils/matrixStore.utils";
+import { createInitialMatrixStoreState } from "@/src/utils/matrixStore.utils";
 
 type MatrixStoreState = {
   rows: Array<MatrixItemGroup>;
@@ -35,18 +32,13 @@ export const createMatrixStore = ({
   numberOfColumns: number;
 }) => {
   return create<MatrixStoreState>((set) => {
-    const matrixItems = createMatrixItems({
-      numberOfRows,
+    const initialState = createInitialMatrixStoreState({
       numberOfColumns,
-    });
-
-    const { rows, columns } = createRowAndColumns({
-      numberOfColumns,
-      matrixItems,
       numberOfRows,
     });
 
     return {
+      ...initialState,
       setValue: (type, index, value) => {
         set(({ matrixItems }) => {
           matrixItems[index] = produce(matrixItems[index], (draft) => {
@@ -58,15 +50,10 @@ export const createMatrixStore = ({
           };
         });
       },
-      rows,
-      columns,
       editMode: "division",
       setEditMode: (editMode) => set(() => ({ editMode })),
       setSelectedItemPositions: (positions) =>
         set(() => ({ selectedItemPositions: positions })),
-      selectedItemPositions: [],
-
-      matrixItems,
     };
   });
 };
