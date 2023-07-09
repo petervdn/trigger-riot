@@ -8,7 +8,7 @@ import { matrixItemGroupIdentifierToString } from "@/src/utils/matrixItemGroup.u
 export type Sample = {
   filename: string;
   name?: string;
-  buffer?: AudioBuffer;
+  audioBuffer?: AudioBuffer;
 };
 
 type SampleStoreState = {
@@ -26,8 +26,10 @@ export const useSampleStore = create<SampleStoreState>((set, get) => {
     setSampleForGroup: (groupIdentifier, sample) => {
       const idString = matrixItemGroupIdentifierToString(groupIdentifier);
       set(() => {
+        const samplesByGroup = get().samplesByGroup;
+        samplesByGroup[idString] = sample;
         return {
-          samplesByGroup: { ...get().samplesByGroup, [idString]: sample },
+          samplesByGroup,
         };
       });
     },

@@ -4,6 +4,7 @@ import { MatrixItemGroup } from "@/src/types/matrix.types";
 import { useSampleStore } from "@/src/data/sampleStore";
 import { getTimeSlotsInRangeForMatrixItems } from "@/src/utils/timeslots.utils";
 import { usePlayStore } from "@/src/data/playStore";
+import { SamplePlayer } from "@/src/sound/SamplePlayer";
 
 export class SoundManagerEvent extends createEventClass()("START", "STOP") {}
 
@@ -11,22 +12,25 @@ const SCHEDULE_INTERVAL = 1;
 const SCHEDULE_LOOKAHEAD = 1.5;
 
 export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
-  public context!: AudioContext;
+  public context: AudioContext;
   private startTime: number | undefined;
   private scheduleIntervalId: number = -1;
+  private samplePlayer: SamplePlayer;
 
   constructor() {
     super();
+    // @ts-ignore
+    this.context = new (window.AudioContext || window.webkitAudioContext)();
+    this.samplePlayer = new SamplePlayer(this.context);
   }
 
-  public getIsPlaying() {
+  public getIsPlaying(): boolean {
     return this.startTime !== undefined;
   }
 
-  public start(): void {
-    if (!this.context) {
-      // @ts-ignore
-      this.context = new (window.AudioContext || window.webkitAudioContext)();
+  public async start(): Promise<void> {
+    if (this.context.state === "suspended") {
+      await this.context.resume();
     }
     this.startTime = this.context.currentTime;
 
@@ -73,18 +77,17 @@ export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
         timeWindow,
       });
 
-      //
-      //     for (let slotIndex = 0; slotIndex < slots.length; slotIndex += 1) {
-      //       // only play sample if the slot is in the future (or now)
-      //       if (slots[slotIndex].start >= playTime) {
-      //         this.samplePlayer.playSampleAtTime(
-      //           group.sample,
-      //           group.id,
-      //           slots[slotIndex].start + this.startTime - timeOffset
-      //         );
-      //       }
-      //     }
-      //   }
+      for (let slotIndex = 0; slotIndex < slots.length; slotIndex += 1) {
+        // only play sample if the slot is in the future (or now) todo: why would that not be the case?
+        // if (slots[slotIndex].start >= playTime) {
+        // this.samplePlayer.playSampleAtTime(
+        //   group.sample,
+        //   group.id,
+        //   slots[slotIndex].start + this.startTime - timeOffset
+        // );
+        //}
+        //}
+      }
     }
   };
 }

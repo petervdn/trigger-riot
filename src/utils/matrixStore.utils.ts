@@ -7,6 +7,12 @@ import {
 import { getPositionForIndex } from "@/src/utils/matrixItem.utils";
 import { positionIsInPositions } from "@/src/utils/misc.utils";
 
+/**
+ * Creates the matrix items, row/column groups and initial selection.
+ *
+ * @param numberOfRows
+ * @param numberOfColumns
+ */
 export function createInitialMatrixStoreState({
   numberOfRows,
   numberOfColumns,

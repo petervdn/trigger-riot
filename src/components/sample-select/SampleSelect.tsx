@@ -6,6 +6,7 @@ import { SelectOption } from "@/src/types/misc.types";
 import { useMemo } from "react";
 import { shallow } from "zustand/shallow";
 import { matrixItemGroupIdentifierToString } from "@/src/utils/matrixItemGroup.utils";
+import { useSampleForGroup } from "@/src/utils/hooks/useSampleForGroup";
 
 type Props = {
   groupIdentifier: MatrixItemGroupIdentifier;
@@ -16,7 +17,7 @@ export function SampleSelect({ groupIdentifier }: Props) {
     () => matrixItemGroupIdentifierToString(groupIdentifier),
     [groupIdentifier]
   );
-  const { samplesByGroup, allSamples, setSampleForGroup } = useSampleStore(
+  const { allSamples, setSampleForGroup } = useSampleStore(
     (state) => ({
       samplesByGroup: state.samplesByGroup,
       allSamples: state.samples,
@@ -25,9 +26,7 @@ export function SampleSelect({ groupIdentifier }: Props) {
     shallow
   );
 
-  const sample = useMemo(() => {
-    return samplesByGroup[groupStringId];
-  }, [groupStringId, samplesByGroup]);
+  const sample = useSampleForGroup(groupIdentifier);
 
   const selectOptions: Array<SelectOption> = useMemo(() => {
     const sampleOptions = allSamples.map(({ filename }) => ({
@@ -38,12 +37,10 @@ export function SampleSelect({ groupIdentifier }: Props) {
   }, [allSamples]);
 
   const onSampleChange = (value: SelectOption | null) => {
-    setSampleForGroup(
-      groupIdentifier,
-      value
-        ? allSamples.find(({ filename }) => filename === value.value)
-        : undefined
-    );
+    const newSample = value
+      ? allSamples.find(({ filename }) => filename === value.value)
+      : undefined;
+    setSampleForGroup(groupIdentifier, newSample);
   };
 
   return (
