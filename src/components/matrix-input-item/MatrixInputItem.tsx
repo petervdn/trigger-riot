@@ -2,7 +2,7 @@ import { useMatrixStore } from "@/src/data/matrixStore";
 import { Position } from "@/src/types/misc.types";
 import { Dial } from "@/src/components/dial/Dial";
 import { useElementWidth } from "@/src/utils/hooks/useElementWidth";
-import { useMatrixItem } from "@/src/utils/hooks/useMatrixItem";
+import { useMatrixItemForPosition } from "@/src/utils/hooks/useMatrixItemForPosition";
 
 type Props = {
   position: Position;
@@ -13,7 +13,7 @@ export function MatrixInputItem({ position }: Props) {
   const editMode = useMatrixStore((state) => state.editMode);
   const setValue = useMatrixStore((state) => state.setValue);
 
-  const matrixItem = useMatrixItem(position);
+  const matrixItem = useMatrixItemForPosition(position);
   const matrixItemValue = matrixItem[editMode];
 
   if (matrixItemValue.type === "number") {

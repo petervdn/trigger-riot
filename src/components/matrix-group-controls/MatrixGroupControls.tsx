@@ -7,6 +7,7 @@ import { useCallback, useMemo } from "react";
 import { SampleSelect } from "@/src/components/sample-select/SampleSelect";
 import { useNumberOfRowsAndColumns } from "@/src/utils/hooks/useNumberOfRowsAndColumns";
 import { RowOrColumn } from "@/src/types/misc.types";
+import { useMatrixItemsForGroup } from "@/src/utils/hooks/useMatrixItemsForGroup";
 
 type Props = {
   groupType: RowOrColumn;
@@ -22,7 +23,7 @@ export function MatrixGroupControls({ groupType, groupIndex }: Props) {
   const setSelectedItemPositions = useMatrixStore(
     ({ setSelectedItemPositions }) => setSelectedItemPositions
   );
-  const matrixItems = useMatrixStore(({ matrixItems }) => matrixItems);
+
   const { numberOfRows, numberOfColumns } = useNumberOfRowsAndColumns();
 
   const onSelectClick = useCallback(() => {
@@ -36,18 +37,7 @@ export function MatrixGroupControls({ groupType, groupIndex }: Props) {
     setSelectedItemPositions,
   ]);
 
-  const matrixItemsForGroup = useMemo(() => {
-    const positions = getPositionsForGroup({
-      groupIdentifier,
-      numberOfRows,
-      numberOfColumns,
-    });
-    return matrixItems.filter((item) => {
-      return positions.some(
-        ({ x, y }) => x === item.position.x && y === item.position.y
-      );
-    });
-  }, [groupIdentifier, matrixItems, numberOfColumns, numberOfRows]);
+  const matrixItemsForGroup = useMatrixItemsForGroup(groupIdentifier);
 
   return (
     <div ref={elementRef}>
