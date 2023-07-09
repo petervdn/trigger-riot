@@ -10,7 +10,6 @@ import { produce } from "immer";
 import {
   createMatrixItems,
   createRowAndColumns,
-  getIndexForPosition,
 } from "@/src/utils/matrixStore.utils";
 
 type MatrixStoreState = {
@@ -26,7 +25,6 @@ type MatrixStoreState = {
   setEditMode: (mode: MatrixItemEditableProperty) => void;
   setSelectedItemPositions: (positions: Array<Position>) => void;
   selectedItemPositions: Array<Position>;
-  getItemForPosition: (position: Position) => MatrixItem;
 };
 
 export const createMatrixStore = ({
@@ -36,7 +34,7 @@ export const createMatrixStore = ({
   numberOfRows: number;
   numberOfColumns: number;
 }) => {
-  return create<MatrixStoreState>((set, get) => {
+  return create<MatrixStoreState>((set) => {
     const matrixItems = createMatrixItems({
       numberOfRows,
       numberOfColumns,
@@ -67,11 +65,6 @@ export const createMatrixStore = ({
       setSelectedItemPositions: (positions) =>
         set(() => ({ selectedItemPositions: positions })),
       selectedItemPositions: [],
-      getItemForPosition: (position) => {
-        return get().matrixItems[
-          getIndexForPosition(position, get().rows.length)
-        ];
-      },
 
       matrixItems,
     };
