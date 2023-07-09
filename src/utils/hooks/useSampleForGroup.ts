@@ -3,8 +3,10 @@ import { MatrixItemGroupIdentifier } from "@/src/types/matrix.types";
 import { matrixItemGroupIdentifierToString } from "@/src/utils/matrixItemGroup.utils";
 
 export function useSampleForGroup(groupIdentifier: MatrixItemGroupIdentifier) {
-  return useSampleStore(
-    (state) =>
-      state.samplesByGroup[matrixItemGroupIdentifierToString(groupIdentifier)]
-  );
+  return useSampleStore((state) => {
+    // console.log("hook");
+    return state.samplesByGroup[
+      matrixItemGroupIdentifierToString(groupIdentifier)
+    ];
+  });
 }

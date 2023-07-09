@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import { shallow } from "zustand/shallow";
 import { matrixItemGroupIdentifierToString } from "@/src/utils/matrixItemGroup.utils";
 import { useSampleForGroup } from "@/src/utils/hooks/useSampleForGroup";
+import { loadSound } from "@/src/utils/sound.utils";
 
 type Props = {
   groupIdentifier: MatrixItemGroupIdentifier;
@@ -17,11 +18,12 @@ export function SampleSelect({ groupIdentifier }: Props) {
     () => matrixItemGroupIdentifierToString(groupIdentifier),
     [groupIdentifier]
   );
-  const { allSamples, setSampleForGroup } = useSampleStore(
+  const { allSamples, setSampleForGroup, loadSample } = useSampleStore(
     (state) => ({
       samplesByGroup: state.samplesByGroup,
       allSamples: state.samples,
       setSampleForGroup: state.setSampleForGroup,
+      loadSample: state.loadSample,
     }),
     shallow
   );
@@ -37,14 +39,20 @@ export function SampleSelect({ groupIdentifier }: Props) {
   }, [allSamples]);
 
   const onSampleChange = (value: SelectOption | null) => {
-    const newSample = value
+    const sample = value
       ? allSamples.find(({ filename }) => filename === value.value)
       : undefined;
-    setSampleForGroup(groupIdentifier, newSample);
+    setSampleForGroup(groupIdentifier, sample);
+
+    // todo: move this to a different place
+    if (sample) {
+      loadSample(sample);
+    }
   };
 
   return (
     <>
+      <p>{sample?.isLoading ? "loading..." : ""}</p>
       <Select
         options={selectOptions}
         value={selectOptions.find(
