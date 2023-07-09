@@ -1,3 +1,4 @@
+// todo: get rid of BeatLabelType here
 export const BeatLabelType = {
   BEAT_INDEX: "beat-number",
   SECONDS: "seconds",

@@ -1,13 +1,15 @@
-import {
-  MatrixItem,
-  MatrixItemGroup,
-  MatrixItemsGroupIdentifier,
-} from "@/src/types/matrix.types";
-import { Position, RowOrColumn } from "@/src/types/misc.types";
-import { round } from "@/src/utils/numberUtils";
+import { MatrixItem } from "@/src/types/matrix.types";
+import { round } from "@/src/utils/number.utils";
 import { TimeWindow } from "@/src/types/misc.types";
-import { matrixItemsGroupIdentifierToString } from "@/src/data/sampleStore.utils";
 
+// todo: maybe rename the timeslots concept
+
+/**
+ * Retrieve the timeslots
+ * @param matrixItems
+ * @param timeWindow
+ * @param bpm
+ */
 export function getTimeSlotsInRangeForMatrixItems({
   matrixItems,
   timeWindow,
@@ -35,7 +37,7 @@ export function getTimeSlotsInRangeForMatrixItems({
   }));
 }
 
-function getClockMultiplierValue({ steps }: MatrixItem) {
+function getClockMultiplierValue({ steps }: MatrixItem): number {
   return steps.value / 96;
 }
 
@@ -48,6 +50,7 @@ export function getSlotsInRangeForMatrixItem({
   bpm: number;
   timeWindow: TimeWindow;
 }): Array<TimeWindow> {
+  // todo: division cannot be 0?
   if (matrixItem.division.value === 0 || matrixItem.pulseWidth.value === 0) {
     // in these cases: there will be no wave at all
     return [];
@@ -85,6 +88,12 @@ export function getSlotsInRangeForMatrixItem({
   return results;
 }
 
+/**
+ * Combine an array of timeslots to a new array in which the timeslots
+ * don't overlap anymore (but are extended into longer timeslots)
+ * .
+ * @param timeSlots
+ */
 export function flattenTimeSlots(
   timeSlots: Array<TimeWindow>
 ): Array<TimeWindow> {
@@ -106,26 +115,4 @@ export function flattenTimeSlots(
   }
 
   return results;
-}
-
-export function getPositionsForGroup({
-  groupIdentifier,
-  numberOfRows,
-  numberOfColumns,
-}: {
-  groupIdentifier: MatrixItemsGroupIdentifier;
-  numberOfRows: number;
-  numberOfColumns: number;
-}): Array<Position> {
-  if (groupIdentifier.type === "row") {
-    return Array.from({ length: numberOfColumns }).map((_, index) => ({
-      x: index,
-      y: groupIdentifier.index,
-    }));
-  }
-
-  return Array.from({ length: numberOfRows }).map((_, index) => ({
-    x: groupIdentifier.index,
-    y: index,
-  }));
 }

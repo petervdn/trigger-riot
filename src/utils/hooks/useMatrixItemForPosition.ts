@@ -1,8 +1,8 @@
 import { useNumberOfRowsAndColumns } from "@/src/utils/hooks/useNumberOfRowsAndColumns";
 import { useMatrixStore } from "@/src/data/matrixStore";
 import { Position } from "@/src/types/misc.types";
-import { getIndexForPosition } from "@/src/utils/matrixStore.utils";
 import { shallow } from "zustand/shallow";
+import { getIndexForPosition } from "@/src/utils/matrixItem.utils";
 
 export function useMatrixItemForPosition(position: Position) {
   const { numberOfRows } = useNumberOfRowsAndColumns();

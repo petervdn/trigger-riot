@@ -2,7 +2,7 @@ import EventDispatcher, { createEventClass } from "seng-event";
 import { useMatrixStore } from "@/src/data/matrixStore";
 import { MatrixItemGroup } from "@/src/types/matrix.types";
 import { useSampleStore } from "@/src/data/sampleStore";
-import { getTimeSlotsInRangeForMatrixItems } from "@/src/utils/matrixUtils";
+import { getTimeSlotsInRangeForMatrixItems } from "@/src/utils/timeslots.utils";
 import { usePlayStore } from "@/src/data/playStore";
 
 export class SoundManagerEvent extends createEventClass()("START", "STOP") {}

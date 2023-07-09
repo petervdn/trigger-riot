@@ -13,6 +13,7 @@ type DrawDialProps = {
   color: string;
   bgColor: string;
 };
+
 export function drawDial({
   bgColor,
   color,

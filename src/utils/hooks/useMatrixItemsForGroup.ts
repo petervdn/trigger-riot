@@ -1,11 +1,11 @@
-import { MatrixItemsGroupIdentifier } from "@/src/types/matrix.types";
+import { MatrixItemGroupIdentifier } from "@/src/types/matrix.types";
 import { useNumberOfRowsAndColumns } from "@/src/utils/hooks/useNumberOfRowsAndColumns";
-import { getPositionsForGroup } from "@/src/utils/matrixUtils";
 import { useMemo } from "react";
 import { useMatrixItemsForPositions } from "@/src/utils/hooks/useMatrixItemForPosition";
+import { getPositionsForGroup } from "@/src/utils/matrixItemGroup.utils";
 
 export function useMatrixItemsForGroup(
-  groupIdentifier: MatrixItemsGroupIdentifier
+  groupIdentifier: MatrixItemGroupIdentifier
 ) {
   const { numberOfRows, numberOfColumns } = useNumberOfRowsAndColumns();
   const positions = useMemo(

@@ -1,18 +1,19 @@
-import { MatrixItemsGroupIdentifier } from "@/src/types/matrix.types";
+import { MatrixItemGroupIdentifier } from "@/src/types/matrix.types";
 import { useSampleStore } from "@/src/data/sampleStore";
-import { matrixItemsGroupIdentifierToString } from "@/src/data/sampleStore.utils";
+
 import Select from "react-select";
 import { SelectOption } from "@/src/types/misc.types";
 import { useMemo } from "react";
 import { shallow } from "zustand/shallow";
+import { matrixItemGroupIdentifierToString } from "@/src/utils/matrixItemGroup.utils";
 
 type Props = {
-  groupIdentifier: MatrixItemsGroupIdentifier;
+  groupIdentifier: MatrixItemGroupIdentifier;
 };
 
 export function SampleSelect({ groupIdentifier }: Props) {
   const groupStringId = useMemo(
-    () => matrixItemsGroupIdentifierToString(groupIdentifier),
+    () => matrixItemGroupIdentifierToString(groupIdentifier),
     [groupIdentifier]
   );
   const { samplesByGroup, allSamples, setSampleForGroup } = useSampleStore(

@@ -25,15 +25,15 @@ export type NumberValue = {
   getLabel?: (value: number) => string | number;
 };
 
-export type MatrixItemsGroupIdentifier = {
+export type MatrixItemGroupIdentifier = {
   index: number;
   type: RowOrColumn;
 };
 
-export type MatrixItemsGroupIdentifierString = `${RowOrColumn}-${number}`;
+export type MatrixItemGroupIdentifierString = `${RowOrColumn}-${number}`;
 
 export type MatrixItemGroup = {
-  identifier: MatrixItemsGroupIdentifier;
-  stringId: MatrixItemsGroupIdentifierString;
+  identifier: MatrixItemGroupIdentifier;
+  stringId: MatrixItemGroupIdentifierString;
   items: Array<MatrixItem>;
 };

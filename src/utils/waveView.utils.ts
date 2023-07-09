@@ -2,7 +2,7 @@ import { TimeWindow } from "@/src/types/misc.types";
 import { BeatLabelType } from "@/src/data/consts";
 import { Position } from "../types/misc.types";
 import { MatrixItem } from "@/src/types/matrix.types";
-import { getTimeSlotsInRangeForMatrixItems } from "@/src/utils/matrixUtils";
+import { getTimeSlotsInRangeForMatrixItems } from "@/src/utils/timeslots.utils";
 
 export function drawWaveForItems({
   waveMargin = 0.2,

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePlayTime } from "@/src/utils/hooks/usePlayTime";
-import { drawWaveForItems } from "@/src/utils/waveViewUtils";
+import { drawWaveForItems } from "@/src/utils/waveView.utils";
 import { usePlayStore } from "@/src/data/playStore";
 import { BeatLabelType, PRIMARY_COLOR } from "@/src/data/consts";
 import { MatrixItem } from "@/src/types/matrix.types";

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
-import { drawDial } from "@/src/utils/dialUtils";
+import { drawDial } from "@/src/utils/dial.utils";
 import { useDrag } from "@use-gesture/react";
-import { clampValue } from "@/src/utils/numberUtils";
+import { clampValue } from "@/src/utils/number.utils";
 import { DialKnob } from "@/src/components/dial-knob/DialKnob";
 import {
   StyledDialWrapper,

@@ -1,9 +1,9 @@
 import {
-  MatrixItemsGroupIdentifier,
-  MatrixItemsGroupIdentifierString,
+  MatrixItemGroupIdentifier,
+  MatrixItemGroupIdentifierString,
 } from "@/src/types/matrix.types";
-import { matrixItemsGroupIdentifierToString } from "@/src/data/sampleStore.utils";
 import { create } from "zustand";
+import { matrixItemGroupIdentifierToString } from "@/src/utils/matrixItemGroup.utils";
 
 export type Sample = {
   filename: string;
@@ -13,10 +13,10 @@ export type Sample = {
 
 type SampleStoreState = {
   samples: Array<Sample>;
-  samplesByGroup: Record<MatrixItemsGroupIdentifierString, Sample | undefined>;
-  getSampleForGroup: (id: MatrixItemsGroupIdentifier) => Sample | undefined;
+  samplesByGroup: Record<MatrixItemGroupIdentifierString, Sample | undefined>;
+  getSampleForGroup: (id: MatrixItemGroupIdentifier) => Sample | undefined;
   setSampleForGroup: (
-    id: MatrixItemsGroupIdentifier,
+    id: MatrixItemGroupIdentifier,
     sample: Sample | undefined
   ) => void;
 };
@@ -24,7 +24,7 @@ type SampleStoreState = {
 export const useSampleStore = create<SampleStoreState>((set, get) => {
   return {
     setSampleForGroup: (groupIdentifier, sample) => {
-      const idString = matrixItemsGroupIdentifierToString(groupIdentifier);
+      const idString = matrixItemGroupIdentifierToString(groupIdentifier);
       set(() => {
         return {
           samplesByGroup: { ...get().samplesByGroup, [idString]: sample },
@@ -32,7 +32,7 @@ export const useSampleStore = create<SampleStoreState>((set, get) => {
       });
     },
     getSampleForGroup: (groupIdentifier) => {
-      const idString = matrixItemsGroupIdentifierToString(groupIdentifier);
+      const idString = matrixItemGroupIdentifierToString(groupIdentifier);
       return get().samplesByGroup[idString];
     },
     samplesByGroup: {},

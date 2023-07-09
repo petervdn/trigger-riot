@@ -1,15 +1,18 @@
-import { Position, RowOrColumn } from "@/src/types/misc.types";
+import { RowOrColumn } from "@/src/types/misc.types";
 import { MatrixItem, MatrixItemGroup } from "@/src/types/matrix.types";
-import { matrixItemsGroupIdentifierToString } from "@/src/data/sampleStore.utils";
-import { getPositionsForGroup } from "@/src/utils/matrixUtils";
+import {
+  getPositionsForGroup,
+  matrixItemGroupIdentifierToString,
+} from "@/src/utils/matrixItemGroup.utils";
+import { getPositionForIndex } from "@/src/utils/matrixItem.utils";
+import { positionIsInPositions } from "@/src/utils/misc.utils";
 
-export function positionIsInPositions(
-  position: Position,
-  positions: Array<Position>
-): boolean {
-  return positions.some(({ x, y }) => position.x === x && position.y === y);
-}
-
+/**
+ * Gets the label for the "steps" dial, where certain values
+ * are shown as their relation to the tempo.
+ *
+ * @param value
+ */
 function getLabelForStepValue(value: number): string | number {
   const labels: Record<number, string> = {
     [6]: "64th",
@@ -29,6 +32,13 @@ function getLabelForStepValue(value: number): string | number {
   return labels[value] || value;
 }
 
+/**
+ * Creates rows and columns for a list of matrix items.
+ *
+ * @param numberOfRows
+ * @param numberOfColumns
+ * @param matrixItems
+ */
 export function createRowAndColumns({
   numberOfRows,
   numberOfColumns,
@@ -37,7 +47,7 @@ export function createRowAndColumns({
   matrixItems: Array<MatrixItem>;
   numberOfRows: number;
   numberOfColumns: number;
-}) {
+}): { rows: Array<MatrixItemGroup>; columns: Array<MatrixItemGroup> } {
   return {
     rows: createMatrixGroups({
       type: "row",
@@ -54,6 +64,15 @@ export function createRowAndColumns({
   };
 }
 
+/**
+ * Creates either rows or columns from a given list of
+ * matrix items.
+ *
+ * @param type
+ * @param numberOfRows
+ * @param numberOfColumns
+ * @param matrixItems
+ */
 export function createMatrixGroups({
   type,
   numberOfRows,
@@ -79,11 +98,17 @@ export function createMatrixGroups({
         positionIsInPositions(position, positions)
       ),
       identifier,
-      stringId: matrixItemsGroupIdentifierToString(identifier),
+      stringId: matrixItemGroupIdentifierToString(identifier),
     };
   });
 }
 
+/**
+ * Creates a list of matrix items.
+ *
+ * @param numberOfRows
+ * @param numberOfColumns
+ */
 export function createMatrixItems({
   numberOfRows,
   numberOfColumns,
@@ -117,15 +142,4 @@ export function createMatrixItems({
       getLabel: getLabelForStepValue,
     },
   }));
-}
-
-export function getPositionForIndex(index: number, numberOfColumns: number) {
-  return {
-    x: index % numberOfColumns,
-    y: Math.floor(index / numberOfColumns),
-  };
-}
-
-export function getIndexForPosition(position: Position, numberOfRows: number) {
-  return position.y * numberOfRows + position.x;
 }

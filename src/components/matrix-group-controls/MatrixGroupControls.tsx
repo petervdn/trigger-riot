@@ -1,6 +1,5 @@
-import { MatrixItemsGroupIdentifier } from "@/src/types/matrix.types";
+import { MatrixItemGroupIdentifier } from "@/src/types/matrix.types";
 import { useMatrixStore } from "@/src/data/matrixStore";
-import { getPositionsForGroup } from "@/src/utils/matrixUtils";
 import { WaveView } from "@/src/components/wave-view/WaveView";
 import { useElementWidth } from "@/src/utils/hooks/useElementWidth";
 import { useCallback, useMemo } from "react";
@@ -8,6 +7,7 @@ import { SampleSelect } from "@/src/components/sample-select/SampleSelect";
 import { useNumberOfRowsAndColumns } from "@/src/utils/hooks/useNumberOfRowsAndColumns";
 import { RowOrColumn } from "@/src/types/misc.types";
 import { useMatrixItemsForGroup } from "@/src/utils/hooks/useMatrixItemsForGroup";
+import { getPositionsForGroup } from "@/src/utils/matrixItemGroup.utils";
 
 type Props = {
   groupType: RowOrColumn;
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export function MatrixGroupControls({ groupType, groupIndex }: Props) {
-  const groupIdentifier: MatrixItemsGroupIdentifier = useMemo(() => {
+  const groupIdentifier: MatrixItemGroupIdentifier = useMemo(() => {
     return { type: groupType, index: groupIndex };
   }, [groupType, groupIndex]);
 
