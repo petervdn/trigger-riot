@@ -1,11 +1,19 @@
 import EventDispatcher, { createEventClass } from "seng-event";
 import { useMatrixStore } from "@/src/data/matrixStore";
+import { MatrixItemGroup } from "@/src/types/matrix.types";
+import { useSampleStore } from "@/src/data/sampleStore";
+import { getTimeSlotsInRangeForMatrixItems } from "@/src/utils/matrixUtils";
+import { usePlayStore } from "@/src/data/playStore";
 
 export class SoundManagerEvent extends createEventClass()("START", "STOP") {}
+
+const SCHEDULE_INTERVAL = 1;
+const SCHEDULE_LOOKAHEAD = 1.5;
 
 export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
   public context!: AudioContext;
   private startTime: number | undefined;
+  private scheduleIntervalId: number = -1;
 
   constructor() {
     super();
@@ -22,6 +30,14 @@ export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
     }
     this.startTime = this.context.currentTime;
 
+    // force first schedule with time = 0, otherwise the first samples (on 0.0) will not fire
+    // (playtime might be something like 0.000005 on first schedule)
+    this.schedule(0);
+    // return;
+    this.scheduleIntervalId = window.setInterval(() => {
+      this.schedule(this.getCurrentTime());
+    }, SCHEDULE_INTERVAL * 1000);
+
     this.dispatchEvent(new SoundManagerEvent(SoundManagerEvent.types.START));
   }
 
@@ -37,48 +53,39 @@ export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
       : 0;
   }
 
-  public schedule = () => {
-    console.log(useMatrixStore.getState());
-    // const groups: IMatrixItemGroup[] = [
-    //   ...this.store!.state.matrix.matrix.columns,
-    //   ...this.store!.state.matrix.matrix.rows,
-    // ];
-    //
-    // for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
-    //   const group = groups[groupIndex];
-    //   if (!group.sample) continue;
-    //
-    //   // only collect items which have a division > 0
-    //   // const itemsWithDivisionSet: IMatrixItem[] = []; // todo also include pulseWidth > 0
-    //   // for (let itemIndex = 0; itemIndex < group.items.length; itemIndex += 1) {
-    //   //   if (group.items[itemIndex].division.value > 0) {
-    //   //     itemsWithDivisionSet.push(group.items[itemIndex]);
-    //   //   }
-    //   // }
-    //
-    //   if (itemsWithDivisionSet.length > 0) {
-    //     // group has a sample, and there is at least 1 item in this group with a division > 0;
-    //     const slots = getTimeSlotsInRangeForMatrixItems(
-    //       itemsWithDivisionSet,
-    //       this.store!.state.app.bpm,
-    //       {
-    //         start: playTime,
-    //         end: playTime + settings.SCHEDULE_LOOKAHEAD,
-    //       }
-    //     );
-    //
-    //     for (let slotIndex = 0; slotIndex < slots.length; slotIndex += 1) {
-    //       // only play sample if the slot is in the future (or now)
-    //       if (slots[slotIndex].start >= playTime) {
-    //         this.samplePlayer.playSampleAtTime(
-    //           group.sample,
-    //           group.id,
-    //           slots[slotIndex].start + this.startTime - timeOffset
-    //         );
-    //       }
-    //     }
-    //   }
-    // }
+  public schedule = (startTime: number) => {
+    const timeWindow = {
+      start: startTime,
+      end: startTime + SCHEDULE_LOOKAHEAD,
+    };
+
+    const { columns, rows } = useMatrixStore.getState();
+    const { samplesByGroup } = useSampleStore.getState();
+    const { bpm } = usePlayStore.getState();
+    const groups: MatrixItemGroup[] = [...columns, ...rows];
+
+    for (const group of groups) {
+      if (!samplesByGroup[group.stringId]) continue;
+
+      const slots = getTimeSlotsInRangeForMatrixItems({
+        matrixItems: group.items,
+        bpm,
+        timeWindow,
+      });
+
+      //
+      //     for (let slotIndex = 0; slotIndex < slots.length; slotIndex += 1) {
+      //       // only play sample if the slot is in the future (or now)
+      //       if (slots[slotIndex].start >= playTime) {
+      //         this.samplePlayer.playSampleAtTime(
+      //           group.sample,
+      //           group.id,
+      //           slots[slotIndex].start + this.startTime - timeOffset
+      //         );
+      //       }
+      //     }
+      //   }
+    }
   };
 }
 
