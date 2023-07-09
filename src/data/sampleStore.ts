@@ -53,7 +53,7 @@ export const useSampleStore = create<SampleStoreState>((set, get) => {
     ],
     loadSample: async (sampleToLoad) => {
       if (!sampleToLoad.audioBuffer) {
-        // todo: this should probably be done i a cleaner way
+        // todo: this should probably be done in a cleaner way
 
         // find index of sample to update
         const index = get().samples.findIndex(

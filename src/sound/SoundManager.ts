@@ -48,6 +48,8 @@ export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
   public stop(): void {
     this.startTime = undefined;
 
+    this.samplePlayer.stopAll();
+
     this.dispatchEvent(new SoundManagerEvent(SoundManagerEvent.types.STOP));
   }
 
@@ -57,10 +59,14 @@ export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
       : 0;
   }
 
-  public schedule = (startTime: number) => {
+  public schedule = (scheduleStartTime: number) => {
+    if (this.startTime === undefined) {
+      return;
+    }
+
     const timeWindow = {
-      start: startTime,
-      end: startTime + SCHEDULE_LOOKAHEAD,
+      start: scheduleStartTime,
+      end: scheduleStartTime + SCHEDULE_LOOKAHEAD,
     };
 
     const { columns, rows } = useMatrixStore.getState();
@@ -69,7 +75,10 @@ export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
     const groups: MatrixItemGroup[] = [...columns, ...rows];
 
     for (const group of groups) {
-      if (!samplesByGroup[group.stringId]) continue;
+      const sampleForGroup = samplesByGroup[group.stringId];
+      if (!sampleForGroup || !sampleForGroup.audioBuffer) {
+        continue;
+      }
 
       const slots = getTimeSlotsInRangeForMatrixItems({
         matrixItems: group.items,
@@ -79,14 +88,13 @@ export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
 
       for (let slotIndex = 0; slotIndex < slots.length; slotIndex += 1) {
         // only play sample if the slot is in the future (or now) todo: why would that not be the case?
-        // if (slots[slotIndex].start >= playTime) {
-        // this.samplePlayer.playSampleAtTime(
-        //   group.sample,
-        //   group.id,
-        //   slots[slotIndex].start + this.startTime - timeOffset
-        // );
-        //}
-        //}
+        if (slots[slotIndex].start >= this.getCurrentTime()) {
+          this.samplePlayer.playSampleAtTime(
+            sampleForGroup,
+            group.stringId,
+            slots[slotIndex].start + this.startTime
+          );
+        }
       }
     }
   };
