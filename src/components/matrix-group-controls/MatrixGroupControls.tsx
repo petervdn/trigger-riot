@@ -46,7 +46,7 @@ export function MatrixGroupControls({ groupType, groupIndex }: Props) {
           width={width}
           height={40}
           matrixItems={matrixItemsForGroup}
-          lookaheadTime={1}
+          viewRange={2}
         />
       )}
 

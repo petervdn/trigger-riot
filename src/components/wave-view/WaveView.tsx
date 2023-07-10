@@ -12,10 +12,10 @@ type Props = {
   width: number;
   height: number;
   matrixItems: Array<MatrixItem>;
-  lookaheadTime: number;
+  viewRange: number; // in seconds
 };
 
-export function WaveView({ height, width, matrixItems, lookaheadTime }: Props) {
+export function WaveView({ height, width, matrixItems, viewRange }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useSizedCanvas({ width, height, canvasRef });
   const bpm = usePlayStore((state) => state.bpm);
@@ -28,15 +28,17 @@ export function WaveView({ height, width, matrixItems, lookaheadTime }: Props) {
     drawWaveForItems({
       context: canvasRef.current.getContext("2d")!,
       bpm,
-      timeWindow: { start: playTime, end: playTime + lookaheadTime },
-      // waveMargin: 40,
+      timeWindow: {
+        start: playTime - 0.5 * viewRange,
+        end: playTime + 0.5 * viewRange,
+      },
       showBeats: true,
       matrixItems,
       beatLabelType: BeatLabelType.BEAT_INDEX,
       beatLabelRepeat: 0,
       color: PRIMARY_COLOR,
     });
-  }, [playTime, matrixItems, lookaheadTime, bpm]);
+  }, [playTime, matrixItems, viewRange, bpm]);
 
   return <canvas ref={canvasRef} style={{ width, height }} />;
 }

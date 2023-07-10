@@ -21,7 +21,7 @@ export function MainWaveView() {
         width={MATRIX_WIDTH}
         height={80}
         matrixItems={selectedMatrixItems}
-        lookaheadTime={4}
+        viewRange={4}
       />
       <WaveViewControls />
     </>
