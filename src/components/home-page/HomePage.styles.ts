@@ -7,7 +7,7 @@ export const StyledSplitWrapper = styled.div`
 
 export const StyledSideBarWrapper = styled.div`
   flex-grow: 0;
-  // background-color: #ddd;
+  padding-left: 20px;
 `;
 
 export const StyledMainWrapper = styled.div`

@@ -3,6 +3,7 @@ import { MATRIX_WIDTH } from "@/src/data/consts";
 import { WaveView } from "@/src/components/wave-view/WaveView";
 import { shallow } from "zustand/shallow";
 import { useMatrixItemsForPositions } from "@/src/utils/hooks/useMatrixItemForPosition";
+import { WaveViewControls } from "@/src/components/wave-view-controls/WaveViewControls";
 
 export function MainWaveView() {
   const { selectedItemPositions } = useMatrixStore((state) => {
@@ -22,7 +23,7 @@ export function MainWaveView() {
         matrixItems={selectedMatrixItems}
         lookaheadTime={4}
       />
-      {/*<WaveViewControls />*/}
+      <WaveViewControls />
     </>
   );
 }

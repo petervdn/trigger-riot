@@ -7,6 +7,7 @@ import { samplePlayer } from "@/src/sound/SamplePlayer";
 
 type PlayStoreState = {
   bpm: number;
+  setBpm: (value: number) => void;
   start: () => void;
   stop: () => void;
   audioContextStartTime: number | undefined; // context's time when user hit play
@@ -18,6 +19,9 @@ type PlayStoreState = {
 export const usePlayStore = create<PlayStoreState>((set, get) => {
   return {
     bpm: DEFAULT_BPM,
+    setBpm: (value) => {
+      set(() => ({ bpm: value }));
+    },
     audioContextStartTime: undefined,
     isPlaying: false,
     scheduleIntervalId: undefined,
@@ -52,7 +56,6 @@ export const usePlayStore = create<PlayStoreState>((set, get) => {
       samplePlayer.stopAll();
       clearInterval(get().scheduleIntervalId);
 
-      console.log("stop");
       set(() => {
         return {
           audioContextStartTime: undefined,
