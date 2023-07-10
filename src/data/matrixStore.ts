@@ -1,5 +1,4 @@
 import { create } from "zustand";
-
 import {
   MatrixItem,
   MatrixItemEditableProperty,
@@ -8,6 +7,7 @@ import { Position } from "@/src/types/misc.types";
 import { produce } from "immer";
 import { createMatrixItems } from "@/src/utils/matrixStore.utils";
 import { getPositionsForGroup } from "@/src/utils/matrixItemGroup.utils";
+import { NUMBER_OF_COLUMNS, NUMBER_OF_ROWS } from "@/src/data/consts";
 
 type MatrixStoreState = {
   numberOfRows: number;
@@ -68,6 +68,6 @@ export const createMatrixStore = ({
 };
 
 export const useMatrixStore = createMatrixStore({
-  numberOfRows: 4,
-  numberOfColumns: 4,
+  numberOfRows: NUMBER_OF_ROWS,
+  numberOfColumns: NUMBER_OF_COLUMNS,
 });

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
-import { drawDial } from "@/src/utils/dial.utils";
 import { useDrag } from "@use-gesture/react";
 import { clampValue } from "@/src/utils/number.utils";
 import { DialKnob } from "@/src/components/dial-knob/DialKnob";
@@ -13,6 +12,7 @@ import {
 } from "@/src/components/dial/Dial.styles";
 import { PRIMARY_COLOR } from "@/src/data/consts";
 import { useSizedCanvas } from "@/src/utils/hooks/useSizedCanvas";
+import { drawDial } from "@/src/components/dial/Dial.utils";
 
 export type DialProps = {
   min: number;

@@ -1,4 +1,3 @@
-import { useMatrixStore } from "@/src/data/matrixStore";
 import { StyledMatrixRow } from "@/src/components/matrix/Matrix.styles";
 import { MatrixInputItem } from "@/src/components/matrix-input-item/MatrixInputItem";
 import { MatrixGroupControls } from "@/src/components/matrix-group-controls/MatrixGroupControls";

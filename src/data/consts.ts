@@ -16,3 +16,6 @@ export const DEFAULT_BPM = 120;
 
 export const SCHEDULE_INTERVAL = 1;
 export const SCHEDULE_LOOKAHEAD = 1.5;
+
+export const NUMBER_OF_ROWS = 4;
+export const NUMBER_OF_COLUMNS = 4;
