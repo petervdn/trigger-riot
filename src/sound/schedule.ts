@@ -1,22 +1,29 @@
-import { useSampleStore } from "@/src/data/sampleStore";
-import { usePlayStore } from "@/src/data/playStore";
+import { Sample } from "@/src/data/sampleStore";
 import { MatrixItemGroup } from "@/src/types/matrix.types";
 import { getTimeSlotsInRangeForMatrixItems } from "@/src/utils/timeslots.utils";
-import { SCHEDULE_LOOKAHEAD } from "@/src/data/consts";
+import { samplePlayer } from "@/src/sound/SamplePlayer";
+import { TimeWindow } from "@/src/types/misc.types";
 
-export function schedule(scheduleStartTime: number) {
-  console.log(scheduleStartTime);
-  const timeWindow = {
-    start: scheduleStartTime,
-    end: scheduleStartTime + SCHEDULE_LOOKAHEAD,
-  };
-
-  const { samplesByGroup } = useSampleStore.getState();
-  const { bpm } = usePlayStore.getState();
-  const groups: MatrixItemGroup[] = []; // todo
+export function schedule({
+  contextStartTime,
+  timeWindow,
+  groups,
+  samplesByGroupId,
+  bpm,
+}: {
+  timeWindow: TimeWindow;
+  groups: Array<MatrixItemGroup>;
+  contextStartTime?: number;
+  bpm: number;
+  samplesByGroupId: Record<string, Sample | undefined>;
+}) {
+  if (!contextStartTime) {
+    console.error("No contextStartTime");
+    return;
+  }
 
   for (const group of groups) {
-    const sampleForGroup = samplesByGroup[group.stringId];
+    const sampleForGroup = samplesByGroupId[group.stringId];
     if (!sampleForGroup || !sampleForGroup.audioBuffer) {
       continue;
     }
@@ -27,15 +34,12 @@ export function schedule(scheduleStartTime: number) {
       timeWindow,
     });
 
-    for (let slotIndex = 0; slotIndex < slots.length; slotIndex += 1) {
-      // only play sample if the slot is in the future (or now) todo: why would that not be the case?
-      // if (slots[slotIndex].start >= this.getCurrentTime()) {
-      //   this.samplePlayer.playSampleAtTime(
-      //     sampleForGroup,
-      //     group.stringId,
-      //     slots[slotIndex].start + this.startTime
-      //   );
-      // }
+    for (const slot of slots) {
+      samplePlayer.playSampleAtTime(
+        sampleForGroup,
+        group.stringId,
+        slot.start + contextStartTime
+      );
     }
   }
 }

@@ -1,22 +1,23 @@
 import { Sample } from "@/src/data/sampleStore";
+import { audioContext } from "@/src/sound/audioContext";
 
-interface IScheduledSample {
+type ScheduledSample = {
   bufferSourceNode: AudioBufferSourceNode;
   gain: GainNode;
   sample: Sample;
   layerId: string;
   time: number;
-}
+};
 
 export class SamplePlayer {
   private latestScheduledTimeByLayer: { [layerId: string]: number } = {};
-  private scheduledSamples: IScheduledSample[] = [];
+  private scheduledSamples: Array<ScheduledSample> = [];
 
-  constructor(private context: AudioContext) {}
+  constructor() {}
 
   public playSampleAtTime(
     sample: Sample,
-    layerId: string,
+    layerId: string, // todo: rename?
     time: number,
     volume = 1
   ): void {
@@ -26,14 +27,14 @@ export class SamplePlayer {
         time > this.latestScheduledTimeByLayer[layerId])
     ) {
       // create and init all nodes
-      const bufferSourceNode = this.context.createBufferSource();
-      const gain = this.context.createGain();
+      const bufferSourceNode = audioContext.createBufferSource();
+      const gain = audioContext.createGain();
 
       bufferSourceNode.buffer = sample.audioBuffer;
       gain.gain.value = volume;
 
       bufferSourceNode.connect(gain);
-      gain.connect(this.context.destination);
+      gain.connect(audioContext.destination);
 
       // set start time
       bufferSourceNode.start(time);
@@ -61,3 +62,5 @@ export class SamplePlayer {
     this.scheduledSamples = [];
   }
 }
+
+export const samplePlayer = new SamplePlayer();

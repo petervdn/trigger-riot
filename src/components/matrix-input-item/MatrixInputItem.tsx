@@ -3,6 +3,7 @@ import { Position } from "@/src/types/misc.types";
 import { Dial } from "@/src/components/dial/Dial";
 import { useElementWidth } from "@/src/utils/hooks/useElementWidth";
 import { useMatrixItemForPosition } from "@/src/utils/hooks/useMatrixItemForPosition";
+import { shallow } from "zustand/shallow";
 
 type Props = {
   position: Position;
@@ -10,8 +11,10 @@ type Props = {
 
 export function MatrixInputItem({ position }: Props) {
   const { elementRef, width } = useElementWidth();
-  const editMode = useMatrixStore((state) => state.editMode);
-  const setValue = useMatrixStore((state) => state.setValue);
+  const { setValue, editMode } = useMatrixStore(
+    (state) => ({ editMode: state.editMode, setValue: state.setValue }),
+    shallow
+  );
 
   const matrixItem = useMatrixItemForPosition(position);
   const matrixItemValue = matrixItem[editMode];
