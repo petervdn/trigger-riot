@@ -14,7 +14,7 @@ export function Header() {
         <div
           style={{ width: CONTENT_WIDTH, margin: "0 auto", display: "flex" }}
         >
-          <div style={{ backgroundColor: undefined, width: MATRIX_WIDTH }}>
+          <div style={{ width: MATRIX_WIDTH }}>
             <MainWaveView />
           </div>
           <Transport />

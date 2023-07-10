@@ -27,7 +27,7 @@ export function MatrixGroupControls({ groupType, groupIndex }: Props) {
 
   const { numberOfRows, numberOfColumns } = useNumberOfRowsAndColumns();
 
-  const onSelectClick = useCallback(() => {
+  const selectGroup = useCallback(() => {
     setSelectedItemPositions(
       getPositionsForGroup({ groupIdentifier, numberOfRows, numberOfColumns })
     );
@@ -44,15 +44,16 @@ export function MatrixGroupControls({ groupType, groupIndex }: Props) {
   return (
     <div ref={elementRef}>
       {width && (
-        <WaveView
-          width={width}
-          height={40}
-          matrixItems={matrixItemsForGroup}
-          viewRange={waveViewRange}
-        />
+        <div onClick={selectGroup}>
+          <WaveView
+            width={width}
+            height={40}
+            matrixItems={matrixItemsForGroup}
+            viewRange={waveViewRange}
+          />
+        </div>
       )}
 
-      <button onClick={onSelectClick}>select</button>
       <SampleSelect groupIdentifier={groupIdentifier} />
     </div>
   );

@@ -21,7 +21,14 @@ export function Transport() {
   }
 
   return (
-    <div style={{ display: "flex", marginTop: 12, marginLeft: 10 }}>
+    <div
+      style={{
+        display: "flex",
+        marginTop: 12,
+        marginLeft: 20,
+        // backgroundColor: "red",
+      }}
+    >
       <PlayButton size={55} isPlaying={isPlaying} onClick={onPlayButtonClick} />
     </div>
   );
