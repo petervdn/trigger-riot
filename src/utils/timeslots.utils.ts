@@ -25,7 +25,10 @@ export function getTimeSlotsInRangeForMatrixItems({
       ...getSlotsInRangeForMatrixItem({
         matrixItem: matrixItems[i],
         bpm,
-        timeWindow,
+        timeWindow: {
+          start: Math.max(0, timeWindow.start),
+          end: timeWindow.end,
+        },
       })
     );
   }
