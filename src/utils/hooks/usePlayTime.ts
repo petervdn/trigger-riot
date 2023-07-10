@@ -8,9 +8,7 @@ export function usePlayTime() {
 
   useInterval(() => {
     const playTime = getCurrentTime();
-    if (playTime) {
-      setPlayTime(playTime);
-    }
+    setPlayTime(playTime ?? 0);
   }, 0);
 
   return playTime;

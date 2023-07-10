@@ -49,11 +49,13 @@ export const usePlayStore = create<PlayStoreState>((set, get) => {
       });
     },
     stop: async () => {
-      set(() => {
-        samplePlayer.stopAll();
-        clearInterval(get().scheduleIntervalId);
+      samplePlayer.stopAll();
+      clearInterval(get().scheduleIntervalId);
 
+      console.log("stop");
+      set(() => {
         return {
+          audioContextStartTime: undefined,
           scheduleIntervalId: undefined,
           startTime: undefined,
           isPlaying: false,
