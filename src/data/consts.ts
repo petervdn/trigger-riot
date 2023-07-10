@@ -17,6 +17,10 @@ export const DEFAULT_BPM = 120;
 export const MIN_BPM = 40;
 export const MAX_BPM = 200;
 
+export const DEFAULT_WAVEVIEW_RANGE = { small: 2, large: 4 };
+export const MIN_WAVEVIEW_RANGE = { small: 0.5, large: 0.5 };
+export const MAX_WAVEVIEW_RANGE = { small: 4, large: 8 };
+
 export const SCHEDULE_INTERVAL = 1;
 export const SCHEDULE_LOOKAHEAD = 1.5;
 

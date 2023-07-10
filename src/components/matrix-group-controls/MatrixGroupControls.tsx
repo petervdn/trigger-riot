@@ -8,6 +8,7 @@ import { useNumberOfRowsAndColumns } from "@/src/utils/hooks/useNumberOfRowsAndC
 import { RowOrColumn } from "@/src/types/misc.types";
 import { useMatrixItemsForGroup } from "@/src/utils/hooks/useMatrixItemsForGroup";
 import { getPositionsForGroup } from "@/src/utils/matrixItemGroup.utils";
+import { useSettingsStore } from "@/src/data/settingsStore";
 
 type Props = {
   groupType: RowOrColumn;
@@ -38,6 +39,7 @@ export function MatrixGroupControls({ groupType, groupIndex }: Props) {
   ]);
 
   const matrixItemsForGroup = useMatrixItemsForGroup(groupIdentifier);
+  const waveViewRange = useSettingsStore((state) => state.waveViewRange.small);
 
   return (
     <div ref={elementRef}>
@@ -46,7 +48,7 @@ export function MatrixGroupControls({ groupType, groupIndex }: Props) {
           width={width}
           height={40}
           matrixItems={matrixItemsForGroup}
-          viewRange={2}
+          viewRange={waveViewRange}
         />
       )}
 

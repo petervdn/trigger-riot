@@ -22,8 +22,6 @@ export function HomePage() {
         <Matrix />
       </StyledMainWrapper>
       <StyledSideBarWrapper style={{ width: SIDEBAR_WIDTH }}>
-        <h3>Settings</h3>
-
         <Settings />
         <h3>About</h3>
         <p>
