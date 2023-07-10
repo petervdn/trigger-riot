@@ -28,6 +28,7 @@ export function WaveView({ height, width, matrixItems, viewRange }: Props) {
     drawWaveForItems({
       context: canvasRef.current.getContext("2d")!,
       bpm,
+      currentTime: playTime,
       timeWindow: {
         start: playTime - 0.5 * viewRange,
         end: playTime + 0.5 * viewRange,

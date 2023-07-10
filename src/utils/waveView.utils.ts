@@ -15,12 +15,14 @@ export function drawWaveForItems({
   showBeats,
   color,
   backgroundColor = "black",
+  currentTime,
 }: {
   context: CanvasRenderingContext2D;
   matrixItems: Array<MatrixItem>;
   bpm: number;
   timeWindow: TimeWindow;
   waveMargin?: number;
+  currentTime?: number;
   showBeats: boolean;
   beatLabelType: string;
   beatLabelRepeat: number;
@@ -52,9 +54,44 @@ export function drawWaveForItems({
     waveMargin: context.canvas.height * waveMargin,
     color,
   });
+
+  if (currentTime !== undefined) {
+    drawCurrentTime({
+      context,
+      currentTime,
+      pixelsPerSecond,
+      windowStartTime: timeWindow.start,
+    });
+  }
 }
 
-export function drawTimeSlots({
+function drawCurrentTime({
+  currentTime,
+  context,
+  pixelsPerSecond,
+  windowStartTime,
+}: {
+  context: CanvasRenderingContext2D;
+  currentTime: number;
+  pixelsPerSecond: number;
+  windowStartTime: number;
+}) {
+  const x = getPositionXInCanvasForTime(
+    context,
+    currentTime,
+    windowStartTime,
+    pixelsPerSecond
+  );
+  context.beginPath();
+  context.moveTo(x, 0);
+  context.lineTo(x, context.canvas.height);
+
+  context.strokeStyle = "rgba(255, 255, 255, 0.3)";
+  context.lineWidth = 4;
+  context.stroke();
+}
+
+function drawTimeSlots({
   timeWindow,
   context,
   bpm,
@@ -158,25 +195,12 @@ function getDrawDataForTimeSlots(
       linePoints.push({ x: context.canvas.width, y: yBottom });
     }
   } else {
-    // when there are no results, draw a low line todo fix high line, when not playing, that goes beyond the canvas range
+    // when there are no results, draw a low line
     linePoints.push({ x: 0, y: yBottom });
     linePoints.push({ x: context.canvas.width, y: yBottom });
   }
 
   return { linePoints };
-}
-
-export function setCanvasSize(
-  canvas: HTMLCanvasElement,
-  width: number,
-  height: number,
-  scaleToPixelRatio = true
-): void {
-  const scale = scaleToPixelRatio ? window.devicePixelRatio : 1;
-  canvas.style.width = `${width}px`;
-  canvas.style.height = `${height}px`;
-  canvas.width = width * scale;
-  canvas.height = height * scale;
 }
 
 export function drawBeats({
