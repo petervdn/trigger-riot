@@ -69,10 +69,9 @@ export default class SoundManager extends EventDispatcher<SoundManagerEvent> {
       end: scheduleStartTime + SCHEDULE_LOOKAHEAD,
     };
 
-    const { columns, rows } = useMatrixStore.getState();
     const { samplesByGroup } = useSampleStore.getState();
     const { bpm } = usePlayStore.getState();
-    const groups: MatrixItemGroup[] = [...columns, ...rows];
+    const groups: MatrixItemGroup[] = []; // todo
 
     for (const group of groups) {
       const sampleForGroup = samplesByGroup[group.stringId];
