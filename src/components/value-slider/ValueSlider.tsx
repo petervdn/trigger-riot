@@ -5,9 +5,10 @@ type Props = {
   onChange?: (value: number) => void;
   min: number;
   max: number;
+  isDisabled?: boolean;
 };
 
-export function ValueSlider({ value, onChange, min, max }: Props) {
+export function ValueSlider({ value, onChange, min, max, isDisabled }: Props) {
   return (
     <Slider
       valueLabelDisplay={"auto"}
@@ -15,6 +16,7 @@ export function ValueSlider({ value, onChange, min, max }: Props) {
       min={min}
       max={max}
       step={0.01}
+      disabled={isDisabled}
       onChange={(_, value) => {
         if (typeof value === "number") {
           onChange?.(value);

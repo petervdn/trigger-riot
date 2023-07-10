@@ -6,15 +6,15 @@ import {
   MIN_BPM,
   MIN_WAVEVIEW_RANGE,
 } from "@/src/data/consts";
-import { ValueSlider } from "@/src/components/value-slider/ValueSlider";
 import { useSettingsStore } from "@/src/data/settingsStore";
 import { SettingsSlider } from "@/src/components/settings-slider/SettingsSlider";
 
 export function Settings() {
-  const { bpm, setBpm } = usePlayStore(
+  const { bpm, setBpm, isPlaying } = usePlayStore(
     (state) => ({
       bpm: state.bpm,
       setBpm: state.setBpm,
+      isPlaying: state.isPlaying,
     }),
     shallow
   );
@@ -30,6 +30,7 @@ export function Settings() {
   return (
     <>
       <SettingsSlider
+        isDisabled={isPlaying}
         label={"bpm"}
         value={bpm}
         min={MIN_BPM}
