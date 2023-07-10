@@ -8,40 +8,6 @@ import { getPositionForIndex } from "@/src/utils/matrixItem.utils";
 import { positionIsInPositions } from "@/src/utils/misc.utils";
 
 /**
- * Creates the matrix items, row/column groups and initial selection.
- *
- * @param numberOfRows
- * @param numberOfColumns
- */
-export function createInitialMatrixStoreState({
-  numberOfRows,
-  numberOfColumns,
-}: {
-  numberOfRows: number;
-  numberOfColumns: number;
-}) {
-  const matrixItems = createMatrixItems({
-    numberOfRows,
-    numberOfColumns,
-  });
-
-  const { rows, columns } = createRowAndColumns({
-    numberOfColumns,
-    matrixItems,
-    numberOfRows,
-  });
-
-  // select first row
-  const selectedItemPositions = getPositionsForGroup({
-    groupIdentifier: { type: "row", index: 0 },
-    numberOfRows,
-    numberOfColumns,
-  });
-
-  return { rows, columns, matrixItems, selectedItemPositions };
-}
-
-/**
  * Gets the label for the "steps" dial, where certain values
  * are shown as their relation to the tempo.
  *

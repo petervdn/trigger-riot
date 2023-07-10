@@ -3,15 +3,17 @@ import { create } from "zustand";
 import {
   MatrixItem,
   MatrixItemEditableProperty,
-  MatrixItemGroup,
 } from "@/src/types/matrix.types";
 import { Position } from "@/src/types/misc.types";
 import { produce } from "immer";
-import { createInitialMatrixStoreState } from "@/src/utils/matrixStore.utils";
+import { createMatrixItems } from "@/src/utils/matrixStore.utils";
+import { getPositionsForGroup } from "@/src/utils/matrixItemGroup.utils";
 
 type MatrixStoreState = {
-  rows: Array<MatrixItemGroup>;
-  columns: Array<MatrixItemGroup>;
+  // rows: Array<MatrixItemGroup>;
+  // columns: Array<MatrixItemGroup>;
+  numberOfRows: number;
+  numberOfColumns: number;
   matrixItems: Array<MatrixItem>;
   setValue: (
     type: MatrixItemEditableProperty,
@@ -32,13 +34,22 @@ export const createMatrixStore = ({
   numberOfColumns: number;
 }) => {
   return create<MatrixStoreState>((set) => {
-    const initialState = createInitialMatrixStoreState({
-      numberOfColumns,
+    const matrixItems = createMatrixItems({
       numberOfRows,
+      numberOfColumns,
+    });
+
+    const selectedItemPositions = getPositionsForGroup({
+      groupIdentifier: { type: "row", index: 0 },
+      numberOfRows,
+      numberOfColumns,
     });
 
     return {
-      ...initialState,
+      matrixItems,
+      selectedItemPositions,
+      numberOfRows,
+      numberOfColumns,
       setValue: (type, index, value) => {
         set(({ matrixItems }) => {
           matrixItems[index] = produce(matrixItems[index], (draft) => {
