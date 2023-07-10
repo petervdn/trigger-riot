@@ -1,19 +1,17 @@
 import styled from "styled-components";
 import { BORDER_RADIUS, PRIMARY_COLOR } from "@/src/data/consts";
 
-export const StyledWrapper = styled.div`
+export const StyledTabsWrapper = styled.div`
   margin: 10px 0;
 `;
 
-export const StyledButton = styled.div<{ isActive?: boolean }>`
+export const StyledTabsButton = styled.div<{ isActive?: boolean }>`
   background-color: ${(p) => (p.isActive ? PRIMARY_COLOR : "white")};
   border-radius: ${() => BORDER_RADIUS}px;
   border-width: 0;
   color: ${(p) => (p.isActive ? "white" : "#333333")};
   cursor: pointer;
   display: inline-block;
-  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
-    sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;

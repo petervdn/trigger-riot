@@ -44,7 +44,7 @@ export function MatrixGroupControls({ groupType, groupIndex }: Props) {
   return (
     <div ref={elementRef}>
       {width && (
-        <div onClick={selectGroup}>
+        <div onClick={selectGroup} style={{ cursor: "pointer" }}>
           <WaveView
             width={width}
             height={40}
