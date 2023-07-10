@@ -4,8 +4,7 @@ import { matrixItemGroupIdentifierToString } from "@/src/utils/matrixItemGroup.u
 
 export function useSampleForGroup(groupIdentifier: MatrixItemGroupIdentifier) {
   return useSampleStore((state) => {
-    // console.log("hook");
-    return state.samplesByGroup[
+    return state.samplesByGroupId[
       matrixItemGroupIdentifierToString(groupIdentifier)
     ];
   });

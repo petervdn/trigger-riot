@@ -1,9 +1,5 @@
 import { create } from "zustand";
-import {
-  DEFAULT_BPM,
-  SCHEDULE_INTERVAL,
-  SCHEDULE_LOOKAHEAD,
-} from "@/src/data/consts";
+import { DEFAULT_BPM, SCHEDULE_INTERVAL } from "@/src/data/consts";
 import { audioContext } from "@/src/sound/audioContext";
 import { schedule } from "@/src/sound/schedule";
 import { getScheduleProps } from "@/src/sound/getScheduleProps";
@@ -11,20 +7,18 @@ import { samplePlayer } from "@/src/sound/SamplePlayer";
 
 type PlayStoreState = {
   bpm: number;
-
   start: () => void;
   stop: () => void;
-  startTime: number | undefined; // context's time when user hit play todo: rename
+  audioContextStartTime: number | undefined; // context's time when user hit play
   scheduleIntervalId: number | undefined;
   isPlaying: boolean;
   getCurrentTime: () => number;
 };
 
-// todo: rename?
 export const usePlayStore = create<PlayStoreState>((set, get) => {
   return {
     bpm: DEFAULT_BPM,
-    startTime: undefined,
+    audioContextStartTime: undefined,
     isPlaying: false,
     scheduleIntervalId: undefined,
     start: async () => {
@@ -35,7 +29,7 @@ export const usePlayStore = create<PlayStoreState>((set, get) => {
       // startTime needs to be set first
       set(() => {
         return {
-          startTime: audioContext.currentTime,
+          audioContextStartTime: audioContext.currentTime,
         };
       });
 
@@ -67,8 +61,10 @@ export const usePlayStore = create<PlayStoreState>((set, get) => {
       });
     },
     getCurrentTime: () => {
-      const { startTime } = get();
-      return startTime !== undefined ? audioContext.currentTime - startTime : 0;
+      const { audioContextStartTime } = get();
+      return audioContextStartTime !== undefined
+        ? audioContext.currentTime - audioContextStartTime
+        : 0;
     },
   };
 });

@@ -5,8 +5,8 @@ import { useMatrixStore } from "@/src/data/matrixStore";
 import { createRowAndColumns } from "@/src/utils/matrixStore.utils";
 
 export function getScheduleProps(fromTime: number) {
-  const { bpm, startTime } = usePlayStore.getState();
-  const { samplesByGroup } = useSampleStore.getState();
+  const { bpm, audioContextStartTime } = usePlayStore.getState();
+  const { samplesByGroupId } = useSampleStore.getState();
   const { matrixItems, numberOfRows, numberOfColumns } =
     useMatrixStore.getState();
 
@@ -18,9 +18,9 @@ export function getScheduleProps(fromTime: number) {
 
   return {
     timeWindow: { start: fromTime, end: fromTime + SCHEDULE_LOOKAHEAD },
-    contextStartTime: startTime,
+    audioContextStartTime,
     bpm,
-    samplesByGroupId: samplesByGroup,
+    samplesByGroupId,
     groups: [...rows, ...columns],
   };
 }

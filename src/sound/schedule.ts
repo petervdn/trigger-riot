@@ -5,7 +5,7 @@ import { samplePlayer } from "@/src/sound/SamplePlayer";
 import { TimeWindow } from "@/src/types/misc.types";
 
 export function schedule({
-  contextStartTime,
+  audioContextStartTime,
   timeWindow,
   groups,
   samplesByGroupId,
@@ -13,11 +13,11 @@ export function schedule({
 }: {
   timeWindow: TimeWindow;
   groups: Array<MatrixItemGroup>;
-  contextStartTime?: number;
+  audioContextStartTime?: number;
   bpm: number;
   samplesByGroupId: Record<string, Sample | undefined>;
 }) {
-  if (!contextStartTime) {
+  if (!audioContextStartTime) {
     console.error("No contextStartTime");
     return;
   }
@@ -38,7 +38,7 @@ export function schedule({
       samplePlayer.playSampleAtTime(
         sampleForGroup,
         group.stringId,
-        slot.start + contextStartTime
+        slot.start + audioContextStartTime
       );
     }
   }

@@ -10,8 +10,6 @@ import { createMatrixItems } from "@/src/utils/matrixStore.utils";
 import { getPositionsForGroup } from "@/src/utils/matrixItemGroup.utils";
 
 type MatrixStoreState = {
-  // rows: Array<MatrixItemGroup>;
-  // columns: Array<MatrixItemGroup>;
   numberOfRows: number;
   numberOfColumns: number;
   matrixItems: Array<MatrixItem>;
