@@ -1,13 +1,15 @@
 import { useInterval } from "usehooks-ts";
 import { useState } from "react";
-import { soundManager } from "@/src/sound/SoundManager";
+import { usePlayStore } from "@/src/data/playStore";
 
 export function usePlayTime() {
   const [playTime, setPlayTime] = useState(0);
+  const getCurrentTime = usePlayStore((state) => state.getCurrentTime);
 
   useInterval(() => {
-    if (playTime !== soundManager.getCurrentTime()) {
-      setPlayTime(soundManager.getCurrentTime());
+    const playTime = getCurrentTime();
+    if (playTime) {
+      setPlayTime(playTime);
     }
   }, 0);
 

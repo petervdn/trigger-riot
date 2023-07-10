@@ -12,3 +12,7 @@ export const BORDER_RADIUS = 4;
 
 export const PRIMARY_COLOR = "deepskyblue";
 export const SECONDARY_COLOR = "crimson";
+export const DEFAULT_BPM = 120;
+
+export const SCHEDULE_INTERVAL = 1;
+export const SCHEDULE_LOOKAHEAD = 1.5;

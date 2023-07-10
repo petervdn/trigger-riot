@@ -1,20 +1,24 @@
-import { useInterval } from "usehooks-ts";
 import { usePlayTime } from "@/src/utils/hooks/usePlayTime";
-import { useIsPlaying } from "@/src/utils/hooks/useIsPlaying";
-import { soundManager } from "@/src/sound/SoundManager";
 import { usePlayStore } from "@/src/data/playStore";
 import { PlayButton } from "@/src/components/play-button/PlayButton";
+import { shallow } from "zustand/shallow";
 
 export function Transport() {
-  const { bpm } = usePlayStore();
+  const { isPlaying, start, stop } = usePlayStore(
+    ({ isPlaying, start, stop }) => ({
+      isPlaying,
+      start,
+      stop,
+    }),
+    shallow
+  );
   const playTime = usePlayTime();
-  const isPlaying = useIsPlaying();
 
   function onPlayButtonClick() {
     if (isPlaying) {
-      soundManager.stop();
+      stop();
     } else {
-      soundManager.start();
+      start();
     }
   }
 

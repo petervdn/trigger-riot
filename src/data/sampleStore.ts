@@ -5,7 +5,6 @@ import {
 import { create } from "zustand";
 import { matrixItemGroupIdentifierToString } from "@/src/utils/matrixItemGroup.utils";
 import { loadSound } from "@/src/utils/sound.utils";
-import { soundManager } from "@/src/sound/SoundManager";
 
 export type Sample = {
   filename: string;
@@ -70,8 +69,7 @@ export const useSampleStore = create<SampleStoreState>((set, get) => {
 
         // load
         const audioBuffer = await loadSound(
-          `/sounds/${sampleToLoad?.filename}`,
-          soundManager.context
+          `/sounds/${sampleToLoad?.filename}`
         );
 
         // set loaded state
