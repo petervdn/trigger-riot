@@ -59,7 +59,7 @@ export const createMatrixStore = ({
           };
         });
       },
-      editMode: "division",
+      editMode: "divide",
       setEditMode: (editMode) => set(() => ({ editMode })),
       setSelectedItemPositions: (positions) =>
         set(() => ({ selectedItemPositions: positions })),

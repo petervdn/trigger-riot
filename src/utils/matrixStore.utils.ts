@@ -119,11 +119,11 @@ export function createMatrixItems({
   return Array.from({ length: numberOfRows * numberOfColumns }, (_, index) => ({
     index,
     position: getPositionForIndex(index, numberOfColumns),
-    division: {
+    divide: {
       type: "number" as const,
-      min: 1,
-      max: 8,
-      value: 1,
+      min: 0,
+      max: 50,
+      value: 0,
       isInteger: true,
     },
     pulseWidth: {

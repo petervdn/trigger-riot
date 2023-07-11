@@ -3,15 +3,15 @@ import { Position } from "../types/misc.types";
 
 export type MatrixItem = {
   index: number;
-  division: NumberValue;
+  divide: NumberValue;
   pulseWidth: NumberValue;
   steps: NumberValue;
   position: Position;
 };
 
 export const editableMatrixItemProperties: Array<
-  keyof Pick<MatrixItem, "division" | "pulseWidth" | "steps">
-> = ["division", "pulseWidth", "steps"];
+  keyof Pick<MatrixItem, "divide" | "pulseWidth" | "steps">
+> = ["divide", "pulseWidth", "steps"];
 
 export type MatrixItemEditableProperty =
   (typeof editableMatrixItemProperties)[number];

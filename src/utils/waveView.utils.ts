@@ -88,9 +88,9 @@ function drawCurrentTime({
   windowStartTime: number;
   timeSinceLastTimeSlotStart?: number;
 }) {
-  const timeRange = 0.1;
+  const timeRange = 0.15;
   const lineWidthRange = [1, 6];
-  const opacityRange = [0.3, 1];
+  const opacityRange = [0.8, 1];
   let opacity: number | undefined;
   let lineWidth: number | undefined;
 

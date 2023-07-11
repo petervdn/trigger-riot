@@ -5,7 +5,7 @@ export const BeatLabelType = {
 };
 
 export const CONTENT_WIDTH = 1100;
-export const SIDEBAR_WIDTH = 340;
+export const SIDEBAR_WIDTH = 400;
 export const MATRIX_ITEM_MARGIN = 5;
 export const MATRIX_WIDTH = CONTENT_WIDTH - SIDEBAR_WIDTH - MATRIX_ITEM_MARGIN;
 export const BORDER_RADIUS = 4;

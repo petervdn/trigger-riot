@@ -34,7 +34,7 @@ export function Dial({
   value,
   min,
   max,
-  pixelsForFullRange = 100,
+  pixelsForFullRange = 200,
   onChange,
   buttonSize,
   integer = false,

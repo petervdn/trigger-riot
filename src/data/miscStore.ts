@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const sidebarModes = ["about", "random", "share", "settings", "sound"] as const;
+const sidebarModes = ["about", "random", "help", "settings", "sounds"] as const;
 type SidebarMode = (typeof sidebarModes)[number];
 
 type MiscStoreState = {

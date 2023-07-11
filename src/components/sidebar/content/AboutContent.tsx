@@ -1,7 +1,7 @@
 export function AboutContent() {
   return (
     <>
-      <h2>About</h2>
+      <h3>About</h3>
       <p>
         This is a recreation of Tiptop Audio's{" "}
         <a href="https://tiptopaudio.com/trigger-riot/" target="_blank">
@@ -11,24 +11,26 @@ export function AboutContent() {
         <a href="https://en.wikipedia.org/wiki/Eurorack" target="_blank">
           Eurorack
         </a>{" "}
-        systems. The main purpose of the module is to generate complex trigger
-        patterns.
+        systems. The purpose of the module is to generate trigger patterns (i.e.
+        rhythms).
       </p>
       <img
         width="100%"
         src="https://tiptopaudio.com/new/wp-content/uploads/2020/06/Tiptop_Audio_Trigger_Riot_white.png"
       />
       <p>
-        Owning a Trigger Riot myself, it seemed an interesting challenge to
-        visualize the signals that the module generates (something the actual
-        module doesn't do).
+        Owning the module myself, it seemed like an interesting challenge to
+        visualize the signals that the module generates.
       </p>
-      Made with NextJS, Zustand, Immer, MaterialUI and Styled Components. Source
-      code can be found on{" "}
-      <a href="https://github.com/petervdn/trigger-riot" target="_blank">
-        GitHub
-      </a>
-      .
+      <h4>Tech used</h4>
+      <p>
+        Made with NextJS, Zustand, Immer, MaterialUI and Styled Components.
+        Source code can be found on{" "}
+        <a href="https://github.com/petervdn/trigger-riot" target="_blank">
+          GitHub
+        </a>
+        .
+      </p>
     </>
   );
 }

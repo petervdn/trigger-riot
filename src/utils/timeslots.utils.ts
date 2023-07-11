@@ -53,14 +53,13 @@ export function getSlotsInRangeForMatrixItem({
   bpm: number;
   timeWindow: TimeWindow;
 }): Array<TimeWindow> {
-  // todo: division cannot be 0?
-  if (matrixItem.division.value === 0 || matrixItem.pulseWidth.value === 0) {
+  if (matrixItem.divide.value === 0 || matrixItem.pulseWidth.value === 0) {
     // in these cases: there will be no wave at all
     return [];
   }
 
   const secondsPerBeat = (60 / bpm) * getClockMultiplierValue(matrixItem);
-  const itemRepeatTime = matrixItem.division.value * secondsPerBeat;
+  const itemRepeatTime = matrixItem.divide.value * secondsPerBeat;
 
   // get last one that starts before start time
   let entryStart = -1;
