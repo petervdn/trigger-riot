@@ -139,10 +139,7 @@ function drawTimeSlots({
   lineWidth?: number;
   color: string;
 }): void {
-  context.lineWidth = lineWidth;
-  context.strokeStyle = color;
-
-  const drawData = getDrawDataForTimeSlots({
+  const linePoints = getLinePointsForTimeSlots({
     context,
     timeWindow,
     timeSlots,
@@ -150,12 +147,14 @@ function drawTimeSlots({
     waveMargin,
   });
 
-  context.beginPath();
-  for (let i = 0; i < drawData.linePoints.length; i += 1) {
+  context.lineWidth = lineWidth;
+  context.strokeStyle = color;
+
+  for (let i = 0; i < linePoints.length; i += 1) {
     if (i === 0) {
-      context.moveTo(drawData.linePoints[i].x, drawData.linePoints[i].y);
+      context.moveTo(linePoints[i].x, linePoints[i].y);
     } else {
-      context.lineTo(drawData.linePoints[i].x, drawData.linePoints[i].y);
+      context.lineTo(linePoints[i].x, linePoints[i].y);
     }
   }
   context.stroke();
@@ -166,11 +165,10 @@ function drawTimeSlots({
  * @param context
  * @param timeWindow
  * @param slots
- * @param bpm
  * @param pixelsPerSecond
  * @param waveMargin
  */
-function getDrawDataForTimeSlots({
+function getLinePointsForTimeSlots({
   timeWindow,
   context,
   timeSlots,
@@ -182,13 +180,13 @@ function getDrawDataForTimeSlots({
   timeSlots: Array<TimeWindow>;
   pixelsPerSecond: number;
   waveMargin: number;
-}): { linePoints: Array<Position> } {
+}): Array<Position> {
   const linePoints: Array<Position> = [];
   const yTop = waveMargin;
   const yBottom = context.canvas.height - waveMargin;
   let endX: number = 0;
 
-  context.beginPath();
+  // context.beginPath();
   const numSlots = timeSlots.length;
   for (let i = 0; i < numSlots; i += 1) {
     const slot = timeSlots[i];
@@ -226,7 +224,7 @@ function getDrawDataForTimeSlots({
     linePoints.push({ x: context.canvas.width, y: yBottom });
   }
 
-  return { linePoints };
+  return linePoints;
 }
 
 export function drawBeats({
