@@ -20,9 +20,7 @@ export function Header() {
           <Transport />
         </div>
       </StyledHeader>
-      <div style={{ width: CONTENT_WIDTH, margin: "0 auto" }}>
-        <EditModeSelect />
-      </div>
+      <div style={{ width: CONTENT_WIDTH, margin: "0 auto" }}></div>
     </>
   );
 }
