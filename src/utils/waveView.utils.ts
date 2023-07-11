@@ -57,7 +57,6 @@ export function drawWaveForItems({
     context,
     timeSlots,
     timeWindow,
-    bpm,
     pixelsPerSecond,
     waveMargin: context.canvas.height * waveMargin,
     color,
@@ -126,7 +125,6 @@ function drawCurrentTime({
 function drawTimeSlots({
   timeWindow,
   context,
-  bpm,
   pixelsPerSecond,
   waveMargin,
   timeSlots,
@@ -136,7 +134,6 @@ function drawTimeSlots({
   context: CanvasRenderingContext2D;
   timeSlots: Array<TimeWindow>;
   timeWindow: TimeWindow;
-  bpm: number;
   pixelsPerSecond: number;
   waveMargin: number;
   lineWidth?: number;
@@ -145,14 +142,13 @@ function drawTimeSlots({
   context.lineWidth = lineWidth;
   context.strokeStyle = color;
 
-  const drawData = getDrawDataForTimeSlots(
+  const drawData = getDrawDataForTimeSlots({
     context,
     timeWindow,
     timeSlots,
-    bpm,
     pixelsPerSecond,
-    waveMargin
-  );
+    waveMargin,
+  });
 
   context.beginPath();
   for (let i = 0; i < drawData.linePoints.length; i += 1) {
@@ -174,23 +170,28 @@ function drawTimeSlots({
  * @param pixelsPerSecond
  * @param waveMargin
  */
-function getDrawDataForTimeSlots(
-  context: CanvasRenderingContext2D,
-  timeWindow: TimeWindow,
-  slots: Array<TimeWindow>,
-  bpm: number,
-  pixelsPerSecond: number,
-  waveMargin: number
-): { linePoints: Array<Position> } {
+function getDrawDataForTimeSlots({
+  timeWindow,
+  context,
+  timeSlots,
+  pixelsPerSecond,
+  waveMargin,
+}: {
+  context: CanvasRenderingContext2D;
+  timeWindow: TimeWindow;
+  timeSlots: Array<TimeWindow>;
+  pixelsPerSecond: number;
+  waveMargin: number;
+}): { linePoints: Array<Position> } {
   const linePoints: Array<Position> = [];
   const yTop = waveMargin;
   const yBottom = context.canvas.height - waveMargin;
   let endX: number = 0;
 
   context.beginPath();
-  const numSlots = slots.length;
+  const numSlots = timeSlots.length;
   for (let i = 0; i < numSlots; i += 1) {
-    const slot = slots[i];
+    const slot = timeSlots[i];
     const startX = getPositionXInCanvasForTime(
       context,
       slot.start,
