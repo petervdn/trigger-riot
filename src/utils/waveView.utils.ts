@@ -3,7 +3,7 @@ import { BeatLabelType } from "@/src/data/consts";
 import { Position } from "../types/misc.types";
 import { MatrixItem } from "@/src/types/matrix.types";
 import {
-  getTimeSinceLastTimeslotStart,
+  getTimeSinceLastTimeSlotStart,
   getTimeSlotsInRangeForMatrixItems,
 } from "@/src/utils/timeslots.utils";
 
@@ -62,7 +62,7 @@ export function drawWaveForItems({
     waveMargin: context.canvas.height * waveMargin,
     color,
   });
-  const timeSinceLastTimeslotStart = getTimeSinceLastTimeslotStart(
+  const timeSinceLastTimeSlotStart = getTimeSinceLastTimeSlotStart(
     timeSlots,
     currentTime
   );
@@ -72,12 +72,7 @@ export function drawWaveForItems({
     currentTime,
     pixelsPerSecond,
     windowStartTime: timeWindow.start,
-    width:
-      timeSinceLastTimeslotStart && timeSinceLastTimeslotStart < 0.1 ? 4 : 2,
-    color:
-      timeSinceLastTimeslotStart && timeSinceLastTimeslotStart < 0.1
-        ? "white"
-        : "#999",
+    timeSinceLastTimeSlotStart,
   });
 }
 
@@ -86,16 +81,33 @@ function drawCurrentTime({
   context,
   pixelsPerSecond,
   windowStartTime,
-  color,
-  width,
+  timeSinceLastTimeSlotStart,
 }: {
   context: CanvasRenderingContext2D;
   currentTime: number;
   pixelsPerSecond: number;
   windowStartTime: number;
-  color: string;
-  width: number;
+  timeSinceLastTimeSlotStart?: number;
 }) {
+  const timeRange = 0.1;
+  const lineWidthRange = [1, 6];
+  const opacityRange = [0.3, 1];
+  let opacity: number | undefined;
+  let lineWidth: number | undefined;
+
+  if (
+    timeSinceLastTimeSlotStart !== undefined &&
+    timeSinceLastTimeSlotStart < timeRange
+  ) {
+    const scale = 1 - timeSinceLastTimeSlotStart / timeRange;
+    lineWidth =
+      lineWidthRange[0] + scale * (lineWidthRange[1] - lineWidthRange[0]);
+    opacity = opacityRange[0] + scale * (opacityRange[1] - opacityRange[0]);
+  } else {
+    opacity = opacityRange[0];
+    lineWidth = lineWidthRange[0];
+  }
+
   const x = getPositionXInCanvasForTime(
     context,
     currentTime,
@@ -106,8 +118,8 @@ function drawCurrentTime({
   context.moveTo(x, 0);
   context.lineTo(x, context.canvas.height);
 
-  context.strokeStyle = color;
-  context.lineWidth = width;
+  context.strokeStyle = `rgba(255,255,255, ${opacity})`;
+  context.lineWidth = lineWidth;
   context.stroke();
 }
 

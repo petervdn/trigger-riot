@@ -120,7 +120,7 @@ export function flattenTimeSlots(
   return results;
 }
 
-export function getTimeSinceLastTimeslotStart(
+export function getTimeSinceLastTimeSlotStart(
   timeslots: Array<TimeWindow>,
   beforeOrOnTime: number
 ) {
