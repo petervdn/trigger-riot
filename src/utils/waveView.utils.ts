@@ -2,7 +2,10 @@ import { TimeWindow } from "@/src/types/misc.types";
 import { BeatLabelType } from "@/src/data/consts";
 import { Position } from "../types/misc.types";
 import { MatrixItem } from "@/src/types/matrix.types";
-import { getTimeSlotsInRangeForMatrixItems } from "@/src/utils/timeslots.utils";
+import {
+  getTimeSinceLastTimeslotStart,
+  getTimeSlotsInRangeForMatrixItems,
+} from "@/src/utils/timeslots.utils";
 
 export function drawWaveForItems({
   waveMargin = 0.2,
@@ -22,7 +25,7 @@ export function drawWaveForItems({
   bpm: number;
   timeWindow: TimeWindow;
   waveMargin?: number;
-  currentTime?: number;
+  currentTime: number;
   showBeats: boolean;
   beatLabelType: string;
   beatLabelRepeat: number;
@@ -44,25 +47,38 @@ export function drawWaveForItems({
       beatLabelRepeat,
     });
   }
+  const timeSlots = getTimeSlotsInRangeForMatrixItems({
+    matrixItems,
+    bpm,
+    timeWindow,
+  });
 
   drawTimeSlots({
     context,
-    matrixItems,
+    timeSlots,
     timeWindow,
     bpm,
     pixelsPerSecond,
     waveMargin: context.canvas.height * waveMargin,
     color,
   });
+  const timeSinceLastTimeslotStart = getTimeSinceLastTimeslotStart(
+    timeSlots,
+    currentTime
+  );
 
-  if (currentTime !== undefined) {
-    drawCurrentTime({
-      context,
-      currentTime,
-      pixelsPerSecond,
-      windowStartTime: timeWindow.start,
-    });
-  }
+  drawCurrentTime({
+    context,
+    currentTime,
+    pixelsPerSecond,
+    windowStartTime: timeWindow.start,
+    width:
+      timeSinceLastTimeslotStart && timeSinceLastTimeslotStart < 0.1 ? 4 : 2,
+    color:
+      timeSinceLastTimeslotStart && timeSinceLastTimeslotStart < 0.1
+        ? "white"
+        : "#999",
+  });
 }
 
 function drawCurrentTime({
@@ -70,11 +86,15 @@ function drawCurrentTime({
   context,
   pixelsPerSecond,
   windowStartTime,
+  color,
+  width,
 }: {
   context: CanvasRenderingContext2D;
   currentTime: number;
   pixelsPerSecond: number;
   windowStartTime: number;
+  color: string;
+  width: number;
 }) {
   const x = getPositionXInCanvasForTime(
     context,
@@ -86,8 +106,8 @@ function drawCurrentTime({
   context.moveTo(x, 0);
   context.lineTo(x, context.canvas.height);
 
-  context.strokeStyle = "rgba(255, 255, 255, 0.3)";
-  context.lineWidth = 4;
+  context.strokeStyle = color;
+  context.lineWidth = width;
   context.stroke();
 }
 
@@ -97,13 +117,12 @@ function drawTimeSlots({
   bpm,
   pixelsPerSecond,
   waveMargin,
-  matrixItems,
-
+  timeSlots,
   color,
   lineWidth = 2,
 }: {
   context: CanvasRenderingContext2D;
-  matrixItems: Array<MatrixItem>;
+  timeSlots: Array<TimeWindow>;
   timeWindow: TimeWindow;
   bpm: number;
   pixelsPerSecond: number;
@@ -114,16 +133,10 @@ function drawTimeSlots({
   context.lineWidth = lineWidth;
   context.strokeStyle = color;
 
-  const slots = getTimeSlotsInRangeForMatrixItems({
-    matrixItems,
-    bpm,
-    timeWindow,
-  });
-
   const drawData = getDrawDataForTimeSlots(
     context,
     timeWindow,
-    slots,
+    timeSlots,
     bpm,
     pixelsPerSecond,
     waveMargin

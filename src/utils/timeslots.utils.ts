@@ -93,7 +93,7 @@ export function getSlotsInRangeForMatrixItem({
 
 /**
  * Combine an array of timeslots to a new array in which the timeslots
- * don't overlap anymore (but are extended into longer timeslots)
+ * don't overlap anymore (they are extended into longer timeslots)
  * .
  * @param timeSlots
  */
@@ -118,4 +118,23 @@ export function flattenTimeSlots(
   }
 
   return results;
+}
+
+export function getTimeSinceLastTimeslotStart(
+  timeslots: Array<TimeWindow>,
+  beforeOrOnTime: number
+) {
+  let result: TimeWindow | undefined;
+  for (let i = 0; i < timeslots.length; i++) {
+    const timeDifference = beforeOrOnTime - timeslots[i].start;
+    if (timeDifference <= 0) {
+      if (i > 0) {
+        // if i === 0 then no timeslot is in the past
+        result = timeslots[i - 1];
+      }
+      break;
+    }
+  }
+
+  return result ? beforeOrOnTime - result.start : undefined;
 }
