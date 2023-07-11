@@ -10,11 +10,10 @@ import {
 } from "@/src/data/consts";
 
 export function SettingsContent() {
-  const { bpm, setBpm, isPlaying } = usePlayStore(
+  const { bpm, setBpm } = usePlayStore(
     (state) => ({
       bpm: state.bpm,
       setBpm: state.setBpm,
-      isPlaying: state.isPlaying,
     }),
     shallow
   );
@@ -30,7 +29,6 @@ export function SettingsContent() {
   return (
     <>
       <SettingsSlider
-        isDisabled={isPlaying}
         label={"bpm"}
         value={bpm}
         min={MIN_BPM}
