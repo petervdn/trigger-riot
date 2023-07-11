@@ -1,7 +1,7 @@
-export function GroupContent() {
+export function RandomContent() {
   return (
     <>
-      <h3>Group</h3>
+      <h3>Random</h3>
       <p>
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
         ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
