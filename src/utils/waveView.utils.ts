@@ -149,7 +149,7 @@ function drawTimeSlots({
 
   context.lineWidth = lineWidth;
   context.strokeStyle = color;
-
+  context.beginPath();
   for (let i = 0; i < linePoints.length; i += 1) {
     if (i === 0) {
       context.moveTo(linePoints[i].x, linePoints[i].y);
@@ -186,7 +186,6 @@ function getLinePointsForTimeSlots({
   const yBottom = context.canvas.height - waveMargin;
   let endX: number = 0;
 
-  // context.beginPath();
   const numSlots = timeSlots.length;
   for (let i = 0; i < numSlots; i += 1) {
     const slot = timeSlots[i];
@@ -256,13 +255,13 @@ export function drawBeats({
   }
 
   context.strokeStyle = color;
-  context.fillStyle = color;
-  context.textAlign = "center";
+  // context.fillStyle = color;
+  // context.textAlign = "center";
   context.lineWidth = lineWidth;
 
-  const fontSize = 11 * window.devicePixelRatio;
-  const verticalMargin = 2;
-  context.font = `${fontSize}px 'Noto Sans KR'`;
+  // const fontSize = 11 * window.devicePixelRatio;
+  // const verticalMargin = 2;
+  // context.font = `${fontSize}px 'Noto Sans KR'`;
   // context.font = `${fontSize}px monospace`;
 
   let time = firstBeatAfterStart;
@@ -275,18 +274,18 @@ export function drawBeats({
     );
     let bottomY = context.canvas.height;
 
-    const beatIndex = Math.round(time / secondsPerBeat);
-    if (beatLabelType && beatIndex > 0 && beatIndex % beatLabelRepeat === 0) {
-      context.fillText(
-        beatLabelType === BeatLabelType.SECONDS
-          ? time.toFixed(2)
-          : (beatIndex + 1).toString(),
-        x,
-        context.canvas.height - 2 * verticalMargin
-      ); // that 2 * margin shouldn't be there, but it seems to center it better todo probably fix with measuring the text?
-
-      bottomY = context.canvas.height - 2 * verticalMargin - fontSize;
-    }
+    // const beatIndex = Math.round(time / secondsPerBeat);
+    // if (beatLabelType && beatIndex > 0 && beatIndex % beatLabelRepeat === 0) {
+    //   context.fillText(
+    //     beatLabelType === BeatLabelType.SECONDS
+    //       ? time.toFixed(2)
+    //       : (beatIndex + 1).toString(),
+    //     x,
+    //     context.canvas.height - 2 * verticalMargin
+    //   ); // that 2 * margin shouldn't be there, but it seems to center it better todo probably fix with measuring the text?
+    //
+    //   bottomY = context.canvas.height - 2 * verticalMargin - fontSize;
+    // }
 
     context.beginPath();
     context.moveTo(x, 0);
