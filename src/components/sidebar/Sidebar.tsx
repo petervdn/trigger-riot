@@ -1,5 +1,4 @@
 import { SidebarModeSelect } from "@/src/components/sidebar-mode-select/SidebarModeSelect";
-import { Settings } from "@/src/components/settings/Settings";
 import { useMiscStore } from "@/src/data/miscStore";
 import { GroupContent } from "@/src/components/sidebar/content/GroupContent";
 import { AboutContent } from "@/src/components/sidebar/content/AboutContent";
