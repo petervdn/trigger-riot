@@ -10,12 +10,14 @@ export function schedule({
   groups,
   samplesByGroupId,
   bpm,
+  audioContext,
 }: {
   timeWindow: TimeWindow;
   groups: Array<MatrixItemGroup>;
   audioContextStartTime?: number;
   bpm: number;
   samplesByGroupId: Record<string, Sample | undefined>;
+  audioContext: AudioContext;
 }) {
   if (!audioContextStartTime) {
     console.error("No contextStartTime");
@@ -35,11 +37,12 @@ export function schedule({
     });
 
     for (const slot of slots) {
-      samplePlayer.playSampleAtTime(
-        sampleForGroup,
-        group.stringId,
-        slot.start + audioContextStartTime
-      );
+      samplePlayer.playSampleAtTime({
+        sample: sampleForGroup,
+        layerId: group.stringId,
+        time: slot.start + audioContextStartTime,
+        audioContext,
+      });
     }
   }
 }

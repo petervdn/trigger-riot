@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { DEFAULT_BPM, SCHEDULE_INTERVAL } from "@/src/data/consts";
-import { audioContext } from "@/src/sound/audioContext";
 import { schedule } from "@/src/sound/schedule";
 import { getScheduleProps } from "@/src/sound/getScheduleProps";
 import { samplePlayer } from "@/src/sound/SamplePlayer";
+import { useAudioContextStore } from "@/src/data/audioContextStore";
 
 type PlayStoreState = {
   bpm: number;
@@ -18,6 +18,7 @@ type PlayStoreState = {
 
 export const usePlayStore = create<PlayStoreState>((set, get) => {
   return {
+    audioContext: undefined,
     bpm: DEFAULT_BPM,
     setBpm: (value) => {
       set(() => ({ bpm: value }));
@@ -26,6 +27,12 @@ export const usePlayStore = create<PlayStoreState>((set, get) => {
     isPlaying: false,
     scheduleIntervalId: undefined,
     start: async () => {
+      const { audioContext } = useAudioContextStore.getState();
+
+      if (!audioContext) {
+        throw new Error("No audioContext");
+      }
+
       if (audioContext.state === "suspended") {
         await audioContext.resume();
       }
@@ -66,6 +73,11 @@ export const usePlayStore = create<PlayStoreState>((set, get) => {
       });
     },
     getCurrentTime: () => {
+      const { audioContext } = useAudioContextStore.getState();
+
+      if (!audioContext) {
+        throw new Error("No audioContext");
+      }
       const { audioContextStartTime } = get();
       return audioContextStartTime !== undefined
         ? audioContext.currentTime - audioContextStartTime

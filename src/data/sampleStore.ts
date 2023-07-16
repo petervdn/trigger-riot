@@ -5,6 +5,7 @@ import {
 import { create } from "zustand";
 import { matrixItemGroupIdentifierToString } from "@/src/utils/matrixItemGroup.utils";
 import { loadSound } from "@/src/utils/sound.utils";
+import { useAudioContextStore } from "@/src/data/audioContextStore";
 
 export type Sample = {
   filename: string;
@@ -67,8 +68,15 @@ export const useSampleStore = create<SampleStoreState>((set, get) => {
           };
         });
 
+        const { audioContext } = useAudioContextStore.getState();
+
+        if (!audioContext) {
+          throw new Error("No audioContext");
+        }
+
         // load
         const audioBuffer = await loadSound(
+          audioContext,
           `/sounds/${sampleToLoad?.filename}`
         );
 

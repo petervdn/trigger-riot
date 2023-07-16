@@ -1,5 +1,4 @@
 import { Sample } from "@/src/data/sampleStore";
-import { audioContext } from "@/src/sound/audioContext";
 
 type ScheduledSample = {
   bufferSourceNode: AudioBufferSourceNode;
@@ -9,18 +8,26 @@ type ScheduledSample = {
   time: number;
 };
 
+type PlaySampleProps = {
+  sample: Sample;
+  layerId: string; // todo: rename?
+  time: number;
+  volume?: number;
+  audioContext: AudioContext;
+};
 export class SamplePlayer {
   private latestScheduledTimeByLayer: { [layerId: string]: number } = {};
   private scheduledSamples: Array<ScheduledSample> = [];
 
   constructor() {}
 
-  public playSampleAtTime(
-    sample: Sample,
-    layerId: string, // todo: rename?
-    time: number,
-    volume = 1
-  ): void {
+  public playSampleAtTime({
+    time,
+    sample,
+    layerId,
+    volume = 1,
+    audioContext,
+  }: PlaySampleProps): void {
     if (
       sample.audioBuffer !== undefined &&
       (this.latestScheduledTimeByLayer[layerId] === undefined ||

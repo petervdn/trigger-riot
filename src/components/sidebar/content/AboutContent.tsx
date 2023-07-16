@@ -3,7 +3,7 @@ export function AboutContent() {
     <>
       <h3>About</h3>
       <p>
-        This is a recreation of Tiptop Audio's{" "}
+        This is a recreation of Tiptop Audio&aposs{" "}
         <a href="https://tiptopaudio.com/trigger-riot/" target="_blank">
           Trigger Riot
         </a>
